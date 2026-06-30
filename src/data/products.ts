@@ -12,16 +12,16 @@ export interface Product {
 
 export const products: Product[] = [
   {
-    name: 'Profimax F301',
+    name: 'Alkaliczny koncentrat do mycia podłóg Biopur F301',
     type: 'Koncentrat',
-    description: 'Alkaliczny środek myjący i odtłuszczający do czyszczenia powierzchni płaskich',
-    ph: 12,
-    phLabel: '12',
-    application: 'Powierzchnie płaskie',
+    description: 'Zasadowy środek niskopienny do codziennego mycia podłóg',
+    ph: 11,
+    phLabel: '11',
+    application: 'Mycie podłóg',
     frequency: ['Codziennie', 'Okresowo'],
     usage:
-      'Przygotuj roztwór: do mycia bieżącego: 1% (100 ml na 10 l wody); do doczyszczania powierzchni: 1–5% (100–500 ml na 10 l wody); do usuwania starych lub trudnych zabrudzeń: 10–50% (1–5 l środka na 10 l wody). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
-    dosage: '100 ml na 10 l wody',
+      'Mycie bieżące: 1% (100 ml / 10 l wody); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l wody); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l wody). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
+    dosage: '100 ml / 10 l wody',
   },
   {
     name: 'Profimax F303',
