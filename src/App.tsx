@@ -231,6 +231,7 @@ function App() {
                       <th className="px-4 py-3 font-medium">pH</th>
                       <th className="px-4 py-3 font-medium">Dozowanie</th>
                       <th className="px-4 py-3 font-medium">Rodzaj</th>
+                      <th className="px-4 py-3 font-medium">Częstotliwość</th>
                       <th className="px-4 py-3 text-right font-medium"></th>
                     </tr>
                   </thead>
@@ -250,6 +251,7 @@ function App() {
                           </td>
                           <td className="px-4 py-3 text-slate-600">{p.dosage}</td>
                           <td className="px-4 py-3 text-slate-600">{p.type}</td>
+                          <td className="px-4 py-3 text-slate-600">{p.frequency.join(', ')}</td>
                           <td className="px-4 py-3 text-right">
                             {isSelected ? (
                               <button
@@ -308,6 +310,9 @@ function App() {
                           <dt className="text-slate-500">Rodzaj</dt>
                           <dd className="text-right text-slate-700">{p.type}</dd>
                         </div>
+                        <div className="flex justify-between gap-3">
+                          <dt className="text-slate-500">Częstotliwość</dt>
+                          <dd className="text-right text-slate-700">{p.frequency.join(', ')}</dd></div>
                       </dl>
                       <div className="mt-3">
                         {isSelected ? (
