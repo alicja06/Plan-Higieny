@@ -48,7 +48,7 @@ export const products: Product[] = [
     dosage: 'bez rozcieńczania',
   },
   {
-    name: 'Profimax F310',
+    name: 'do wypełnienia',
     type: 'Płyn do nabłyszczania',
     description: 'Płyn do nabłyszczania naczyń w zmywarkach przemysłowych',
     ph: 3,
@@ -60,7 +60,7 @@ export const products: Product[] = [
     dosage: '0,5–2 g / l wody',
   },
   {
-    name: 'Profimax F315',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek dezynfekujący',
     description: 'Alkaliczny środek myjąco-dezynfekujący do mycia i dezynfekcji powierzchni płaskich',
     ph: 12,
@@ -72,7 +72,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F312',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -84,7 +84,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F320',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -96,7 +96,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F316',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -108,7 +108,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F317',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -120,7 +120,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F313',
+    name: 'do wypełnienia',
     type: 'Kwasowy środek do sanitariatów',
     description: 'Kwasowy środek do mycia i dezynfekcji sanitariatów',
     ph: 2,
@@ -132,7 +132,7 @@ export const products: Product[] = [
     dosage: '100 ml – 1 l / 10 L wody',
   },
   {
-    name: 'Profimax F318',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -144,7 +144,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F319',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -156,7 +156,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F319',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -168,7 +168,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F308',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -180,7 +180,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F309',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -192,7 +192,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F310',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -204,7 +204,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Profimax F315',
+    name: 'do wypełnienia',
     type: 'Alkaliczny środek myjący',
     description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
     ph: 11,
@@ -216,7 +216,7 @@ export const products: Product[] = [
     dosage: '100–500 ml / 10 L wody',
   },
   {
-    name: 'Biopur E1',
+    name: 'do wypełnienia',
     type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
