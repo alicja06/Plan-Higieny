@@ -378,7 +378,7 @@ function App() {
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-slate-400 sm:px-6">
-          Konfigurator planu higieny — dane przykładowe, inspirowane rozwiązaniem Lakma
+          Konfigurator planu higieny Kawido
         </div>
       </footer>
     </div>
