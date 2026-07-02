@@ -20,8 +20,8 @@ export const products: Product[] = [
     application: 'Mycie podłóg',
     frequency: ['Codziennie', 'Okresowo'],
     usage:
-      'Mycie bieżące: 1% (100 ml / 10 l wody); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l wody); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l wody). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
-    dosage: '100 ml / 10 l wody',
+      'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
+    dosage: '100 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
@@ -48,16 +48,16 @@ export const products: Product[] = [
     dosage: 'bez rozcieńczania',
   },
   {
-    name: 'do wypełnienia',
-    type: 'Płyn do nabłyszczania',
-    description: 'Płyn do nabłyszczania naczyń w zmywarkach przemysłowych',
-    ph: 3,
-    phLabel: '3',
-    application: 'Naczynia',
+    name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6, 1l',
+    type: 'Koncentrat',
+    description: 'Ekologiczny, neutralny koncentrat do codziennego mycia podłóg oparty na naturalnych składnikach',
+    ph: 7,
+    phLabel: '7',
+    application: 'Mycie podłóg',
     frequency: ['Codziennie'],
     usage:
-      'Używaj zgodnie z instrukcją zmywarki przemysłowej. Należy używać z automatem dozującym.',
-    dosage: '0,5–2 g / l wody',
+      'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu)',
+    dosage: '25 ml / 10 l roztworu',
   },
   {
     name: 'do wypełnienia',
