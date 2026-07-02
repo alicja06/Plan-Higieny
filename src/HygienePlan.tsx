@@ -1,5 +1,23 @@
-import { ArrowLeft, Printer, Droplets } from 'lucide-react';
-import type { Product } from './data/products';
+import { ArrowLeft, Download, Droplets } from 'lucide-react';import type { Product } from './data/products';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+
+const generatePDF = async () => {
+  const element = document.getElementById('hygiene-plan');
+
+  if (!element) return;
+
+  const canvas = await html2canvas(element);
+  const imgData = canvas.toDataURL('image/png');
+
+  const pdf = new jsPDF('p', 'mm', 'a4');
+
+  const pdfWidth = 210;
+  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+  pdf.save('plan-higieny.pdf');
+};
 
 function phColor(ph: number): string {
   if (ph < 5) return 'bg-red-100 text-red-700 ring-red-200';
@@ -43,11 +61,11 @@ function HygienePlan({ selected, onBack }: Props) {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => window.print()}
+                onClick={generatePDF}
                 className="hidden items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:inline-flex"
               >
-                <Printer className="h-3.5 w-3.5" />
-                Drukuj
+                <Download className="h-3.5 w-3.5" />
+                Pobierz PDF
               </button>
               <button
                 type="button"
@@ -62,7 +80,10 @@ function HygienePlan({ selected, onBack }: Props) {
         </div>
       </header>
 
-      <main className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">
+      <main
+  id="hygiene-plan"
+  className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8"
+>
         {selected.length === 0 ? (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
             <p className="text-sm text-slate-500">
