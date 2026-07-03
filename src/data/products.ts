@@ -45,7 +45,7 @@ export const products: Product[] = [
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
-    dosage: 'bez rozcieńczania',
+    dosage: 'Bez rozcieńczania',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6, 1l',
