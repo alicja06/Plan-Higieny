@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { RotateCcw, FlaskConical, Layers, Clock, Filter, Plus, Check, FileText, X } from 'lucide-react';
 import { products, type Product } from './data/products';
 import HygienePlan from './HygienePlan';
@@ -32,6 +32,9 @@ function App() {
   const [phRange, setPhRange] = useState<PhRangeKey>('all');
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [view, setView] = useState<'config' | 'plan'>('config');
+  
+  const ITEMS_PER_PAGE = 15;
+  const [currentPage, setCurrentPage] = useState(1);
 
   const activeRange = PH_RANGES.find((r) => r.key === phRange)!;
 
@@ -44,6 +47,17 @@ function App() {
     });
   }, [application, frequency, phRange, activeRange]);
 
+  const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
+
+  const paginatedProducts = useMemo(() => {
+  const start = (currentPage - 1) * ITEMS_PER_PAGE;
+  return filtered.slice(start, start + ITEMS_PER_PAGE);
+}, [filtered, currentPage]);
+
+useEffect(() => {
+  setCurrentPage(1);
+}, [application, frequency, phRange]);
+
   const hasFilters = application !== '' || frequency !== '' || phRange !== 'all';
 
   const selectedProducts = useMemo(
@@ -52,10 +66,11 @@ function App() {
   );
 
   const reset = () => {
-    setApplication('');
-    setFrequency('');
-    setPhRange('all');
-  };
+  setApplication('');
+  setFrequency('');
+  setPhRange('all');
+  setCurrentPage(1);
+};
 
   const addProduct = (name: string) => {
     setSelected((prev) => new Set(prev).add(name));
@@ -236,7 +251,7 @@ function App() {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-slate-100">
-                    {filtered.map((p) => {
+                    {paginatedProducts.map((p) => {
                       const isSelected = selected.has(p.name);
                       return (
                         <tr key={p.name} className="transition hover:bg-slate-50">
@@ -282,7 +297,7 @@ function App() {
 
               {/* Mobile cards */}
               <div className="space-y-3 sm:hidden">
-                {filtered.map((p) => {
+                {paginatedProducts.map((p) => {
                   const isSelected = selected.has(p.name);
                   return (
                     <div
@@ -342,6 +357,43 @@ function App() {
             </>
           )}
         </section>
+        
+        {totalPages > 1 && (
+  <div className="mt-6 flex items-center justify-center gap-2">
+    <button
+      type="button"
+      disabled={currentPage === 1}
+      onClick={() => setCurrentPage(currentPage - 1)}
+      className="rounded-md border border-slate-300 px-3 py-2 text-sm disabled:opacity-40"
+    >
+      ← Poprzednia
+    </button>
+
+    {Array.from({ length: totalPages }, (_, i) => (
+      <button
+        key={i + 1}
+        type="button"
+        onClick={() => setCurrentPage(i + 1)}
+        className={`h-9 w-9 rounded-md text-sm font-medium transition ${
+          currentPage === i + 1
+            ? 'bg-primary text-white'
+            : 'border border-slate-300 bg-white hover:bg-slate-100'
+        }`}
+      >
+        {i + 1}
+      </button>
+    ))}
+
+    <button
+      type="button"
+      disabled={currentPage === totalPages}
+      onClick={() => setCurrentPage(currentPage + 1)}
+      className="rounded-md border border-slate-300 px-3 py-2 text-sm disabled:opacity-40"
+    >
+      Następna →
+    </button>
+  </div>
+)}
       </main>
 
       {/* Selection bar */}

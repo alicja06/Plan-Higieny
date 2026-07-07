@@ -21,7 +21,7 @@ export const products: Product[] = [
     frequency: ['Codziennie', 'Okresowo'],
     usage:
       'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
-    dosage: '100 ml / 10 l roztworu',
+    dosage: '100–5000 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
@@ -57,7 +57,7 @@ export const products: Product[] = [
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
-    dosage: '25 ml / 10 l roztworu',
+    dosage: '25–200 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg maszynowo Biopur E9',
@@ -69,7 +69,7 @@ export const products: Product[] = [
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
-    dosage: '25 ml / 10 l roztworu',
+    dosage: '25–200 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia powierzchni Biopur E4',
@@ -81,7 +81,7 @@ export const products: Product[] = [
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię',
-    dosage: '25 ml / 10 l roztworu',
+    dosage: '25–100 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia sanitariatów Biopur E5',
@@ -93,7 +93,7 @@ export const products: Product[] = [
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 1% (100 ml koncentratu / 10 l roztworu). Nanieś przygotowany roztwór na powierzchnię i wyczyść.',
-    dosage: '25 ml / 10 l roztworu',
+    dosage: '25–100 ml / 10 l roztworu',
   },
   {
     name: 'Ekologiczny uniwersalny odtłuszczacz Biopur E11',
@@ -156,16 +156,40 @@ export const products: Product[] = [
     dosage: '10–20 ml / 1 l wody',
   },
   {
-    name: 'do wypełnienia',
-    type: 'Alkaliczny środek myjący',
-    description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
-    ph: 11,
-    phLabel: '11',
-    application: 'Powierzchnie płaskie',
+    name: 'Kwasowy koncentrat czyszczący Biopur F831',
+    type: 'Koncentrat',
+    description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
+    ph: 2,
+    phLabel: '2',
+    application: 'Teren zewnętrzny',
+    frequency: ['Okresowo, W razie potrzeby'],
+    usage:
+      'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Rozprowadź środek po powierzchni. Pozostaw wytworzoną pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia. Przeszoruj powierzchnię szczotką ryżową lub maszyną jednotarczową. Po zakończeniu procesu dokładnie spłucz zimną wodą.',
+    dosage: '100–1000 ml / 10 l roztworu',
+  },
+  {
+    name: 'Kwasowy koncentrat czyszczący Biopur F832',
+    type: 'Koncentrat',
+    description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
+    ph: 2,
+    phLabel: '2',
+    application: 'Teren zewnętrzny',
+    frequency: ['Okresowo, W razie potrzeby'],
+    usage:
+      'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Nanieś rozcieńczony preparat na powierzchnię elewacji lub dachu. Pozostaw pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia mytej powierzchni. Spłucz dokładnie strumieniem wody.',
+    dosage: '100–1000 ml / 10 l roztworu',
+  },
+  {
+    name: 'Kwasowy koncentrat do czyszczenia sanitariatów Biopur F521',
+    type: 'Koncentrat',
+    description: 'Profesjonalny środek do codziennego mycia pomieszczeń sanitarnych, urządzeń sanitarnych oraz armatury łazienkowej, kabin prysznicowych i wanien kąpielowych',
+    ph: 2,
+    phLabel: '2',
+    application: 'Sanitariaty',
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: 1–5% (100–500 ml na 10 l wody). Umyj powierzchnię przygotowanym roztworem. Następnie spłucz czystą wodą.',
-    dosage: '100–500 ml / 10 L wody',
+      'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 10% (1 l środka / 10 l roztworu), silnie zakamienione powierzchnie: 50% (0,5 l środka w 1 l wody + spryskiwacz). Umyj powierzchnię przygotowanym roztworem. Dokładnie spłucz zimną wodą.',
+    dosage: '25–1000 ml / 10 l roztworu',
   },
   {
     name: 'do wypełnienia',
@@ -193,29 +217,41 @@ export const products: Product[] = [
   },
   {
     name: 'do wypełnienia',
-    type: 'Alkaliczny środek myjący',
-    description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
-    ph: 11,
-    phLabel: '11',
-    application: 'Powierzchnie płaskie',
+    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
+    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
+    ph: 7,
+    phLabel: '7',
+    application: 'Powierzchnie szklane',
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: 1–5% (100–500 ml na 10 l wody). Umyj powierzchnię przygotowanym roztworem. Następnie spłucz czystą wodą.',
-    dosage: '100–500 ml / 10 L wody',
+      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
+    dosage: 'Bez rozcieńczania',
   },
-  {
+    {
     name: 'do wypełnienia',
-    type: 'Alkaliczny środek myjący',
-    description: 'Alkaliczny środek myjący do podłóg i powierzchni płaskich',
-    ph: 11,
-    phLabel: '11',
-    application: 'Powierzchnie płaskie',
+    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
+    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
+    ph: 7,
+    phLabel: '7',
+    application: 'Powierzchnie szklane',
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: 1–5% (100–500 ml na 10 l wody). Umyj powierzchnię przygotowanym roztworem. Następnie spłucz czystą wodą.',
-    dosage: '100–500 ml / 10 L wody',
+      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
+    dosage: 'Bez rozcieńczania',
   },
-  {
+    {
+    name: 'do wypełnienia',
+    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
+    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
+    ph: 7,
+    phLabel: '7',
+    application: 'Powierzchnie szklane',
+    frequency: ['Codziennie'],
+    usage:
+      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
+    dosage: 'Bez rozcieńczania',
+  },
+    {
     name: 'do wypełnienia',
     type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
