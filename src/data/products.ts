@@ -56,20 +56,20 @@ export const products: Product[] = [
     application: 'Mycie podłóg',
     frequency: ['Codziennie'],
     usage:
-      'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu)',
+      'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
     dosage: '25 ml / 10 l roztworu',
   },
   {
-    name: 'do wypełnienia',
-    type: 'Alkaliczny środek dezynfekujący',
-    description: 'Alkaliczny środek myjąco-dezynfekujący do mycia i dezynfekcji powierzchni płaskich',
-    ph: 12,
-    phLabel: '12',
-    application: 'Powierzchnie płaskie',
+    name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg maszynowo Biopur E9',
+    type: 'Koncentrat',
+    description: 'Ekologiczny, neutralny, zapachowy koncentrat do codziennego mycia podłóg za pomocą automatów lub szorowarek',
+    ph: 7,
+    phLabel: '7',
+    application: 'Mycie podłóg',
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: 1–5% (100–500 ml na 10 l wody). Umyj i zdezynfekuj powierzchnię przygotowanym roztworem. Następnie spłucz obficie czystą wodą.',
-    dosage: '100–500 ml / 10 L wody',
+      'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
+    dosage: '25 ml / 10 l wody',
   },
   {
     name: 'do wypełnienia',
@@ -80,7 +80,7 @@ export const products: Product[] = [
     application: 'Powierzchnie płaskie',
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: 1–5% (100–500 ml na 10 l wody). Umyj powierzchnię przygotowanym roztworem. Następnie spłucz czystą wodą.',
+      'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
     dosage: '100–500 ml / 10 L wody',
   },
   {
