@@ -52,7 +52,7 @@ function App() {
   const paginatedProducts = useMemo(() => {
   const start = (currentPage - 1) * ITEMS_PER_PAGE;
   return filtered.slice(start, start + ITEMS_PER_PAGE);
-}, [filtered, currentPage]);
+}, [filtered, currentPage, ITEMS_PER_PAGE]);
 
 useEffect(() => {
   setCurrentPage(1);
@@ -89,6 +89,36 @@ useEffect(() => {
   if (view === 'plan') {
     return <HygienePlan selected={selectedProducts} onBack={() => setView('config')} />;
   }
+
+  const getVisiblePages = () => {
+  const pages: (number | string)[] = [];
+
+  if (totalPages <= 7) {
+    for (let i = 1; i <= totalPages; i++) pages.push(i);
+    return pages;
+  }
+
+  pages.push(1);
+
+  if (currentPage > 4) {
+    pages.push('...');
+  }
+
+  const start = Math.max(2, currentPage - 1);
+  const end = Math.min(totalPages - 1, currentPage + 1);
+
+  for (let i = start; i <= end; i++) {
+    pages.push(i);
+  }
+
+  if (currentPage < totalPages - 3) {
+    pages.push('...');
+  }
+
+  pages.push(totalPages);
+
+  return pages;
+};
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -369,20 +399,29 @@ useEffect(() => {
       ← Poprzednia
     </button>
 
-    {Array.from({ length: totalPages }, (_, i) => (
-      <button
-        key={i + 1}
-        type="button"
-        onClick={() => setCurrentPage(i + 1)}
-        className={`h-9 w-9 rounded-md text-sm font-medium transition ${
-          currentPage === i + 1
-            ? 'bg-primary text-white'
-            : 'border border-slate-300 bg-white hover:bg-slate-100'
-        }`}
-      >
-        {i + 1}
-      </button>
-    ))}
+    {getVisiblePages().map((page, index) =>
+      page === '...' ? (
+        <span
+          key={`dots-${index}`}
+          className="px-2 text-slate-500"
+        >
+          ...
+        </span>
+      ) : (
+        <button
+          key={page}
+          type="button"
+          onClick={() => setCurrentPage(page as number)}
+          className={`h-9 w-9 rounded-md text-sm font-medium transition ${
+            currentPage === page
+              ? 'bg-primary text-white'
+              : 'border border-slate-300 bg-white hover:bg-slate-100'
+          }`}
+        >
+          {page}
+        </button>
+      )
+    )}
 
     <button
       type="button"
