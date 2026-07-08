@@ -119,7 +119,7 @@ function HygienePlan({ selected, onBack }: Props) {
                     <tr key={p.name} className="align-top transition hover:bg-slate-50">
                       <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
                       <td className="max-w-xs px-4 py-3 text-slate-600">{p.description}</td>
-                      <td className="px-4 py-3 text-slate-600">{p.application}</td>
+                      <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
                       <td className="px-4 py-3">
                         <span
                           className={`inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
@@ -157,7 +157,7 @@ function HygienePlan({ selected, onBack }: Props) {
                     </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Zastosowanie</dt>
-                      <dd className="text-right text-slate-700">{p.application}</dd>
+                      <dd className="text-right text-slate-700">{p.application.join(', ')}</dd>
                     </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Dozowanie</dt>

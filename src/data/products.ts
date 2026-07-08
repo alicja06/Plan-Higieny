@@ -4,7 +4,7 @@ export interface Product {
   description: string;
   ph: number;
   phLabel: string;
-  application: string;
+  application: string[];
   frequency: string[];
   usage: string;
   dosage: string;
@@ -17,7 +17,7 @@ export const products: Product[] = [
     description: 'Zasadowy środek niskopienny do codziennego mycia podłóg',
     ph: 11,
     phLabel: '11',
-    application: 'Mycie podłóg',
+    application: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
@@ -29,7 +29,7 @@ export const products: Product[] = [
     description: 'Alkoholowy płyn do codziennego mycia powierzchni szklanych na bazie naturalnych składników',
     ph: 7,
     phLabel: '7',
-    application: 'Mycie szyb',
+    application: ['Mycie szyb'],
     frequency: ['Codziennie', 'Okresowo'],
     usage:
       'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność. ',
@@ -41,7 +41,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do codziennego mycia i pielęgnacji powierzchni odpornych na działanie wody',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie płaskie',
+    application: ['Powierzchnie płaskie'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -53,7 +53,7 @@ export const products: Product[] = [
     description: 'Ekologiczny, neutralny koncentrat do codziennego mycia podłóg oparty na naturalnych składnikach',
     ph: 7,
     phLabel: '7',
-    application: 'Mycie podłóg',
+    application: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -65,7 +65,7 @@ export const products: Product[] = [
     description: 'Ekologiczny, neutralny, zapachowy koncentrat do codziennego mycia podłóg za pomocą automatów lub szorowarek',
     ph: 7,
     phLabel: '7',
-    application: 'Mycie podłóg',
+    application: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -77,7 +77,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, ekologiczny koncentrat do codziennego mycia wodoodpornych powierzchni, oparty na naturalnych składnikach. Nadaje się do mycia manualnego, jak i maszynowego',
     ph: 7,
     phLabel: '7',
-    application: 'Mycie podłóg',
+    application: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię',
@@ -89,7 +89,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, ekologiczny, kwasowy koncentrat do codziennego mycia wodoodpornych powierzchni odpornych na działanie kwasów, oparty na naturalnych składnikach',
     ph: 1,
     phLabel: '1',
-    application: 'Sanitariaty',
+    application: ['Sanitariaty'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 1% (100 ml koncentratu / 10 l roztworu). Nanieś przygotowany roztwór na powierzchnię i wyczyść.',
@@ -101,7 +101,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, zasadowy gotowy płyn do czyszczenia i usuwania tłustych, spieczonych zabrudzeń z powierzchni i przedmiotów odpornych na działanie alkaliów',
     ph: 14,
     phLabel: '14',
-    application: 'Kuchnia',
+    application: ['Kuchnia'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 2–5 minut, aby umożliwić rozpuszczenie tłustych i przypalonych zabrudzeń. Wyczyść powierzchnię. Dokładnie spłucz wodą i wytrzyj powierzchnię do sucha.',
@@ -113,7 +113,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, ekologiczny detergent w formie pianki do codziennego mycia powierzchni i urządzeń sanitarnych, oparty na naturalnych składnikach',
     ph: 2,
     phLabel: '2',
-    application: 'Sanitariaty',
+    application: ['Sanitariaty'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na kilkanaście sekund, a przy uporczywych zabrudzeniach na 2–3 minuty. Wyczyść powierzchnię, a następnie spłucz wodą lub wytrzyj wilgotną ściereczką.',
@@ -125,7 +125,7 @@ export const products: Product[] = [
     description: 'Profesjonalny środek w formie żelu do codziennego czyszczenia toalet, pisuarów i armatury sanitarnej',
     ph: 2,
     phLabel: '2',
-    application: 'Sanitariaty',
+    application: ['Sanitariaty'],
     frequency: ['Codziennie'],
     usage:
       'Przeczyść muszlę wodą, używając szczotki, aby zwiększyć skuteczność działania żelu. Odkręć korek tak, aby aplikator pozostał na miejscu. Rozprowadź żel pod obrzeżem muszli klozetowej lub pisuaru. Pozostaw do 15 minut w celu aktywnego działania. Ponownie użyj szczotki w celu pozbycia się rozpuszczonych zabrudzeń i spłucz muszlę wodą.',
@@ -137,7 +137,7 @@ export const products: Product[] = [
     description: 'Enzymatyczny płyn do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
     ph: 8,
     phLabel: '8',
-    application: 'Kuchnia',
+    application: ['Kuchnia'],
     frequency: ['Codziennie'],
     usage:
       'Ustaw odpowiednie parametry dozowania (1–5 ml środka na 1 l wody, temperatura wody: 40–60°C). Umieść naczynia w zmywarce. Uruchom cykl mycia zgodnie z instrukcją producenta zmywarki.',
@@ -149,7 +149,7 @@ export const products: Product[] = [
     description: 'Enzymatyczny żel do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
     ph: 8,
     phLabel: '8',
-    application: 'Kuchnia',
+    application: ['Kuchnia'],
     frequency: ['Codziennie'],
     usage:
       'Wlej żel do dozownika na detergent znajdującego się w zmywarce gastronomicznej (10–20 ml). Zamknij dozownik i uruchom odpowiedni cykl zmywania w temperaturze 40–60°C.',
@@ -161,7 +161,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
     ph: 2,
     phLabel: '2',
-    application: 'Teren zewnętrzny',
+    application: ['Teren zewnętrzny'],
     frequency: ['Okresowo'],
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Rozprowadź środek po powierzchni. Pozostaw wytworzoną pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia. Przeszoruj powierzchnię szczotką ryżową lub maszyną jednotarczową. Po zakończeniu procesu dokładnie spłucz zimną wodą.',
@@ -173,7 +173,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
     ph: 2,
     phLabel: '2',
-    application: 'Teren zewnętrzny',
+    application: ['Teren zewnętrzny'],
     frequency: ['Okresowo'],
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Nanieś rozcieńczony preparat na powierzchnię elewacji lub dachu. Pozostaw pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia mytej powierzchni. Spłucz dokładnie strumieniem wody.',
@@ -185,7 +185,7 @@ export const products: Product[] = [
     description: 'Profesjonalny środek do codziennego mycia pomieszczeń sanitarnych, urządzeń sanitarnych oraz armatury łazienkowej, kabin prysznicowych i wanien kąpielowych',
     ph: 2,
     phLabel: '2',
-    application: 'Sanitariaty',
+    application: ['Sanitariaty'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 10% (1 l środka / 10 l roztworu), silnie zakamienione powierzchnie: 50% (0,5 l środka w 1 l wody + spryskiwacz). Umyj powierzchnię przygotowanym roztworem. Dokładnie spłucz zimną wodą.',
@@ -197,7 +197,7 @@ export const products: Product[] = [
     description: 'Profesjonalny środek w formie żelu do codziennego czyszczenia WC oraz konserwacji muszli klozetowych i pisuarów',
     ph: 2,
     phLabel: '2',
-    application: 'Sanitariaty',
+    application: ['Sanitariaty'],
     frequency: ['Codziennie'],
     usage:
       'Przed zastosowaniem żelu przeczyść muszlę za pomocą szczotki, aby usunąć luźne zabrudzenia. Odkręć korek tak, aby aplikator pozostał na miejscu, a następnie rozprowadź żel pod obrzeżem muszli lub pisuaru. Pozostaw preparat na powierzchni do 15 minut. W razie potrzeby użyj szczotki do WC, aby dokładniej oczyścić powierzchnię. Spłucz muszlę wodą.',
@@ -209,7 +209,7 @@ export const products: Product[] = [
     description: 'Gotowy płyn do czyszczenia i mycia powierzchni chłodni, mroźni, zamrażarek i lodówek w niskich temperaturach do -25°C bez konieczności wcześniejszego ich rozmrażania',
     ph: 10,
     phLabel: '10',
-    application: 'Kuchnia',
+    application: ['Kuchnia'],
     frequency: ['Okresowo'],
     usage:
       'Usuń mechanicznie warstwę lodu powyżej 3 mm. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw na 15 minut. Wyczyść powierzchnię odpowiednim narzędziem (szczotka, pad, szorowarka, gąbka lub ściereczka). Usuń pozostałości preparatu i wytrzyj powierzchnię do sucha.',
@@ -221,7 +221,7 @@ export const products: Product[] = [
     description: 'Gotowy do użycia płyn do czyszczenia i mycia powierzchni lodówek, zamrażarek oraz różnego typu pojemników szklanych, plastikowych w niskich temperaturach do -5°C',
     ph: 7,
     phLabel: '7',
-    application: 'Kuchnia',
+    application: ['Kuchnia'],
     frequency: ['Okresowo'],
     usage:
       'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha. ',
@@ -233,31 +233,67 @@ export const products: Product[] = [
     description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: 'Kuchnia, Sanitariaty',
+    application: ['Kuchnia', 'Sanitariaty'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
     dosage: '10–50 ml / 10 l wody',
   },
     {
-    name: 'do wypełnienia',
-    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
-    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
+    name: 'Odświeżacz powietrza w płynie Biopur F211, Orange',
+    type: 'Gotowy do użycia',
+    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
-    frequency: ['Codziennie'],
+    application: ['Kuchnia', 'Sanitariaty'],
+    frequency: ['W razie potrzeby'],
     usage:
-      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
-    dosage: 'Bez rozcieńczania',
+      'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
+    dosage: '10–50 ml / 10 l wody',
   },
     {
-    name: 'do wypełnienia',
-    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
-    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
+    name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Aquanilla',
+      type: 'Gotowy do użycia',
+    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Kuchnia', 'Sanitariaty'],
+    frequency: ['W razie potrzeby'],
+    usage:
+      'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
+    dosage: '10–50 ml / 10 l wody',
+  },
+  {
+    name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Thanilla',
+    type: 'Gotowy do użycia',
+    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
+    ph: 7,
+    phLabel: '7',
+    application: ['Kuchnia', 'Sanitariaty'],
+    frequency: ['W razie potrzeby'],
+    usage:
+      'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
+    dosage: '10–50 ml / 10 l wody',
+  },
+  {
+    name: 'Pianka do czyszczenia sanitariatów Biopur F511',
+    type: 'Gotowy do użycia',
+    description: 'Profesjonalny środek w formie pianki do codziennego mycia powierzchni, pomieszczeń i urządzeń sanitarnych',
+    ph: 2,
+    phLabel: '2',
+    application: ['Sanitariaty'],
+    frequency: ['Codziennie'],
+    usage:
+      'Nanieś piankę równomiernie na czyszczoną powierzchnię. Pozostaw na 2–5 minut w zależności od stopnia zabrudzenia. Zmyj przy pomocy gąbki i spłucz dokładnie zimną wodą.',
+    dosage: 'Bez rozcieńczania',
+  },
+  {
+    name: 'Płyn do dezynfekcji powierzchni Medisoft APC 100',
+    type: 'Gotowy do użycia',
+    description: 'Alkoholowy płyn do dezynfekcji powierzchni o działaniu bakteriobójczym, grzybobójczym i wirusobójczym wobec wirusów osłonkowych',
+    ph: 7,
+    phLabel: '7',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -269,7 +305,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -281,7 +317,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -293,7 +329,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -305,7 +341,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -317,7 +353,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -329,7 +365,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -341,7 +377,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -353,7 +389,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -365,7 +401,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -377,7 +413,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -389,7 +425,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -401,43 +437,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
     ph: 7,
     phLabel: '7',
-    application: 'Powierzchnie szklane',
-    frequency: ['Codziennie'],
-    usage:
-      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
-    dosage: 'Bez rozcieńczania',
-  },
-  {
-    name: 'do wypełnienia',
-    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
-    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
-    ph: 7,
-    phLabel: '7',
-    application: 'Powierzchnie szklane',
-    frequency: ['Codziennie'],
-    usage:
-      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
-    dosage: 'Bez rozcieńczania',
-  },
-  {
-    name: 'do wypełnienia',
-    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
-    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
-    ph: 7,
-    phLabel: '7',
-    application: 'Powierzchnie szklane',
-    frequency: ['Codziennie'],
-    usage:
-      'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
-    dosage: 'Bez rozcieńczania',
-  },
-  {
-    name: 'do wypełnienia',
-    type: 'Ekologiczny płyn do czyszczenia powierzchni szklanych',
-    description: 'Ekologiczny płyn do czyszczenia powierzchni szklanych, 1 l',
-    ph: 7,
-    phLabel: '7',
-    application: 'Powierzchnie szklane',
+    application: ['Powierzchnie szklane'],
     frequency: ['Codziennie'],
     usage:
       'Produkt nie wymaga rozcieńczania. Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
