@@ -277,6 +277,7 @@ return (
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-3 font-medium">Zdjęcie</th>
                     <th className="px-4 py-3 font-medium">Produkt</th>
                     <th className="px-4 py-3 font-medium">Zastosowanie</th>
                     <th className="px-4 py-3 font-medium">pH</th>
@@ -291,6 +292,13 @@ return (
                     const isSelected = selected.has(p.name);
                     return (
                       <tr key={p.name} className="transition hover:bg-slate-50">
+                        <td className="px-4 py-3">
+                        <img
+                        src={p.image}
+                         alt={p.name}
+                        className="h-16 w-16 rounded object-contain"
+                        />
+                        </td>
                         <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
                         <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
                         <td className="px-4 py-3">
@@ -340,14 +348,23 @@ return (
                     key={p.name}
                     className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
                   >
-                    <div className="flex items-start justify-between gap-2">
-                      <h3 className="font-medium text-primary">{p.name}</h3>
-                      <span
-                        className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
-                      >
-                        pH {p.phLabel}
-                      </span>
-                    </div>
+                    <div>
+  <img
+    src={p.image}
+    alt={p.name}
+    className="mb-3 h-32 w-full rounded-lg object-contain"
+  />
+
+  <div className="flex items-start justify-between gap-2">
+    <h3 className="font-medium text-primary">{p.name}</h3>
+
+    <span
+      className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
+    >
+      pH {p.phLabel}
+    </span>
+  </div>
+</div>
                     <dl className="mt-3 space-y-1.5 text-sm">
                       <div className="flex justify-between gap-3">
                         <dt className="text-slate-500">Zastosowanie</dt>

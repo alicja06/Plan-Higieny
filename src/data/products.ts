@@ -8,6 +8,7 @@ export interface Product {
   frequency: string[];
   usage: string;
   dosage: string;
+  image: string;
 }
 
 export const products: Product[] = [
@@ -22,6 +23,7 @@ export const products: Product[] = [
     usage:
       'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
     dosage: '100–5000 ml / 10 l roztworu',
+    image: '/images/F301-zasadowy-koncentrat-do-podlog-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
@@ -34,6 +36,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność. ',
     dosage: 'Bez rozcieńczania',
+    image: '/images/spray-do-szyb-biopur-E1-1-l-PL.jpg',
   },
   {
     name: 'Ekologiczny płyn do mycia powierzchni Biopur E2',
@@ -46,6 +49,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/E2-ekologiczny-plyn-do-mycia-powierzchni-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6',
@@ -58,6 +62,7 @@ export const products: Product[] = [
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
     dosage: '25–200 ml / 10 l roztworu',
+    image: 'images/E6-ekologiczny-uniwersalny-koncentrat-do-mycia-podłóg-manualnie-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg maszynowo Biopur E9',
@@ -70,6 +75,7 @@ export const products: Product[] = [
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
     dosage: '25–200 ml / 10 l roztworu',
+    image: 'images/E9-ekologiczny-uniwersalny-koncentrat-do-mycia-podłóg-maszynowo-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia powierzchni Biopur E4',
@@ -82,6 +88,7 @@ export const products: Product[] = [
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię',
     dosage: '25–100 ml / 10 l roztworu',
+    image: 'images/E4-ekologiczny-uniwersalny-koncentrat-do-mycia-powierzchni-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia sanitariatów Biopur E5',
@@ -94,6 +101,7 @@ export const products: Product[] = [
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 1% (100 ml koncentratu / 10 l roztworu). Nanieś przygotowany roztwór na powierzchnię i wyczyść.',
     dosage: '25–100 ml / 10 l roztworu',
+    image: 'images/E5-ekologiczny-uniwersalny-koncentrat-do-mycia-sanitariatów-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny odtłuszczacz Biopur E11',
@@ -106,6 +114,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 2–5 minut, aby umożliwić rozpuszczenie tłustych i przypalonych zabrudzeń. Wyczyść powierzchnię. Dokładnie spłucz wodą i wytrzyj powierzchnię do sucha.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/E11-ekologiczny-uniwersalny-odtłuszczacz-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny płyn do mycia sanitariatów Biopur E3',
@@ -118,6 +127,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na kilkanaście sekund, a przy uporczywych zabrudzeniach na 2–3 minuty. Wyczyść powierzchnię, a następnie spłucz wodą lub wytrzyj wilgotną ściereczką.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/E3-ekologiczny-uniwersalny-plyn-do-mycia-sanitariatów-biopur-1-l.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny żel do WC Biopur E10',
@@ -130,6 +140,7 @@ export const products: Product[] = [
     usage:
       'Przeczyść muszlę wodą, używając szczotki, aby zwiększyć skuteczność działania żelu. Odkręć korek tak, aby aplikator pozostał na miejscu. Rozprowadź żel pod obrzeżem muszli klozetowej lub pisuaru. Pozostaw do 15 minut w celu aktywnego działania. Ponownie użyj szczotki w celu pozbycia się rozpuszczonych zabrudzeń i spłucz muszlę wodą.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/E10-ekologiczny-uniwersalny-żel-do-wc-biopur-1-l.jpg',
   },
   {
     name: 'Enzymatyczny koncentrat do mycia naczyń Biopur F731',
@@ -142,6 +153,7 @@ export const products: Product[] = [
     usage:
       'Ustaw odpowiednie parametry dozowania (1–5 ml środka na 1 l wody, temperatura wody: 40–60°C). Umieść naczynia w zmywarce. Uruchom cykl mycia zgodnie z instrukcją producenta zmywarki.',
     dosage: '1–5 ml / 1 l wody',
+    image: 'images/F731-enzymatyczny-koncentrat-do-mycia-naczyń-biopur-1-l.jpg',
   },
   {
     name: 'Enzymatyczny żel do mycia naczyń Biopur F732',
@@ -154,6 +166,7 @@ export const products: Product[] = [
     usage:
       'Wlej żel do dozownika na detergent znajdującego się w zmywarce gastronomicznej (10–20 ml). Zamknij dozownik i uruchom odpowiedni cykl zmywania w temperaturze 40–60°C.',
     dosage: '10–20 ml / 1 l wody',
+    image: 'images/F732-enzymatyczny-żel-do-mycia-naczyń-biopur-1-l.jpg',
   },
   {
     name: 'Kwasowy koncentrat czyszczący Biopur F831',
@@ -166,6 +179,7 @@ export const products: Product[] = [
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Rozprowadź środek po powierzchni. Pozostaw wytworzoną pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia. Przeszoruj powierzchnię szczotką ryżową lub maszyną jednotarczową. Po zakończeniu procesu dokładnie spłucz zimną wodą.',
     dosage: '100–1000 ml / 10 l roztworu',
+    image: 'images/F831-kwasowy-koncentrat-czyszczący-biopur-1-l.jpg',
   },
   {
     name: 'Kwasowy koncentrat czyszczący Biopur F832',
@@ -178,6 +192,7 @@ export const products: Product[] = [
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Nanieś rozcieńczony preparat na powierzchnię elewacji lub dachu. Pozostaw pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia mytej powierzchni. Spłucz dokładnie strumieniem wody.',
     dosage: '100–1000 ml / 10 l roztworu',
+    image: 'images/F832-kwasowy-koncentrat-czyszczący-biopur-1-l.jpg',
   },
   {
     name: 'Kwasowy koncentrat do czyszczenia sanitariatów Biopur F521',
@@ -190,6 +205,7 @@ export const products: Product[] = [
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 10% (1 l środka / 10 l roztworu), silnie zakamienione powierzchnie: 50% (0,5 l środka w 1 l wody + spryskiwacz). Umyj powierzchnię przygotowanym roztworem. Dokładnie spłucz zimną wodą.',
     dosage: '25–1000 ml / 10 l roztworu',
+    image: 'images/E5-ekologiczny-uniwersalny-koncentrat-do-mycia-sanitariatów-biopur-1-l.jpg',
   },
   {
     name: 'Kwasowy uniwersalny żel do WC Biopur F531',
@@ -202,6 +218,7 @@ export const products: Product[] = [
     usage:
       'Przed zastosowaniem żelu przeczyść muszlę za pomocą szczotki, aby usunąć luźne zabrudzenia. Odkręć korek tak, aby aplikator pozostał na miejscu, a następnie rozprowadź żel pod obrzeżem muszli lub pisuaru. Pozostaw preparat na powierzchni do 15 minut. W razie potrzeby użyj szczotki do WC, aby dokładniej oczyścić powierzchnię. Spłucz muszlę wodą.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/E10-ekologiczny-uniwersalny-żel-do-wc-biopur-1-l.jpg',
   },
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F121, do -25°C',
@@ -214,6 +231,7 @@ export const products: Product[] = [
     usage:
       'Usuń mechanicznie warstwę lodu powyżej 3 mm. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw na 15 minut. Wyczyść powierzchnię odpowiednim narzędziem (szczotka, pad, szorowarka, gąbka lub ściereczka). Usuń pozostałości preparatu i wytrzyj powierzchnię do sucha.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/F121-niskotemperaturowy-środek-czyszczący-biopur-1-l.jpg',
   },
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F122, do -5°C',
@@ -226,6 +244,7 @@ export const products: Product[] = [
     usage:
       'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha. ',
     dosage: 'Bez rozcieńczania',
+    image: 'images/F122-niskotemperaturowy-środek-czyszczący-biopur-1-l.jpg',
   },
     {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Berry',
@@ -238,6 +257,7 @@ export const products: Product[] = [
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
     dosage: '10–50 ml / 10 l wody',
+    image: 'images/F211-odświeżacz-powietrza-w-płynie-biopur-berry-1-l.jpg',
   },
     {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Orange',
@@ -250,6 +270,7 @@ export const products: Product[] = [
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
     dosage: '10–50 ml / 10 l wody',
+    image: 'images/F211-odświeżacz-powietrza-w-płynie-biopur-orange-1-l.jpg',
   },
     {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Aquanilla',
@@ -262,6 +283,7 @@ export const products: Product[] = [
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
     dosage: '10–50 ml / 10 l wody',
+    image: 'images/F212-odświeżacz-powietrza-w-płynie-biopur-premium-aquanilla-1-l.jpg',
   },
   {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Thanilla',
@@ -274,6 +296,7 @@ export const products: Product[] = [
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
     dosage: '10–50 ml / 10 l wody',
+    image: 'images/F212-odświeżacz-powietrza-w-płynie-biopur-premium-thanilla-1-l.jpg',
   },
   {
     name: 'Pianka do czyszczenia sanitariatów Biopur F511',
@@ -286,6 +309,7 @@ export const products: Product[] = [
     usage:
       'Nanieś piankę równomiernie na czyszczoną powierzchnię. Pozostaw na 2–5 minut w zależności od stopnia zabrudzenia. Zmyj przy pomocy gąbki i spłucz dokładnie zimną wodą.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/F511-pianka-do-czyszczenia-sanitariatów-biopur-1-l.jpg',
   },
   {
     name: 'Płyn do dezynfekcji powierzchni Medisoft APC 100',
@@ -298,6 +322,7 @@ export const products: Product[] = [
     usage:
       'Nanieś produkt na dezynfekowaną powierzchnię w ilości odpowiedniej do całkowitego pokrycia. Zapewnij czas kontaktu (w temperaturze pokojowej): dla działania wirusobójczego na wirusy osłonkowe: minimum 1 minuta, dla działania bakteriobójczego: minimum 5 minut, dla działania grzybobójczego: minimum 15 minut.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/APC-100-płyn-do-dezynfekcji-powierzchni-medisoft-1-l.jpg',
   },
   {
     name: 'Płyn do dezynfekcji rąk i skóry Medisoft APH 100',
@@ -310,6 +335,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na czystą i suchą skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
+    image: 'images/APH-100-płyn-do-dezynfekcji-rąk-i-skóry-medisoft-1-l.jpg',
   },
   {
     name: 'Płyn do mycia naczyń Biopur F701, cytryna',
@@ -322,6 +348,7 @@ export const products: Product[] = [
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
+    image: 'images/F701-płyn-do-mycia-naczyń-biopur-cytryna-1-l.jpg',
   },
   {
     name: 'Płyn do mycia naczyń Biopur F701, mięta',
@@ -334,6 +361,7 @@ export const products: Product[] = [
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
+    image: 'images/F701-płyn-do-mycia-naczyń-biopur-mięta-1-l.jpg',
   },
   {
     name: 'Płyn do mycia naczyń Biopur Premium F702, citro',
@@ -346,6 +374,7 @@ export const products: Product[] = [
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
+    image: 'images/F702-płyn-do-mycia-naczyń-biopur-premium-citro-1-l.jpg',
   },
   {
     name: 'Płyn do mycia naczyń Biopur Premium F702, mintigo',
@@ -358,6 +387,7 @@ export const products: Product[] = [
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
+    image: 'images/F702-płyn-do-mycia-naczyń-biopur-premium-mintigo-1-l.jpg',
   },
   {
     name: 'Płyn do nabłyszczania i czyszczenia powierzchni meblowych Biopur F811',
@@ -370,6 +400,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj suchą ściereczkę płynem. Przetrzyj zabrudzoną powierzchnię, równomiernie rozprowadzając preparat. Po wyczyszczeniu przetrzyj powierzchnię do sucha. ',
     dosage: 'Bez rozcieńczania',
+    image: 'images/F811-płyn-do-nabłyszczania-i-czyszczenia-powierzchni-meblowych-biopur-1-l.jpg',
   },
   {
     name: 'Płyn do płukania i nabłyszczania naczyń Biopur F711',
@@ -382,6 +413,7 @@ export const products: Product[] = [
     usage:
       'Przed użyciem dobrze wstrząśnij butelkę. Wlej płyn do dozownika na nabłyszczacz w zmywarce (10–15 ml na cykl zmywania). Dawkę można dostosować w zależności od twardości wody, stopnia zabrudzenia naczyń i wybranego programu zmywania. Zamknij dozownik i wybierz odpowiedni cykl zmywania',
     dosage: '10–15 ml',
+    image: 'images/F711-płyn-do-płukania-i-nabłyszczania-naczyń-biopur-1-l.jpg',
   },
   {
     name: 'Silnie kwasowy koncentrat do czyszczenia sanitariatów Biopur F522',
@@ -394,6 +426,7 @@ export const products: Product[] = [
     usage:
       'Mycie bieżące: 0,5% (50 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i wyczyść.Dokładnie spłucz powierzchnię wodą.',
     dosage: '50–5000 ml / 10 l roztworu',
+    image: 'images/F522-silnie-kwasowy-koncentrat-do-czyszczenia-sanitariatów-biopur-1-l.jpg',
   },
   {
     name: 'Silnie kwasowy koncentrat do mycia podłóg Biopur F331',
@@ -406,6 +439,7 @@ export const products: Product[] = [
     usage:
       'Mycie bieżące: 1% (100 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Wyczyść powierzchnię uzyskanym roztworem, a następnie spłucz dokładnie wodą.',
     dosage: '100–5000 ml / 10 l roztworu',
+    image: 'images/F331-silnie-kwasowy-koncentrat-do-mycia-podłóg-biopur-1-l.jpg',
   },
   {
     name: 'Silnie rozpuszczalnikowy koncentrat do mycia podłóg Biopur F351',
@@ -418,6 +452,7 @@ export const products: Product[] = [
     usage:
       'Przygotuj roztwór: 10–50% do mycia ręcznego, 1–5% do automatów i myjek ciśnieniowych. Umyj powierzchnię ręcznie lub maszynowo. Spłucz dokładnie wodą.',
     dosage: '100–5000 ml / 10 l roztworu',
+    image: 'images/F351-silnie-rozpuszczalnikowy-koncentrat-do-mycia-podłóg-biopur-1-l.jpg',
   },
   {
     name: 'Silnie zasadowy koncentrat do mycia naczyń Biopur F721',
@@ -430,6 +465,7 @@ export const products: Product[] = [
     usage:
       'Ustaw dozowanie: 0,5–5 ml/ 1 l wody, temperatura 40–60°C. Umieść naczynia odporne na alkalia w zmywarce. Uruchom program mycia zgodnie z instrukcją urządzenia.',
     dosage: '0,5–5 ml / 1 l wody',
+    image: 'images/F721-silnie-zasadowy-koncentrat-do-mycia-naczyń-biopur-1-l.jpg',
   },
   {
     name: 'Silnie zasadowy koncentrat do mycia podłóg Biopur F341',
@@ -442,6 +478,7 @@ export const products: Product[] = [
     usage:
       'Mycie bieżące: 0,5% (50 ml / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i rozprowadź równomiernie. Po umyciu powierzchni spłucz dokładnie wodą.',
     dosage: '50–5000 ml / 10 l roztworu',
+    image: 'images/F341-silnie-zasadowy-koncentrat-do-mycia-podłóg-biopur-1-l.jpg',
   },
   {
     name: 'Silnie zasadowy środek czyszczący i odtłuszczający Biopur F611',
@@ -454,5 +491,6 @@ export const products: Product[] = [
     usage:
       'Spryskaj czyszczoną powierzchnię z odległości około 10 cm i pozostaw preparat na 2–5 minut. Wyczyść zabrudzenia gąbką. Dokładnie spłucz wodą i wytrzyj do sucha. ',
     dosage: 'Bez rozcieńczania',
+    image: 'images/F611-silnie-zasadowy-środek-czyszczący-i-odtłuszczający-biopur-1-l.jpg',
   },
 ];

@@ -105,6 +105,7 @@ function HygienePlan({ selected, onBack }: Props) {
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                    <th className="px-4 py-3 font-medium">Zdjęcie</th>
                     <th className="px-4 py-3 font-medium">Produkt</th>
                     <th className="px-4 py-3 font-medium">Opis</th>
                     <th className="px-4 py-3 font-medium">Zastosowanie</th>
@@ -115,9 +116,18 @@ function HygienePlan({ selected, onBack }: Props) {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {selected.map((p) => (
-                    <tr key={p.name} className="align-top transition hover:bg-slate-50">
-                      <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
+  {selected.map((p) => (
+    <tr key={p.name} className="align-top transition hover:bg-slate-50">
+
+      <td className="px-4 py-3">
+        <img
+          src={p.image}
+          alt={p.name}
+          className="h-20 w-20 rounded-lg object-contain"
+        />
+      </td>
+
+      <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
                       <td className="max-w-xs px-4 py-3 text-slate-600">{p.description}</td>
                       <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
                       <td className="px-4 py-3">
