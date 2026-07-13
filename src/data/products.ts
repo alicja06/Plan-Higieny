@@ -21,7 +21,7 @@ export const products: Product[] = [
     application: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
-      'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą. W przypadku silniejszych zabrudzeń zalecamy powtórzenie czynności.',
+      'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą.',
     dosage: '100–5000 ml / 10 l roztworu',
     image: '/images/F301-zasadowy-koncentrat-do-podlog-biopur-1-l.jpg',
   },
@@ -49,7 +49,7 @@ export const products: Product[] = [
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
     dosage: 'Bez rozcieńczania',
-    image: 'images/E2-ekologiczny-plyn-do-mycia-powierzchni-biopur-1-l.jpg',
+    image: '/images/plyn-uniwersalny-biopur-E2-1-l-PL.jpg',
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6',

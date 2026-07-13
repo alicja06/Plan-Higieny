@@ -12,11 +12,35 @@ const generatePDF = async () => {
 
   const pdf = new jsPDF('p', 'mm', 'a4');
 
-  const pdfWidth = 210;
-  const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+  // Logo
+  const logo = new Image();
+  logo.src = '/images/logo-kawido.png';
 
-  pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-  pdf.save('plan-higieny.pdf');
+  logo.onload = () => {
+    pdf.addImage(
+      logo,
+      'PNG',
+      150, // pozycja X
+      10,  // pozycja Y
+      40,  // szerokość
+      15   // wysokość
+    );
+
+    // Treść planu
+    const pdfWidth = 210;
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    pdf.addImage(
+      imgData,
+      'PNG',
+      0,
+      30, // zostawiamy miejsce na logo
+      pdfWidth,
+      pdfHeight
+    );
+
+    pdf.save('plan-higieny.pdf');
+  };
 };
 
 function phColor(ph: number): string {
