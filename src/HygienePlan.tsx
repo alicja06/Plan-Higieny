@@ -1,71 +1,8 @@
 import { ArrowLeft, Download, Droplets } from 'lucide-react';import type { Product } from './data/products';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
+import autoTable from 'jspdf-autotable';
+import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
 
-const generatePDF = async () => {
-  const element = document.getElementById('hygiene-plan');
-
-  if (!element) return;
-
-  const canvas = await html2canvas(element, {
-    scale: 2,
-    useCORS: true,
-  });
-
-  const imgData = canvas.toDataURL('image/png');
-
-  const pdf = new jsPDF('p', 'mm', 'a4');
-
-  const pageWidth = 210;
-  const pageHeight = 297;
-
-  const imgWidth = pageWidth;
-  const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-  // ---------- Logo ----------
-  const logo = new Image();
-  logo.src = '/images/logo-kawido.png';
-
-  logo.onload = () => {
-
-    // pierwsza strona
-    pdf.addImage(logo, 'PNG', 150, 8, 45, 16);
-
-    let heightLeft = imgHeight;
-    let position = 28;
-
-    pdf.addImage(
-      imgData,
-      'PNG',
-      0,
-      position,
-      imgWidth,
-      imgHeight
-    );
-
-    heightLeft -= (pageHeight - position);
-
-    while (heightLeft > 0) {
-
-      position = heightLeft - imgHeight;
-
-      pdf.addPage();
-
-      pdf.addImage(
-        imgData,
-        'PNG',
-        0,
-        position,
-        imgWidth,
-        imgHeight
-      );
-
-      heightLeft -= pageHeight;
-    }
-
-    pdf.save('plan-higieny.pdf');
-  };
-};
 
 function phColor(ph: number): string {
   if (ph < 5) return 'bg-red-100 text-red-700 ring-red-200';
@@ -86,6 +23,145 @@ function HygienePlan({ selected, onBack }: Props) {
     month: 'long',
     year: 'numeric',
   });
+
+const loadImage = (src: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+
+    img.onload = () => resolve(img);
+    img.onerror = reject;
+    img.src = src;
+  });
+
+ const generatePDF = async () => {
+  const logo = await loadImage('/images/logo-kawido.png');
+  const pdf = new jsPDF('p', 'mm', 'a4');
+
+  // Dodanie fontów Montserrat
+  pdf.addFileToVFS(
+    'Montserrat-Regular.ttf',
+    MontserratRegular
+  );
+
+  pdf.addFont(
+    'Montserrat-Regular.ttf',
+    'Montserrat',
+    'normal'
+  );
+
+
+  pdf.setFont('Montserrat', 'normal');
+
+const logoWidth = 45;
+const logoHeight =
+  (logo.height * logoWidth) / logo.width;
+
+pdf.addImage(
+  logo,
+  'PNG',
+  150,
+  10,
+  logoWidth,
+  logoHeight
+);
+
+pdf.setFontSize(18);
+pdf.text('Plan higieny', 15, 35);
+
+  pdf.setFontSize(10);
+  pdf.text(
+    `Wygenerowano: ${today}`,
+    15,
+    28
+  );
+
+  autoTable(pdf, {
+    startY: 50,
+
+    head: [[
+      'Zdjęcie',
+      'Produkt',
+      'pH',
+      'Dozowanie',
+      'Zastosowanie',
+      'Instrukcja użycia',
+    ]],
+
+    body: selected.map((p) => [
+  '',
+  p.name,
+  p.phLabel,
+  p.dosage,
+  p.application.join(', '),
+  p.usage,
+]),
+
+    styles: {
+      font: 'Montserrat',
+      fontStyle: 'normal',
+      fontSize: 8,
+      cellPadding: 3,
+      overflow: 'linebreak',
+      valign: 'top',
+    },
+
+headStyles: {
+  fillColor: [44, 90, 63],
+  textColor: 255,
+  font: 'Montserrat',
+  fontStyle: 'normal',
+  fontSize: 8,
+  halign: 'center',
+  valign: 'middle',
+},
+
+  columnStyles: {
+  0: {
+    cellWidth: 18,
+  },
+  1: {
+    cellWidth: 32,
+  },
+  2: {
+    cellWidth: 12,
+  },
+  3: {
+    cellWidth: 35,
+  },
+  4: {
+    cellWidth: 35,
+  },
+  5: {
+    cellWidth: 50,
+  },
+},
+
+    pageBreak: 'auto',
+rowPageBreak: 'avoid',
+
+    didDrawCell: (data) => {
+      if (
+        data.section === 'body' &&
+        data.column.index === 0
+      ) {
+        const product = selected[data.row.index];
+
+        if (product.image) {
+          pdf.addImage(
+            product.image,
+            'JPEG',
+            data.cell.x + 2,
+            data.cell.y + 2,
+            12,
+            12
+          );
+        }
+      }
+    },
+  });
+
+  pdf.save('plan-higieny.pdf');
+};
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
