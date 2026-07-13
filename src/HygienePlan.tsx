@@ -7,37 +7,61 @@ const generatePDF = async () => {
 
   if (!element) return;
 
-  const canvas = await html2canvas(element);
+  const canvas = await html2canvas(element, {
+    scale: 2,
+    useCORS: true,
+  });
+
   const imgData = canvas.toDataURL('image/png');
 
   const pdf = new jsPDF('p', 'mm', 'a4');
 
-  // Logo
+  const pageWidth = 210;
+  const pageHeight = 297;
+
+  const imgWidth = pageWidth;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+  // ---------- Logo ----------
   const logo = new Image();
   logo.src = '/images/logo-kawido.png';
 
   logo.onload = () => {
-    pdf.addImage(
-      logo,
-      'PNG',
-      150, // pozycja X
-      10,  // pozycja Y
-      40,  // szerokość
-      15   // wysokość
-    );
 
-    // Treść planu
-    const pdfWidth = 210;
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    // pierwsza strona
+    pdf.addImage(logo, 'PNG', 150, 8, 45, 16);
+
+    let heightLeft = imgHeight;
+    let position = 28;
 
     pdf.addImage(
       imgData,
       'PNG',
       0,
-      30, // zostawiamy miejsce na logo
-      pdfWidth,
-      pdfHeight
+      position,
+      imgWidth,
+      imgHeight
     );
+
+    heightLeft -= (pageHeight - position);
+
+    while (heightLeft > 0) {
+
+      position = heightLeft - imgHeight;
+
+      pdf.addPage();
+
+      pdf.addImage(
+        imgData,
+        'PNG',
+        0,
+        position,
+        imgWidth,
+        imgHeight
+      );
+
+      heightLeft -= pageHeight;
+    }
 
     pdf.save('plan-higieny.pdf');
   };
@@ -86,7 +110,7 @@ function HygienePlan({ selected, onBack }: Props) {
               <button
                 type="button"
                 onClick={generatePDF}
-                className="hidden items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100 sm:inline-flex"
+                className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
               >
                 <Download className="h-3.5 w-3.5" />
                 Pobierz PDF
@@ -217,7 +241,7 @@ function HygienePlan({ selected, onBack }: Props) {
 
       <footer className="border-t border-slate-200 bg-white">
         <div className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-slate-400 sm:px-6">
-          Konfigurator planu higieny — dane przykładowe, inspirowane rozwiązaniem Lakma
+          Konfigurator planu higieny Kawido
         </div>
       </footer>
     </div>
