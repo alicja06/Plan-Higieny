@@ -148,7 +148,7 @@ export const products: Product[] = [
     description: 'Enzymatyczny płyn do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
     ph: 8,
     phLabel: '8',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Ustaw odpowiednie parametry dozowania (1–5 ml środka na 1 l wody, temperatura wody: 40–60°C). Umieść naczynia w zmywarce. Uruchom cykl mycia zgodnie z instrukcją producenta zmywarki.',
@@ -161,7 +161,7 @@ export const products: Product[] = [
     description: 'Enzymatyczny żel do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
     ph: 8,
     phLabel: '8',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Wlej żel do dozownika na detergent znajdującego się w zmywarce gastronomicznej (10–20 ml). Zamknij dozownik i uruchom odpowiedni cykl zmywania w temperaturze 40–60°C.',
@@ -343,7 +343,7 @@ export const products: Product[] = [
     description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła',
     ph: 6,
     phLabel: '6',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -356,7 +356,7 @@ export const products: Product[] = [
     description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła',
     ph: 6,
     phLabel: '6',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -369,7 +369,7 @@ export const products: Product[] = [
     description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła, wzbogacony ekstraktem z aloesu',
     ph: 6,
     phLabel: '6',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -382,7 +382,7 @@ export const products: Product[] = [
     description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła, wzbogacony ekstraktem z aloesu',
     ph: 6,
     phLabel: '6',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -408,7 +408,7 @@ export const products: Product[] = [
     description: 'Profesjonalny płyn na bazie kwasu cytrynowego do płukania i nabłyszczania naczyń w zmywarkach gastronomicznych i przemysłowych',
     ph: 4,
     phLabel: '4',
-    application: ['Kuchnia'],
+    application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przed użyciem dobrze wstrząśnij butelkę. Wlej płyn do dozownika na nabłyszczacz w zmywarce (10–15 ml na cykl zmywania). Dawkę można dostosować w zależności od twardości wody, stopnia zabrudzenia naczyń i wybranego programu zmywania. Zamknij dozownik i wybierz odpowiedni cykl zmywania',
