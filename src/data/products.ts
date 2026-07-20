@@ -709,4 +709,17 @@ export const products: Product[] = [
     dosage: '50–5000 ml / 10 l roztworu',
     image: '/images/zasadowy-koncentrat-uniwersalny-biopur-F600-1-l-PL.jpg',
   },
+  {
+    name: 'Zasadowy środek czyszczący i odtłuszczający Biopur F612',
+    type: 'Gotowy do użycia',
+    surfaces: ['armatura kuchenna i łazienkowa', 'zlewozmywaki i umywalki', 'drewno', 'laminat', 'stal nierdzewna'],
+    ph: 10,
+    phLabel: '10',
+    application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    frequency: ['Codziennie'],
+    usage:
+      'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw środek na 2–5 minut. Wyczyść powierzchnię. Przetrzyj wilgotną ściereczką lub spłucz wodą, a następnie wytrzyj do sucha',
+    dosage: 'Bez rozcieńczania',
+    image: '/images/zasadowy-srodek-czyszczacy-i-odtluszczajacy-Biopur-F612-1-l-PL.jpg',
+  },
 ];
