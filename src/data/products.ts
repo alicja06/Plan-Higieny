@@ -44,7 +44,7 @@ export const products: Product[] = [
     description: 'Ekologiczny płyn do codziennego mycia i pielęgnacji powierzchni odpornych na działanie wody',
     ph: 7,
     phLabel: '7',
-    application: ['Powierzchnie płaskie'],
+    application: ['Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -83,7 +83,7 @@ export const products: Product[] = [
     description: 'Profesjonalny, ekologiczny koncentrat do codziennego mycia wodoodpornych powierzchni, oparty na naturalnych składnikach. Nadaje się do mycia manualnego, jak i maszynowego',
     ph: 7,
     phLabel: '7',
-    application: ['Mycie podłóg'],
+    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię',
@@ -395,7 +395,7 @@ export const products: Product[] = [
     description: 'Płyn o efekcie antystatycznym do czyszczenia i nabłyszczania powierzchni w przestrzeniach biurowych',
     ph: 7,
     phLabel: '7',
-    application: ['Powierzchnie płaskie'],
+    application: ['Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj suchą ściereczkę płynem. Przetrzyj zabrudzoną powierzchnię, równomiernie rozprowadzając preparat. Po wyczyszczeniu przetrzyj powierzchnię do sucha. ',
@@ -447,7 +447,7 @@ export const products: Product[] = [
     description: 'Rozpuszczalnikowy, zasadowy koncentrat do czyszczenia i odtłuszczania silnie zabrudzonych powierzchni odpornych na działanie rozpuszczalników i alkaliów',
     ph: 12,
     phLabel: '12',
-    application: ['Mycie podłóg', 'Powierzchnie płaskie'],
+    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
     frequency: ['W razie potrzeby'],
     usage:
       'Przygotuj roztwór: 10–50% do mycia ręcznego, 1–5% do automatów i myjek ciśnieniowych. Umyj powierzchnię ręcznie lub maszynowo. Spłucz dokładnie wodą.',
@@ -473,7 +473,7 @@ export const products: Product[] = [
     description: 'Silnie zasadowy koncentrat o szerokim zakresie zastosowań do czyszczenia, odtłuszczania i usuwania zanieczyszczeń',
     ph: 14,
     phLabel: '14',
-    application: ['Mycie podłóg', 'Powierzchnie płaskie'],
+    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
     frequency: ['W razie potrzeby'],
     usage:
       'Mycie bieżące: 0,5% (50 ml / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i rozprowadź równomiernie. Po umyciu powierzchni spłucz dokładnie wodą.',
@@ -486,7 +486,7 @@ export const products: Product[] = [
     description: 'Zasadowy płyn do czyszczenia i usuwania tłustych oraz spieczonych zabrudzeń z powierzchni i przedmiotów odpornych na działanie alkaliów',
     ph: 14,
     phLabel: '14',
-    application: ['Powierzchnie płaskie'],
+    application: ['Kuchnia'],
     frequency: ['W razie potrzeby'],
     usage:
       'Spryskaj czyszczoną powierzchnię z odległości około 10 cm i pozostaw preparat na 2–5 minut. Wyczyść zabrudzenia gąbką. Dokładnie spłucz wodą i wytrzyj do sucha. ',
