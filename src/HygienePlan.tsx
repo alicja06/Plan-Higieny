@@ -84,6 +84,7 @@ pdf.text('Plan higieny', 15, 35);
       'pH',
       'Dozowanie',
       'Zastosowanie',
+      'Powierzchnie',
       'Instrukcja użycia',
     ]],
 
@@ -93,6 +94,7 @@ pdf.text('Plan higieny', 15, 35);
   p.phLabel,
   p.dosage,
   p.application.join(', '),
+  p.surfaces.join(', '),
   p.usage,
 ]),
 
@@ -120,19 +122,22 @@ headStyles: {
     cellWidth: 18,
   },
   1: {
-    cellWidth: 32,
+    cellWidth: 30,
   },
   2: {
     cellWidth: 12,
   },
   3: {
-    cellWidth: 35,
+    cellWidth: 30,
   },
   4: {
-    cellWidth: 35,
+    cellWidth: 32,
   },
   5: {
-    cellWidth: 50,
+    cellWidth: 38,
+  },
+  6: {
+    cellWidth: 35,
   },
 },
 
@@ -231,8 +236,8 @@ rowPageBreak: 'avoid',
                   <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                     <th className="px-4 py-3 font-medium">Zdjęcie</th>
                     <th className="px-4 py-3 font-medium">Produkt</th>
-                    <th className="px-4 py-3 font-medium">Opis</th>
                     <th className="px-4 py-3 font-medium">Zastosowanie</th>
+                    <th className="px-4 py-3 font-medium">Powierzchnie</th>
                     <th className="px-4 py-3 font-medium">pH</th>
                     <th className="px-4 py-3 font-medium">Dozowanie</th>
                     <th className="px-4 py-3 font-medium">Instrukcja użycia</th>
@@ -252,8 +257,8 @@ rowPageBreak: 'avoid',
       </td>
 
       <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
-                      <td className="max-w-xs px-4 py-3 text-slate-600">{p.description}</td>
                       <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
+                       <td className="max-w-xs px-4 py-3 text-slate-600">{p.surfaces.join(", ")}</td>
                       <td className="px-4 py-3">
                         <span
                           className={`inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
@@ -283,15 +288,15 @@ rowPageBreak: 'avoid',
                     </span>
                   </div>
                   <dl className="mt-3 space-y-2 text-sm">
-                    <div>
-                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        Opis
-                      </dt>
-                      <dd className="mt-0.5 text-slate-600">{p.description}</dd>
-                    </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Zastosowanie</dt>
                       <dd className="text-right text-slate-700">{p.application.join(', ')}</dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
+                        Powierzchnie
+                      </dt>
+                      <dd className="mt-0.5 text-slate-600">{p.surfaces.join(", ")}</dd>
                     </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Dozowanie</dt>

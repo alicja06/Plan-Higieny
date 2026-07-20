@@ -1,10 +1,10 @@
 export interface Product {
   name: string;
   type: string;
-  description: string;
   ph: number;
   phLabel: string;
   application: string[];
+  surfaces: string[];
   frequency: string[];
   usage: string;
   dosage: string;
@@ -15,10 +15,17 @@ export const products: Product[] = [
   {
     name: 'Alkaliczny koncentrat do mycia podłóg Biopur F301',
     type: 'Koncentrat',
-    description: 'Zasadowy środek niskopienny do codziennego mycia podłóg',
     ph: 11,
     phLabel: '11',
     application: ['Mycie podłóg'],
+    surfaces: [
+  "PCV",
+  "linoleum",
+  "kauczuk",
+  "płytki ceramiczne",
+  "posadzki kamienne",
+  "gres"
+],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą.',
@@ -28,7 +35,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
     type: 'Gotowy do użycia',
-    description: 'Alkoholowy płyn do codziennego mycia powierzchni szklanych na bazie naturalnych składników',
+    surfaces: ['przeszklenia wewnętrzne', 'lustra', 'okna', 'szyby samochodowe'],
     ph: 7,
     phLabel: '7',
     application: ['Mycie szyb'],
@@ -41,7 +48,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny płyn do mycia powierzchni Biopur E2',
     type: 'Gotowy do użycia',
-    description: 'Ekologiczny płyn do codziennego mycia i pielęgnacji powierzchni odpornych na działanie wody',
+    surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'szkło', 'metal', 'kamień'],
     ph: 7,
     phLabel: '7',
     application: ['Powierzchnie ponadpodłogowe'],
@@ -54,7 +61,14 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6',
     type: 'Koncentrat',
-    description: 'Ekologiczny, neutralny koncentrat do codziennego mycia podłóg oparty na naturalnych składnikach',
+    surfaces: [
+  "PCV",
+  "linoleum",
+  "kauczuk",
+  "płytki ceramiczne",
+  "posadzki kamienne",
+  "gres"
+],
     ph: 7,
     phLabel: '7',
     application: ['Mycie podłóg'],
@@ -67,7 +81,14 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg maszynowo Biopur E9',
     type: 'Koncentrat',
-    description: 'Ekologiczny, neutralny, zapachowy koncentrat do codziennego mycia podłóg za pomocą automatów lub szorowarek',
+    surfaces: [
+  "PCV",
+  "linoleum",
+  "kauczuk",
+  "płytki ceramiczne",
+  "posadzki kamienne",
+  "gres"
+],
     ph: 7,
     phLabel: '7',
     application: ['Mycie podłóg'],
@@ -80,7 +101,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia powierzchni Biopur E4',
     type: 'Koncentrat',
-    description: 'Profesjonalny, ekologiczny koncentrat do codziennego mycia wodoodpornych powierzchni, oparty na naturalnych składnikach. Nadaje się do mycia manualnego, jak i maszynowego',
+    surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'drewno', 'metal'],
     ph: 7,
     phLabel: '7',
     application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
@@ -93,7 +114,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia sanitariatów Biopur E5',
     type: 'Koncentrat',
-    description: 'Profesjonalny, ekologiczny, kwasowy koncentrat do codziennego mycia wodoodpornych powierzchni odpornych na działanie kwasów, oparty na naturalnych składnikach',
+    surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
     ph: 1,
     phLabel: '1',
     application: ['Sanitariaty'],
@@ -106,7 +127,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny odtłuszczacz Biopur E11',
     type: 'Gotowy do użycia',
-    description: 'Profesjonalny, zasadowy gotowy płyn do czyszczenia i usuwania tłustych, spieczonych zabrudzeń z powierzchni i przedmiotów odpornych na działanie alkaliów',
+    surfaces: ['grille', 'płyty grzewcze', 'okapy kuchenne', 'stal', 'piekarniki', 'kominki'],
     ph: 14,
     phLabel: '14',
     application: ['Kuchnia'],
@@ -119,7 +140,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny płyn do mycia sanitariatów Biopur E3',
     type: 'Gotowy do użycia',
-    description: 'Profesjonalny, ekologiczny detergent w formie pianki do codziennego mycia powierzchni i urządzeń sanitarnych, oparty na naturalnych składnikach',
+    surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -132,7 +153,7 @@ export const products: Product[] = [
   {
     name: 'Ekologiczny uniwersalny żel do WC Biopur E10',
     type: 'Żel',
-    description: 'Profesjonalny środek w formie żelu do codziennego czyszczenia toalet, pisuarów i armatury sanitarnej',
+    surfaces: ['toalety', 'pisuary'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -145,7 +166,7 @@ export const products: Product[] = [
   {
     name: 'Enzymatyczny koncentrat do mycia naczyń Biopur F731',
     type: 'Koncentrat',
-    description: 'Enzymatyczny płyn do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
+    surfaces: ['ceramika', 'aluminium','stal nierdzewna', 'tworzywo sztuczne', 'szkło'],
     ph: 8,
     phLabel: '8',
     application: ['Mycie naczyń'],
@@ -158,7 +179,7 @@ export const products: Product[] = [
   {
     name: 'Enzymatyczny żel do mycia naczyń Biopur F732',
     type: 'Żel',
-    description: 'Enzymatyczny żel do mycia naczyń oraz przedmiotów w zmywarkach gastronomicznych',
+    surfaces: ['ceramika', 'aluminium','stal nierdzewna', 'tworzywo sztuczne', 'szkło'],
     ph: 8,
     phLabel: '8',
     application: ['Mycie naczyń'],
@@ -171,7 +192,7 @@ export const products: Product[] = [
   {
     name: 'Kwasowy koncentrat czyszczący Biopur F831',
     type: 'Koncentrat',
-    description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
+    surfaces: ['beton'],
     ph: 2,
     phLabel: '2',
     application: ['Teren zewnętrzny'],
@@ -184,7 +205,7 @@ export const products: Product[] = [
   {
     name: 'Kwasowy koncentrat czyszczący Biopur F832',
     type: 'Koncentrat',
-    description: 'Profesjonalny, kwasowy koncentrat do czyszczenia, odtłuszczania i usuwania zabrudzeń naturalnych i syntetycznych, w tym rdzy i wykwitów wapiennych',
+    surfaces: ['beton', 'elewacje i dachy'],
     ph: 2,
     phLabel: '2',
     application: ['Teren zewnętrzny'],
@@ -197,7 +218,7 @@ export const products: Product[] = [
   {
     name: 'Kwasowy koncentrat do czyszczenia sanitariatów Biopur F521',
     type: 'Koncentrat',
-    description: 'Profesjonalny środek do codziennego mycia pomieszczeń sanitarnych, urządzeń sanitarnych oraz armatury łazienkowej, kabin prysznicowych i wanien kąpielowych',
+    surfaces: ['tworzywo sztuczne', 'płytki ceramiczne', 'kabiny prysznicowe', 'stal nierdzewna'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -210,7 +231,7 @@ export const products: Product[] = [
   {
     name: 'Kwasowy uniwersalny żel do WC Biopur F531',
     type: 'Żel',
-    description: 'Profesjonalny środek w formie żelu do codziennego czyszczenia WC oraz konserwacji muszli klozetowych i pisuarów',
+    surfaces: ['toalety', 'pisuary'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -223,7 +244,7 @@ export const products: Product[] = [
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F121, do -25°C',
     type: 'Gotowy do użycia',
-    description: 'Gotowy płyn do czyszczenia i mycia powierzchni chłodni, mroźni, zamrażarek i lodówek w niskich temperaturach do -25°C bez konieczności wcześniejszego ich rozmrażania',
+    surfaces: ['chłodnie', 'mroźnie', 'zamrażarki', 'lodówki'],
     ph: 10,
     phLabel: '10',
     application: ['Kuchnia'],
@@ -236,7 +257,7 @@ export const products: Product[] = [
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F122, do -5°C',
     type: 'Gotowy do użycia',
-    description: 'Gotowy do użycia płyn do czyszczenia i mycia powierzchni lodówek, zamrażarek oraz różnego typu pojemników szklanych, plastikowych w niskich temperaturach do -5°C',
+    surfaces: ['lodówki', 'szkło', 'tworzywo sztuczne'],
     ph: 7,
     phLabel: '7',
     application: ['Kuchnia'],
@@ -249,7 +270,7 @@ export const products: Product[] = [
     {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Berry',
     type: 'Gotowy do użycia',
-    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
+    surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
     ph: 7,
     phLabel: '7',
     application: ['Neutralizacja zapachów'],
@@ -262,7 +283,7 @@ export const products: Product[] = [
     {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Orange',
     type: 'Gotowy do użycia',
-    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
+    surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
     ph: 7,
     phLabel: '7',
     application: ['Neutralizacja zapachów'],
@@ -275,7 +296,7 @@ export const products: Product[] = [
     {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Aquanilla',
       type: 'Gotowy do użycia',
-    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
+    surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
     ph: 7,
     phLabel: '7',
     application: ['Neutralizacja zapachów'],
@@ -288,7 +309,7 @@ export const products: Product[] = [
   {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Thanilla',
     type: 'Gotowy do użycia',
-    description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
+    surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
     ph: 7,
     phLabel: '7',
     application: ['Neutralizacja zapachów'],
@@ -301,7 +322,7 @@ export const products: Product[] = [
   {
     name: 'Pianka do czyszczenia sanitariatów Biopur F511',
     type: 'Gotowy do użycia',
-    description: 'Profesjonalny środek w formie pianki do codziennego mycia powierzchni, pomieszczeń i urządzeń sanitarnych',
+    surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'armatura chromowana', 'szkło', 'tworzywo sztuczne', 'wanny', 'urządzenia sanitarne'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -314,7 +335,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do dezynfekcji powierzchni Medisoft APC 100',
     type: 'Gotowy do użycia',
-    description: 'Alkoholowy płyn do dezynfekcji powierzchni o działaniu bakteriobójczym, grzybobójczym i wirusobójczym wobec wirusów osłonkowych',
+    surfaces: ['dowolne powierzchnie'],
     ph: 7,
     phLabel: '7',
     application: ['Dezynfekcja'],
@@ -327,7 +348,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do dezynfekcji rąk i skóry Medisoft APH 100',
     type: 'Gotowy do użycia',
-    description: 'Alkoholowy płyn do higienicznej dezynfekcji rąk oraz nieuszkodzonej i chorobowo niezmienionej skóry o działaniu bakteriobójczym, grzybobójczym i wirusobójczym wobec wirusów osłonkowych',
+    surfaces: ['skóra'],
     ph: 7,
     phLabel: '7',
     application: ['Dezynfekcja'],
@@ -340,7 +361,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do mycia naczyń Biopur F701, cytryna',
     type: 'Gotowy do użycia',
-    description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła',
+    surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
     ph: 6,
     phLabel: '6',
     application: ['Mycie naczyń'],
@@ -353,7 +374,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do mycia naczyń Biopur F701, mięta',
     type: 'Gotowy do użycia',
-    description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła',
+    surfaces: ['stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
     ph: 6,
     phLabel: '6',
     application: ['Mycie naczyń'],
@@ -366,7 +387,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do mycia naczyń Biopur Premium F702, citro',
     type: 'Gotowy do użycia',
-    description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła, wzbogacony ekstraktem z aloesu',
+    surfaces: ['stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
     ph: 6,
     phLabel: '6',
     application: ['Mycie naczyń'],
@@ -379,7 +400,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do mycia naczyń Biopur Premium F702, mintigo',
     type: 'Gotowy do użycia',
-    description: 'Skuteczny i bezpieczny płyn do mycia naczyń oraz przedmiotów wykonanych ze stali szlachetnej, aluminium, tworzywa sztucznego i szkła, wzbogacony ekstraktem z aloesu',
+    surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
     ph: 6,
     phLabel: '6',
     application: ['Mycie naczyń'],
@@ -392,7 +413,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do nabłyszczania i czyszczenia powierzchni meblowych Biopur F811',
     type: 'Gotowy do użycia',
-    description: 'Płyn o efekcie antystatycznym do czyszczenia i nabłyszczania powierzchni w przestrzeniach biurowych',
+    surfaces: ['drewno', 'powierzchnie lakierowane', 'skórzane meble'],
     ph: 7,
     phLabel: '7',
     application: ['Powierzchnie ponadpodłogowe'],
@@ -405,7 +426,7 @@ export const products: Product[] = [
   {
     name: 'Płyn do płukania i nabłyszczania naczyń Biopur F711',
     type: 'Gotowy do użycia',
-    description: 'Profesjonalny płyn na bazie kwasu cytrynowego do płukania i nabłyszczania naczyń w zmywarkach gastronomicznych i przemysłowych',
+    surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
     ph: 4,
     phLabel: '4',
     application: ['Mycie naczyń'],
@@ -418,7 +439,7 @@ export const products: Product[] = [
   {
     name: 'Silnie kwasowy koncentrat do czyszczenia sanitariatów Biopur F522',
     type: 'Koncentrat',
-    description: 'Silnie kwasowy koncentrat do gruntownego i intensywnego czyszczenia powierzchni sanitarnych, mokrych i basenowych odpornych na działanie kwasów',
+    surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'mokre i basenowe powierzchnie', 'wanny'],
     ph: 2,
     phLabel: '2',
     application: ['Sanitariaty'],
@@ -431,7 +452,7 @@ export const products: Product[] = [
   {
     name: 'Silnie kwasowy koncentrat do mycia podłóg Biopur F331',
     type: 'Koncentrat',
-    description: 'Silnie kwasowy koncentrat do gruntownego i intensywnego czyszczenia mikroporowatych powierzchni odpornych na działanie kwasów',
+    surfaces: ['płytki ceramiczne', 'gres'],
     ph: 2,
     phLabel: '2',
     application: ['Mycie podłóg'],
@@ -444,7 +465,7 @@ export const products: Product[] = [
   {
     name: 'Silnie rozpuszczalnikowy koncentrat do mycia podłóg Biopur F351',
     type: 'Koncentrat',
-    description: 'Rozpuszczalnikowy, zasadowy koncentrat do czyszczenia i odtłuszczania silnie zabrudzonych powierzchni odpornych na działanie rozpuszczalników i alkaliów',
+    surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne'],
     ph: 12,
     phLabel: '12',
     application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
@@ -457,7 +478,7 @@ export const products: Product[] = [
   {
     name: 'Silnie zasadowy koncentrat do mycia naczyń Biopur F721',
     type: 'Koncentrat',
-    description: 'Silnie zasadowy, niskopieniący koncentrat do mycia naczyń odpornych na działanie alkaliów w zmywarkach przemysłowych i gastronomicznych',
+    surfaces: ['ceramika', 'stal', 'tworzywo sztuczne', 'szkło'],
     ph: 14,
     phLabel: '14',
     application: ['Mycie naczyń'],
@@ -470,7 +491,7 @@ export const products: Product[] = [
   {
     name: 'Silnie zasadowy koncentrat do mycia podłóg Biopur F341',
     type: 'Koncentrat',
-    description: 'Silnie zasadowy koncentrat o szerokim zakresie zastosowań do czyszczenia, odtłuszczania i usuwania zanieczyszczeń',
+    surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
     ph: 14,
     phLabel: '14',
     application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
@@ -483,7 +504,7 @@ export const products: Product[] = [
   {
     name: 'Silnie zasadowy środek czyszczący i odtłuszczający Biopur F611',
     type: 'Gotowy do użycia',
-    description: 'Zasadowy płyn do czyszczenia i usuwania tłustych oraz spieczonych zabrudzeń z powierzchni i przedmiotów odpornych na działanie alkaliów',
+    surfaces: ['grill', 'piekarnik', 'płyty grzewcze', 'kominki'],
     ph: 14,
     phLabel: '14',
     application: ['Kuchnia'],

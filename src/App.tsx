@@ -280,6 +280,7 @@ return (
                     <th className="px-4 py-3 font-medium">Zdjęcie</th>
                     <th className="px-4 py-3 font-medium">Produkt</th>
                     <th className="px-4 py-3 font-medium">Zastosowanie</th>
+                    <th className="px-4 py-3 font-medium">Powierzchnie</th>
                     <th className="px-4 py-3 font-medium">pH</th>
                     <th className="px-4 py-3 font-medium">Dozowanie</th>
                     <th className="px-4 py-3 font-medium">Rodzaj</th>
@@ -301,6 +302,10 @@ return (
                         </td>
                         <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
                         <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
+                        <td className="px-4 py-3 text-slate-600">
+                        {p.surfaces.join(', ')}
+                        </td>
+
                         <td className="px-4 py-3">
                           <span
                             className={`inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
@@ -370,6 +375,12 @@ return (
                         <dt className="text-slate-500">Zastosowanie</dt>
                         <dd className="text-right text-slate-700">{p.application.join(', ')}</dd>
                       </div>
+                      <div className="flex justify-between gap-3">
+  <dt className="text-slate-500">Powierzchnie</dt>
+  <dd className="text-right text-slate-700">
+    {p.surfaces.join(', ')}
+  </dd>
+</div>
                       <div className="flex justify-between gap-3">
                         <dt className="text-slate-500">Dozowanie</dt>
                         <dd className="text-right text-slate-700">{p.dosage}</dd>
