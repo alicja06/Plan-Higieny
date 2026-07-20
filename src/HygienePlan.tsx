@@ -276,46 +276,88 @@ rowPageBreak: 'avoid',
             </div>
 
             {/* Mobile cards */}
-            <div className="divide-y divide-slate-100 sm:hidden">
-              {selected.map((p) => (
-                <div key={p.name} className="p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-medium text-primary">{p.name}</h3>
-                    <span
-                      className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
-                    >
-                      pH {p.phLabel}
-                    </span>
-                  </div>
-                  <dl className="mt-3 space-y-2 text-sm">
-                    <div className="flex justify-between gap-3">
-                      <dt className="text-slate-500">Zastosowanie</dt>
-                      <dd className="text-right text-slate-700">{p.application.join(', ')}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        Powierzchnie
-                      </dt>
-                      <dd className="mt-0.5 text-slate-600">{p.surfaces.join(", ")}</dd>
-                    </div>
-                    <div className="flex justify-between gap-3">
-                      <dt className="text-slate-500">Dozowanie</dt>
-                      <dd className="text-right text-slate-700">{p.dosage}</dd>
-                    </div>
-                    <div>
-                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        Instrukcja użycia
-                      </dt>
-                      <dd className="mt-0.5 text-slate-600">{p.usage}</dd>
-                    </div>
-                    <div className="flex justify-between gap-3">
-                      <dt className="text-slate-500">Częstotliwość</dt>
-                      <dd className="text-right text-slate-700">{p.frequency.join(', ')}</dd>
-                    </div>
-                  </dl>
-                </div>
-              ))}
-            </div>
+<div className="divide-y divide-slate-100 sm:hidden">
+  {selected.map((p) => (
+    <div key={p.name} className="p-4">
+
+      {/* Zdjęcie */}
+      <img
+        src={p.image}
+        alt={p.name}
+        className="mb-4 h-40 w-full rounded-lg object-contain"
+      />
+
+      {/* Nazwa + pH */}
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="font-medium text-primary">
+          {p.name}
+        </h3>
+
+        <span
+          className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
+        >
+          pH {p.phLabel}
+        </span>
+      </div>
+
+
+      {/* Dane */}
+      <div className="mt-4 space-y-3 text-sm">
+
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            Zastosowanie
+          </div>
+          <div className="mt-1 text-slate-700">
+            {p.application.join(', ')}
+          </div>
+        </div>
+
+
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            Powierzchnie
+          </div>
+          <div className="mt-1 text-slate-700">
+            {p.surfaces.join(', ')}
+          </div>
+        </div>
+
+
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            Dozowanie
+          </div>
+          <div className="mt-1 text-slate-700">
+            {p.dosage}
+          </div>
+        </div>
+
+
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            Instrukcja użycia
+          </div>
+          <div className="mt-1 leading-relaxed text-slate-700">
+            {p.usage}
+          </div>
+        </div>
+
+
+        <div>
+          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
+            Częstotliwość
+          </div>
+          <div className="mt-1 text-slate-700">
+            {p.frequency.join(', ')}
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  ))}
+</div>
           </section>
         )}
       </main>
