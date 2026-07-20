@@ -77,6 +77,7 @@ pdf.text('Plan higieny', 15, 35);
 
   autoTable(pdf, {
     startY: 50,
+    tableWidth: 'wrap',
 
     head: [[
       'Zdjęcie',
@@ -118,27 +119,13 @@ headStyles: {
 },
 
   columnStyles: {
-  0: {
-    cellWidth: 18,
-  },
-  1: {
-    cellWidth: 30,
-  },
-  2: {
-    cellWidth: 12,
-  },
-  3: {
-    cellWidth: 30,
-  },
-  4: {
-    cellWidth: 32,
-  },
-  5: {
-    cellWidth: 38,
-  },
-  6: {
-    cellWidth: 35,
-  },
+  0: { cellWidth: 16 },
+  1: { cellWidth: 27 },
+  2: { cellWidth: 11 },
+  3: { cellWidth: 27 },
+  4: { cellWidth: 28 },
+  5: { cellWidth: 32 },
+  6: { cellWidth: 32 },
 },
 
     pageBreak: 'auto',
