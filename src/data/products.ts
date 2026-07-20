@@ -252,7 +252,7 @@ export const products: Product[] = [
     description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: ['Kuchnia', 'Sanitariaty'],
+    application: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -265,7 +265,7 @@ export const products: Product[] = [
     description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: ['Kuchnia', 'Sanitariaty'],
+    application: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -278,7 +278,7 @@ export const products: Product[] = [
     description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: ['Kuchnia', 'Sanitariaty'],
+    application: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -291,7 +291,7 @@ export const products: Product[] = [
     description: 'Zapachowy odświeżacz powietrza w płynie do szybkiego i długotrwałego neutralizowania nieprzyjemnych zapachów oraz poprawy jakości powietrza w pomieszczeniach',
     ph: 7,
     phLabel: '7',
-    application: ['Kuchnia', 'Sanitariaty'],
+    application: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
