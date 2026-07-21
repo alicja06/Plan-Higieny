@@ -19,7 +19,7 @@ export const products: Product[] = [
     ph: 7,
     phLabel: '7',
     application: ['Mycie szyb'],
-    frequency: ['Codziennie', 'Okresowo'],
+    frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność. ',
     dosage: 'Bez rozcieńczania',
