@@ -722,4 +722,30 @@ export const products: Product[] = [
     dosage: 'Bez rozcieńczania',
     image: '/images/zasadowy-srodek-czyszczacy-i-odtluszczajacy-Biopur-F612-1-l-PL.jpg',
   },
+  {
+    name: 'Zmywacz graffiti i klejów w formie płynu Biopur F801',
+    type: 'Gotowy do użycia',
+    surfaces: ['szkło', 'tworzywo sztuczne', 'metal', 'kamień'],
+    ph: 6,
+    phLabel: '6',
+    application: ['Teren zewnętrzny', 'Powierzchnie ponadpodłogowe'],
+    frequency: ['W razie potrzeby'],
+    usage:
+      'Spryskaj zabrudzoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 5–10 minut. Delikatnie zetrzyj rozpuszczone zabrudzenie gąbką lub szmatką. Spłucz powierzchnię wodą i wytrzyj do sucha.',
+    dosage: 'Bez rozcieńczania',
+    image: '/images/zmywacz-graffiti-i-klejow-plyn-biopur-F801-1-l-PL.jpg',
+  },
+  {
+    name: 'Zmywacz graffiti i klejów w formie żelu Biopur F802',
+    type: 'Gotowy do użycia',
+    surfaces: ['szkło', 'tworzywo sztuczne', 'metal', 'kamień'],
+    ph: 6,
+    phLabel: '6',
+    application: ['Teren zewnętrzny', 'Powierzchnie ponadpodłogowe'],
+    frequency: ['W razie potrzeby'],
+    usage:
+      'Nanieś niewielką ilość żelu bezpośrednio na zabrudzenie. Delikatnie rozprowadź preparat przy pomocy miękkiej gąbki, pędzla lub szmatki. Pozostaw środek na 5–10 minut. Zetrzyj rozpuszczone zabrudzenie miękką gąbką lub ściereczką. Spłucz powierzchnię wodą i wytrzyj ją do sucha.',
+    dosage: 'Bez rozcieńczania',
+    image: '/images/zmywacz-graffiti-i-klejow-zel-biopur-F802-1-l-PL.jpg',
+  },
 ];
