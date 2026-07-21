@@ -139,7 +139,7 @@ export const products: Product[] = [
     application: ['Kuchnia'],
     frequency: ['Codziennie'],
     usage:
-      'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 2–5 minut, aby umożliwić rozpuszczenie tłustych i przypalonych zabrudzeń. Wyczyść powierzchnię. Dokładnie spłucz wodą i wytrzyj powierzchnię do sucha.',
+      'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 2–5 minut. Wyczyść powierzchnię. Dokładnie spłucz wodą i wytrzyj do sucha.',
     dosage: 'Bez rozcieńczania',
     image: '/images/burny-cleaner-biopur-E11-1-l-PL.jpg',
   },
