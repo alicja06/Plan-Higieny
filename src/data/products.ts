@@ -21,7 +21,7 @@ export const products: Product[] = [
     application: ['Mycie szyb'],
     frequency: ['Codziennie'],
     usage:
-      'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność. ',
+      'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
     dosage: 'Bez rozcieńczania',
     image: '/images/spray-do-szyb-biopur-E1-1-l-PL.jpg',
   },
@@ -60,7 +60,7 @@ export const products: Product[] = [
     application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
-      'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię',
+      'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię.',
     dosage: '25–100 ml / 10 l roztworu',
     image: '/images/koncentrat-uniwersalny-biopur-E4-1-l-PL.jpg',
   },
@@ -87,7 +87,7 @@ export const products: Product[] = [
   "płytki ceramiczne",
   "posadzki kamienne",
   "gres"
-],
+  ],
     ph: 7,
     phLabel: '7',
     application: ['Mycie podłóg'],
@@ -204,7 +204,7 @@ export const products: Product[] = [
     application: ['Kuchnia'],
     frequency: ['Okresowo'],
     usage:
-      'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha. ',
+      'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha.',
     dosage: 'Bez rozcieńczania',
     image: '/images/spray-do-lodowki-i-zamrazarki-biopur-F122-1-l-PL.jpg',
   },
@@ -352,7 +352,7 @@ export const products: Product[] = [
     ph: 2,
     phLabel: '2',
     application: ['Mycie podłóg'],
-    frequency: ['Okresowo', 'W razie potrzeby'],
+    frequency: ['W razie potrzeby'],
     usage:
       'Mycie bieżące: 1% (100 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Wyczyść powierzchnię uzyskanym roztworem, a następnie spłucz dokładnie wodą.',
     dosage: '100–5000 ml / 10 l roztworu',
@@ -364,7 +364,7 @@ export const products: Product[] = [
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
     ph: 14,
     phLabel: '14',
-    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
+    application: ['Mycie podłóg'],
     frequency: ['W razie potrzeby'],
     usage:
       'Mycie bieżące: 0,5% (50 ml / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i rozprowadź równomiernie. Po umyciu powierzchni spłucz dokładnie wodą.',
@@ -377,7 +377,7 @@ export const products: Product[] = [
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne'],
     ph: 12,
     phLabel: '12',
-    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
+    application: ['Mycie podłóg'],
     frequency: ['W razie potrzeby'],
     usage:
       'Przygotuj roztwór: 10–50% do mycia ręcznego, 1–5% do automatów i myjek ciśnieniowych. Umyj powierzchnię ręcznie lub maszynowo. Spłucz dokładnie wodą.',
@@ -517,7 +517,7 @@ export const products: Product[] = [
   {
     name: 'Silnie zasadowy środek czyszczący i odtłuszczający Biopur F611',
     type: 'Gotowy do użycia',
-    surfaces: ['grill', 'piekarnik', 'płyty grzewcze', 'kominki'],
+    surfaces: ['grill', 'piekarnik', 'płyta grzewcza', 'kominek'],
     ph: 14,
     phLabel: '14',
     application: ['Kuchnia'],
@@ -536,7 +536,7 @@ export const products: Product[] = [
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
-      'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw środek na 2–5 minut. Wyczyść powierzchnię. Przetrzyj wilgotną ściereczką lub spłucz wodą, a następnie wytrzyj do sucha',
+      'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw środek na 2–5 minut. Wyczyść powierzchnię. Przetrzyj wilgotną ściereczką lub spłucz wodą, a następnie wytrzyj do sucha.',
     dosage: 'Bez rozcieńczania',
     image: '/images/zasadowy-srodek-czyszczacy-i-odtluszczajacy-Biopur-F612-1-l-PL.jpg',
   },
@@ -562,7 +562,7 @@ export const products: Product[] = [
     application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
+      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
     image: '/images/plyn-do-naczyn-cytrynowy-biopur-F701-1-l-PL.jpg',
   },
@@ -575,7 +575,7 @@ export const products: Product[] = [
     application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
+      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
     image: '/images/plyn-do-naczyn-mietowy-biopur-F701-1-l-PL.jpg',
   },
@@ -588,7 +588,7 @@ export const products: Product[] = [
     application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
+      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
     image: '/images/plyn-do-naczyn-premium-citro-biopur-F702-1-l-PL.jpg',
   },
@@ -601,7 +601,7 @@ export const products: Product[] = [
     application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
-      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 litrów wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
+      'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
     dosage: '5 ml / 5 l wody',
     image: '/images/plyn-do-mycia-naczyn-premium-mintigo-biopur-F702-1-l-PL.jpg',
   },
@@ -614,7 +614,7 @@ export const products: Product[] = [
     application: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
-      'Przed użyciem dobrze wstrząśnij butelkę. Wlej płyn do dozownika na nabłyszczacz w zmywarce (10–15 ml na cykl zmywania). Dawkę można dostosować w zależności od twardości wody, stopnia zabrudzenia naczyń i wybranego programu zmywania. Zamknij dozownik i wybierz odpowiedni cykl zmywania',
+      'Przed użyciem dobrze wstrząśnij butelkę. Wlej płyn do dozownika na nabłyszczacz w zmywarce (10–15 ml na cykl zmywania). Dawkę można dostosować w zależności od twardości wody, stopnia zabrudzenia naczyń i wybranego programu zmywania. Zamknij dozownik i wybierz odpowiedni cykl zmywania.',
     dosage: '10–15 ml',
     image: '/images/nablyszczacz-biopur-F711-1-l-PL.jpg',
   },
@@ -692,13 +692,13 @@ export const products: Product[] = [
     application: ['Powierzchnie ponadpodłogowe'],
     frequency: ['Codziennie'],
     usage:
-      'Spryskaj suchą ściereczkę płynem. Przetrzyj zabrudzoną powierzchnię, równomiernie rozprowadzając preparat. Po wyczyszczeniu przetrzyj powierzchnię do sucha. ',
+      'Spryskaj suchą ściereczkę płynem. Przetrzyj zabrudzoną powierzchnię, równomiernie rozprowadzając preparat. Po wyczyszczeniu przetrzyj powierzchnię do sucha.',
     dosage: 'Bez rozcieńczania',
     image: '/images/plyn-do-nablyszczania-i-czyszczenia-mebli-adamilla-biopur-F811-1-l-PL.jpg',
   },
   {
     name: 'Żel do nabłyszczania i czyszczenia powierzchni meblowych Biopur F812',
-    type: 'Gotowy do użycia',
+    type: 'Żel',
     surfaces: ['drewno', 'powierzchnie lakierowane', 'skórzane meble', 'tworzywo sztuczne'],
     ph: 7,
     phLabel: '7',
@@ -757,7 +757,7 @@ export const products: Product[] = [
     application: ['Dezynfekcja'],
     frequency: ['W razie potrzeby'],
     usage:
-      'Nanieś produkt na dezynfekowaną powierzchnię w ilości odpowiedniej do całkowitego pokrycia. Zapewnij czas kontaktu (w temperaturze pokojowej): dla działania wirusobójczego na wirusy osłonkowe: minimum 1 minuta, dla działania bakteriobójczego: minimum 5 minut, dla działania grzybobójczego: minimum 15 minut.',
+      'Nanieś na dezynfekowaną powierzchnię w ilości odpowiedniej do całkowitego pokrycia. Zapewnij czas kontaktu (w temperaturze pokojowej): dla działania wirusobójczego na wirusy osłonkowe: minimum 1 minuta, dla działania bakteriobójczego: minimum 5 minut, dla działania grzybobójczego: minimum 15 minut.',
     dosage: 'Bez rozcieńczania',
     image: '/images/plyn-do-dezynfekcji-powierzchni-APC-100-biopur-1-l.jpg',
   },
