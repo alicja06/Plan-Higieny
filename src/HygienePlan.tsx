@@ -1,8 +1,9 @@
-import { ArrowLeft, Download, Droplets } from 'lucide-react';import type { Product } from './data/products';
+import { ArrowLeft, Download, Droplets } from 'lucide-react';
+import type { Product } from './data/products';
+import type { Accessory } from './data/accessories';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
-
 
 function phColor(ph: number): string {
   if (ph < 5) return 'bg-red-100 text-red-700 ring-red-200';
@@ -13,147 +14,100 @@ function phColor(ph: number): string {
 }
 
 type Props = {
-  selected: Product[];
+  selectedChemistry: Product[];
+  selectedAccessories: Accessory[];
   onBack: () => void;
 };
 
-function HygienePlan({ selected, onBack }: Props) {
+function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) {
   const today = new Date().toLocaleDateString('pl-PL', {
     day: 'numeric',
     month: 'long',
     year: 'numeric',
   });
+  const totalSelected = selectedChemistry.length + selectedAccessories.length;
 
-const loadImage = (src: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const img = new Image();
+  const loadImage = (src: string): Promise<HTMLImageElement> =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = src;
+    });
 
-    img.onload = () => resolve(img);
-    img.onerror = reject;
-    img.src = src;
-  });
+  const generatePDF = async () => {
+    const pdf = new jsPDF('p', 'mm', 'a4');
 
- const generatePDF = async () => {
-  const logo = await loadImage('/images/logo-kawido.png');
-  const pdf = new jsPDF('p', 'mm', 'a4');
+    pdf.addFileToVFS('Montserrat-Regular.ttf', MontserratRegular);
+    pdf.addFont('Montserrat-Regular.ttf', 'Montserrat', 'normal');
+    pdf.setFont('Montserrat', 'normal');
 
-  // Dodanie fontów Montserrat
-  pdf.addFileToVFS(
-    'Montserrat-Regular.ttf',
-    MontserratRegular
-  );
+    try {
+      const logo = await loadImage('/images/logo-kawido.png');
+      const logoWidth = 45;
+      const logoHeight = (logo.height * logoWidth) / logo.width;
+      pdf.addImage(logo, 'PNG', 150, 10, logoWidth, logoHeight);
+    } catch {
+      // Logo jest elementem dekoracyjnym; jego brak nie powinien blokować PDF-u.
+    }
 
-  pdf.addFont(
-    'Montserrat-Regular.ttf',
-    'Montserrat',
-    'normal'
-  );
+    pdf.setFontSize(18);
+    pdf.text('Plan higieny', 15, 35);
+    pdf.setFontSize(10);
+    pdf.text(`Wygenerowano: ${today}`, 15, 28);
 
+    let nextY = 48;
 
-  pdf.setFont('Montserrat', 'normal');
+    if (selectedChemistry.length > 0) {
+      pdf.setFontSize(13);
+      pdf.text('Chemia', 15, nextY);
+      autoTable(pdf, {
+        startY: nextY + 4,
+        head: [['Zdjęcie', 'Produkt', 'pH', 'Dozowanie', 'Zastosowanie', 'Powierzchnie', 'Instrukcja użycia']],
+        body: selectedChemistry.map((p) => ['', p.name, p.phLabel, p.dosage, p.application.join(', '), p.surfaces.join(', '), p.usage]),
+        styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 7, cellPadding: 2, overflow: 'linebreak', valign: 'top' },
+        headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 7, halign: 'center', valign: 'middle' },
+        columnStyles: { 0: { cellWidth: 14 }, 1: { cellWidth: 27 }, 2: { cellWidth: 10 }, 3: { cellWidth: 24 }, 4: { cellWidth: 27 }, 5: { cellWidth: 30 }, 6: { cellWidth: 33 } },
+        pageBreak: 'auto',
+        rowPageBreak: 'avoid',
+        didDrawCell: (data) => {
+          if (data.section === 'body' && data.column.index === 0) {
+            const product = selectedChemistry[data.row.index];
+            if (product?.image) {
+              try {
+                pdf.addImage(product.image, 'JPEG', data.cell.x + 1, data.cell.y + 1, 12, 12);
+              } catch {
+                // Pominięcie niedostępnego obrazu produktu.
+              }
+            }
+          }
+        },
+      });
+      nextY = (pdf as jsPDF & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? nextY + 20;
+      nextY += 12;
+    }
 
-const logoWidth = 45;
-const logoHeight =
-  (logo.height * logoWidth) / logo.width;
-
-pdf.addImage(
-  logo,
-  'PNG',
-  150,
-  10,
-  logoWidth,
-  logoHeight
-);
-
-pdf.setFontSize(18);
-pdf.text('Plan higieny', 15, 35);
-
-  pdf.setFontSize(10);
-  pdf.text(
-    `Wygenerowano: ${today}`,
-    15,
-    28
-  );
-
-  autoTable(pdf, {
-    startY: 50,
-    tableWidth: 'wrap',
-
-    head: [[
-      'Zdjęcie',
-      'Produkt',
-      'pH',
-      'Dozowanie',
-      'Zastosowanie',
-      'Powierzchnie',
-      'Instrukcja użycia',
-    ]],
-
-    body: selected.map((p) => [
-  '',
-  p.name,
-  p.phLabel,
-  p.dosage,
-  p.application.join(', '),
-  p.surfaces.join(', '),
-  p.usage,
-]),
-
-    styles: {
-      font: 'Montserrat',
-      fontStyle: 'normal',
-      fontSize: 8,
-      cellPadding: 3,
-      overflow: 'linebreak',
-      valign: 'top',
-    },
-
-headStyles: {
-  fillColor: [44, 90, 63],
-  textColor: 255,
-  font: 'Montserrat',
-  fontStyle: 'normal',
-  fontSize: 8,
-  halign: 'center',
-  valign: 'middle',
-},
-
-  columnStyles: {
-  0: { cellWidth: 16 },
-  1: { cellWidth: 27 },
-  2: { cellWidth: 11 },
-  3: { cellWidth: 27 },
-  4: { cellWidth: 28 },
-  5: { cellWidth: 32 },
-  6: { cellWidth: 32 },
-},
-
-    pageBreak: 'auto',
-rowPageBreak: 'avoid',
-
-    didDrawCell: (data) => {
-      if (
-        data.section === 'body' &&
-        data.column.index === 0
-      ) {
-        const product = selected[data.row.index];
-
-        if (product.image) {
-          pdf.addImage(
-            product.image,
-            'JPEG',
-            data.cell.x + 2,
-            data.cell.y + 2,
-            12,
-            12
-          );
-        }
+    if (selectedAccessories.length > 0) {
+      if (nextY > 255) {
+        pdf.addPage();
+        nextY = 20;
       }
-    },
-  });
+      pdf.setFontSize(13);
+      pdf.text('Akcesoria i artykuły higieniczne', 15, nextY);
+      autoTable(pdf, {
+        startY: nextY + 4,
+        head: [['Produkt', 'Kategoria', 'Zastosowanie']],
+        body: selectedAccessories.map((p) => [p.name, p.category, p.application.join(', ') || 'Nie przypisano']),
+        styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 8, cellPadding: 3, overflow: 'linebreak', valign: 'top' },
+        headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 8, halign: 'center', valign: 'middle' },
+        columnStyles: { 0: { cellWidth: 80 }, 1: { cellWidth: 45 }, 2: { cellWidth: 55 } },
+        pageBreak: 'auto',
+        rowPageBreak: 'avoid',
+      });
+    }
 
-  pdf.save('plan-higieny.pdf');
-};
+    pdf.save('plan-higieny.pdf');
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -161,199 +115,77 @@ rowPageBreak: 'avoid',
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white">
-                <Droplets className="h-5 w-5" />
-              </div>
+              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white"><Droplets className="h-5 w-5" /></div>
               <div>
-                <h1 className="text-lg font-semibold tracking-tight text-primary sm:text-xl">
-                  Plan higieny
-                </h1>
-                <p className="text-sm text-slate-500">
-                  Wygenerowano {today} · {selected.length}{' '}
-                  {selected.length === 1 ? 'produkt' : 'produktów'}
-                </p>
+                <h1 className="text-lg font-semibold tracking-tight text-primary sm:text-xl">Plan higieny</h1>
+                <p className="text-sm text-slate-500">Wygenerowano {today} · {totalSelected} {totalSelected === 1 ? 'produkt' : 'produktów'}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button
-                type="button"
-                onClick={generatePDF}
-                className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
-              >
-                <Download className="h-3.5 w-3.5" />
-                Pobierz PDF
-              </button>
-              <button
-                type="button"
-                onClick={onBack}
-                className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white transition hover:bg-primary-dark"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" />
-                Wróć
-              </button>
+              <button type="button" onClick={generatePDF} className="inline-flex items-center gap-1.5 rounded-md border border-slate-300 px-3 py-1.5 text-sm font-medium text-slate-700 transition hover:bg-slate-100"><Download className="h-3.5 w-3.5" /> Pobierz PDF</button>
+              <button type="button" onClick={onBack} className="inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white transition hover:bg-primary-dark"><ArrowLeft className="h-3.5 w-3.5" /> Wróć</button>
             </div>
           </div>
         </div>
       </header>
-
-      <main
-  id="hygiene-plan"
-  className="mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8"
->
-        {selected.length === 0 ? (
+      <main id="hygiene-plan" className="mx-auto max-w-6xl space-y-6 px-4 py-6 sm:px-6 sm:py-8">
+        {totalSelected === 0 ? (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
-            <p className="text-sm text-slate-500">
-              Brak produktów w planie. Wróć i dodaj produkty do planu higieny.
-            </p>
-            <button
-              type="button"
-              onClick={onBack}
-              className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white transition hover:bg-primary-dark"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" />
-              Wróć do konfiguratora
-            </button>
+            <p className="text-sm text-slate-500">Brak produktów w planie. Wróć i dodaj produkty do planu higieny.</p>
+            <button type="button" onClick={onBack} className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white"><ArrowLeft className="h-3.5 w-3.5" /> Wróć do konfiguratora</button>
           </div>
         ) : (
-          <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            {/* Desktop table */}
-            <div className="hidden overflow-x-auto sm:block">
-              <table className="w-full text-left text-sm">
-                <thead>
-                  <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-                    <th className="px-4 py-3 font-medium">Zdjęcie</th>
-                    <th className="px-4 py-3 font-medium">Produkt</th>
-                    <th className="px-4 py-3 font-medium">Zastosowanie</th>
-                    <th className="px-4 py-3 font-medium">Powierzchnie</th>
-                    <th className="px-4 py-3 font-medium">pH</th>
-                    <th className="px-4 py-3 font-medium">Dozowanie</th>
-                    <th className="px-4 py-3 font-medium">Instrukcja użycia</th>
-                    <th className="px-4 py-3 font-medium">Częstotliwość</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-100">
-  {selected.map((p) => (
-    <tr key={p.name} className="align-top transition hover:bg-slate-50">
-
-      <td className="px-4 py-3">
-        <img
-          src={p.image}
-          alt={p.name}
-          className="h-20 w-20 rounded-lg object-contain"
-        />
-      </td>
-
-      <td className="px-4 py-3 font-medium text-primary">{p.name}</td>
-                      <td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td>
-                       <td className="max-w-xs px-4 py-3 text-slate-600">{p.surfaces.join(", ")}</td>
-                      <td className="px-4 py-3">
-                        <span
-                          className={`inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
-                        >
-                          {p.phLabel}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-slate-600">{p.dosage}</td>
-                      <td className="max-w-xs px-4 py-3 text-slate-600">{p.usage}</td>
-                      <td className="px-4 py-3 text-slate-600">{p.frequency.join(', ')}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-
-            {/* Mobile cards */}
-<div className="divide-y divide-slate-100 sm:hidden">
-  {selected.map((p) => (
-    <div key={p.name} className="p-4">
-
-      {/* Zdjęcie */}
-      <img
-        src={p.image}
-        alt={p.name}
-        className="mb-4 h-40 w-full rounded-lg object-contain"
-      />
-
-      {/* Nazwa + pH */}
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-medium text-primary">
-          {p.name}
-        </h3>
-
-        <span
-          className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
-        >
-          pH {p.phLabel}
-        </span>
-      </div>
-
-
-      {/* Dane */}
-      <div className="mt-4 space-y-3 text-sm">
-
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Zastosowanie
-          </div>
-          <div className="mt-1 text-slate-700">
-            {p.application.join(', ')}
-          </div>
-        </div>
-
-
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Powierzchnie
-          </div>
-          <div className="mt-1 text-slate-700">
-            {p.surfaces.join(', ')}
-          </div>
-        </div>
-
-
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Dozowanie
-          </div>
-          <div className="mt-1 text-slate-700">
-            {p.dosage}
-          </div>
-        </div>
-
-
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Instrukcja użycia
-          </div>
-          <div className="mt-1 leading-relaxed text-slate-700">
-            {p.usage}
-          </div>
-        </div>
-
-
-        <div>
-          <div className="text-xs font-medium uppercase tracking-wide text-slate-500">
-            Częstotliwość
-          </div>
-          <div className="mt-1 text-slate-700">
-            {p.frequency.join(', ')}
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  ))}
-</div>
-          </section>
+          <>
+            {selectedChemistry.length > 0 && (
+              <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-200 bg-slate-50 px-4 py-3"><h2 className="font-semibold text-primary">Chemia</h2></div>
+                <div className="hidden overflow-x-auto sm:block">
+                  <table className="w-full text-left text-sm">
+                    <thead><tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><th className="px-4 py-3 font-medium">Zdjęcie</th><th className="px-4 py-3 font-medium">Produkt</th><th className="px-4 py-3 font-medium">Zastosowanie</th><th className="px-4 py-3 font-medium">Powierzchnie</th><th className="px-4 py-3 font-medium">pH</th><th className="px-4 py-3 font-medium">Dozowanie</th><th className="px-4 py-3 font-medium">Instrukcja użycia</th><th className="px-4 py-3 font-medium">Częstotliwość</th></tr></thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {selectedChemistry.map((p) => <tr key={p.name} className="align-top transition hover:bg-slate-50">
+                        <td className="px-4 py-3"><img src={p.image} alt={p.name} className="h-20 w-20 rounded-lg object-contain" /></td>
+                        <td className="px-4 py-3 font-medium text-primary">{p.name}</td><td className="px-4 py-3 text-slate-600">{p.application.join(', ')}</td><td className="max-w-xs px-4 py-3 text-slate-600">{p.surfaces.join(', ')}</td>
+                        <td className="px-4 py-3"><span className={`inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}>{p.phLabel}</span></td><td className="px-4 py-3 text-slate-600">{p.dosage}</td><td className="max-w-xs px-4 py-3 text-slate-600">{p.usage}</td><td className="px-4 py-3 text-slate-600">{p.frequency.join(', ')}</td>
+                      </tr>)}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="divide-y divide-slate-100 sm:hidden">
+                  {selectedChemistry.map((p) => <div key={p.name} className="p-4">
+                    <img src={p.image} alt={p.name} className="mb-4 h-40 w-full rounded-lg object-contain" />
+                    <div className="flex items-start justify-between gap-3"><h3 className="font-medium text-primary">{p.name}</h3><span className={`shrink-0 rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}>pH {p.phLabel}</span></div>
+                    <div className="mt-4 space-y-3 text-sm">
+                      <div><div className="text-xs font-medium uppercase tracking-wide text-slate-500">Zastosowanie</div><div className="mt-1 text-slate-700">{p.application.join(', ')}</div></div>
+                      <div><div className="text-xs font-medium uppercase tracking-wide text-slate-500">Powierzchnie</div><div className="mt-1 text-slate-700">{p.surfaces.join(', ')}</div></div>
+                      <div><div className="text-xs font-medium uppercase tracking-wide text-slate-500">Dozowanie</div><div className="mt-1 text-slate-700">{p.dosage}</div></div>
+                      <div><div className="text-xs font-medium uppercase tracking-wide text-slate-500">Instrukcja użycia</div><div className="mt-1 leading-relaxed text-slate-700">{p.usage}</div></div>
+                      <div><div className="text-xs font-medium uppercase tracking-wide text-slate-500">Częstotliwość</div><div className="mt-1 text-slate-700">{p.frequency.join(', ')}</div></div>
+                    </div>
+                  </div>)}
+                </div>
+              </section>
+            )}
+            {selectedAccessories.length > 0 && (
+              <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+                <div className="border-b border-slate-200 bg-slate-50 px-4 py-3"><h2 className="font-semibold text-primary">Akcesoria i artykuły higieniczne</h2></div>
+                <div className="hidden overflow-x-auto sm:block">
+                  <table className="w-full text-left text-sm">
+                    <thead><tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><th className="px-4 py-3 font-medium">Produkt</th><th className="px-4 py-3 font-medium">Kategoria</th><th className="px-4 py-3 font-medium">Zastosowanie</th></tr></thead>
+                    <tbody className="divide-y divide-slate-100">
+                      {selectedAccessories.map((p) => <tr key={p.id} className="align-top hover:bg-slate-50"><td className="px-4 py-3 font-medium text-primary">{p.name}</td><td className="px-4 py-3 text-slate-600">{p.category}</td><td className="px-4 py-3 text-slate-600">{p.application.length ? p.application.join(', ') : 'Nie przypisano'}</td></tr>)}
+                    </tbody>
+                  </table>
+                </div>
+                <div className="divide-y divide-slate-100 sm:hidden">
+                  {selectedAccessories.map((p) => <div key={p.id} className="p-4"><h3 className="font-medium text-primary">{p.name}</h3><p className="mt-1 text-xs text-slate-500">{p.category}</p><p className="mt-3 text-sm text-slate-700"><span className="text-slate-500">Zastosowanie: </span>{p.application.length ? p.application.join(', ') : 'Nie przypisano'}</p></div>)}
+                </div>
+              </section>
+            )}
+          </>
         )}
       </main>
-
-      <footer className="border-t border-slate-200 bg-white">
-        <div className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-slate-400 sm:px-6">
-          Konfigurator planu higieny Kawido
-        </div>
-      </footer>
+      <footer className="border-t border-slate-200 bg-white"><div className="mx-auto max-w-6xl px-4 py-4 text-center text-xs text-slate-400 sm:px-6">Konfigurator planu higieny Kawido</div></footer>
     </div>
   );
 }
