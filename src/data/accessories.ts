@@ -15,11 +15,34 @@ export type AccessoryApplication =
   | 'Sanitariaty'
   | 'Teren zewnętrzny';
 
+export type AccessoryPaperType =
+  | 'składane'
+  | 'w roli'
+  | 'systemowe'
+  | 'Jumbo';
+
+export type AccessoryPaperMaterial = 'celuloza' | 'makulatura';
+
+export type AccessoryBagColor =
+  | 'bezbarwny'
+  | 'biały'
+  | 'brązowy'
+  | 'czarny'
+  | 'czerwony'
+  | 'niebieski'
+  | 'zielony'
+  | 'żółty';
+
 export interface Accessory {
   id: string;
   name: string;
   category: string;
   application: AccessoryApplication[];
+  type?: AccessoryPaperType;
+  material?: AccessoryPaperMaterial;
+  rollDiameter?: number;
+  capacity?: number;
+  color?: AccessoryBagColor;
 }
 
 export const accessories: Accessory[] = [
@@ -29,78 +52,110 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-ręczn.Mak.Biel280m 1W(6)#305034',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'makulatura',
+    rollDiameter: 18,
   },
   {
     id: 'recznik-mak-biel-150m-1w-6-305035',
     name: 'CleanPRO-ręczn.Mak.Biel150m 1W(6)#305035',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'makulatura',
+    rollDiameter: 18,
   },
   {
     id: 'recznik-celuloza-280m-1w-6-305029',
     name: 'CleanPRO ręcznik celul 280m 1W(6)#305029',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'recznik-celuloza-150m-1w-6-305030',
     name: 'CleanPRO ręcznik celul 150m 1W(6)#305030',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'recznik-celuloza-lux-150m-1w-6-305033',
     name: 'CleanPRO ręcz.cel.LUX 150m 1W(6)#305033',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'recznik-zz-1520-celuloza-25x23-2w-305003',
     name: 'CleanPRO ZZ-1520 celul.25x23cm 2W#305003',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'celuloza',
   },
   {
     id: 'recznik-zz-4000-celuloza-25x23-2w-305037',
     name: 'CleanPRO ZZ-4000 celul.25x23cm 2W#305037',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'celuloza',
   },
   {
     id: 'recznik-zz-4000-mak-biel-25x23-1w-305039',
     name: 'CleanPRO ZZ-4000 Mbiel.25x23cm 1W#305039',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'makulatura',
   },
   {
     id: 'recznik-zz-4000-mak-biel-22x23-1w-305040',
     name: 'CleanPRO ZZ-4000 Mbiel.22x23cm 1W#305040',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'makulatura',
   },
   {
     id: 'recznik-zz-4000-celuloza-21x23-2w-305038',
     name: 'CleanPRO ZZ-4000 Cel. 21x23cm 2W#305038',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'celuloza',
   },
   {
     id: 'recznik-zz-4000-zielony-25x23-1w',
     name: 'CleanPro Ręcznik ZZ 4000 zielony25x23 1W',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'makulatura',
   },
   {
     id: 'recznik-zz-4000-szary-25x23-1w',
     name: 'CleanPro Ręcznik ZZ 4000 szary 25x23 1W',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'składane',
+    material: 'makulatura',
   },
   {
     id: 'recznik-autocut-celuloza-1w-6x260m',
     name: 'Ręcznik w roli CleanPRO Autocut, 1w, celuloza, biały, 6x260m',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
+    type: 'w roli',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
 
   // Papiery toaletowe (7 produktów)
@@ -109,42 +164,63 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Papier Jumbo celuloza190m1W(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'jumbo-mak-biel-190m-1w-12-305016',
     name: 'CleanPRO-Jumbo MakBiel190m 1W(12)#305016',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'makulatura',
+    rollDiameter: 18,
   },
   {
     id: 'jumbo-mak-biel-190m-1w-6-305017',
     name: 'CleanPRO-Jumbo mak.biel190m 1W(6)#305017',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'makulatura',
+    rollDiameter: 18,
   },
   {
     id: 'papier-jumbo-celuloza-150m-2w-12',
     name: 'CleanPRO-Papier Jumbo celuloza150m2W(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'papier-jumbo-celuloza-150m-2w-6',
     name: 'CleanPRO-Papier Jumbo celuloza150m 2W(6)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'papier-toaletowy-jumbo-cleanpro-2w-12x100m',
     name: 'Papier toaletowy w roli Jumbo CleanPRO, 2w, celuloza, biały, 12x100m',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'celuloza',
+    rollDiameter: 18,
   },
   {
     id: 'papier-toaletowy-jumbo-szary-150m-12',
     name: 'CleanPro Papier toal.Jumbo szary150m(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
+    type: 'Jumbo',
+    material: 'makulatura',
+    rollDiameter: 18,
   },
 
   // Wózki do sprzątania (14 produktów)
@@ -390,9 +466,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofazy-niebieska-32x32',
     name: 'CleanPRO Ścierka z mikrofazy nieb. 32x32',
     category: 'Ścierki',
-    application: [
-  'Mycie szyb',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Mycie szyb','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-mikrofazy-czerwona-32x32',
@@ -404,67 +478,55 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofazy-zolta-32x32',
     name: 'CleanPRO Ścierka z mikrofazy żółta 32x32',
     category: 'Ścierki',
-    application: [
-  'Kuchnia',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-mikrofazy-zielona-32x32',
     name: 'CleanPRO Ścierka z mikrofazy ziel. 32x32',
     category: 'Ścierki',
-    application: [
-  'Kuchnia',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-ultra-soft-blue-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 blue',
     category: 'Ścierki',
-    application: [
-  'Mycie szyb',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Mycie szyb','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-ultra-soft-red-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 red',
     category: 'Ścierki',
-    application: ['Sanitariaty',],
+    application: ['Sanitariaty'],
   },
   {
     id: 'scierka-ultra-soft-green-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 green',
     category: 'Ścierki',
-    application: [
-  'Kuchnia',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-ultra-soft-yellow-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 yellow',
     category: 'Ścierki',
-    application: [
-  'Kuchnia',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-ultra-soft-orange-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 orange',
     category: 'Ścierki',
-    application: [
-  'Kuchnia',
-  'Powierzchnie ponadpodłogowe',],
+    application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
   },
   {
     id: 'scierka-mikrofaza-niebieska-40x40-320',
     name: 'CleanPRO Ścierka mikr.nieb.40x40 320g/m2',
     category: 'Ścierki',
-    application: ['Mycie szyb',],
+    application: ['Mycie szyb'],
   },
   {
     id: 'scierka-mikrofaza-czerwona-40x40-320',
     name: 'CleanPRO Ścierka mikr.czer.40x40 320g/m2',
     category: 'Ścierki',
-    application: ['Sanitariaty',],
+    application: ['Sanitariaty'],
   },
   {
     id: 'scierka-do-szyb-niebieska-40x40',
@@ -506,7 +568,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofazy-niebieska-30x30',
     name: 'CleanPRO Ścierka z mikrofazy nieb. 30x30',
     category: 'Ścierki',
-    application: [],
+    application: ['Mycie szyb'],
   },
   {
     id: 'scierka-mikrofibra-zolta-30x30',
@@ -737,121 +799,161 @@ export const accessories: Accessory[] = [
     id: 'worki-ldpe-120l-bezbarwne-25',
     name: 'EN worki LDPE 120l (25) bezbarwne',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'bezbarwny',
   },
   {
     id: 'worki-ldpe-120l-biale-25',
     name: 'EN worki LDPE 120l (25) białe',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'biały',
   },
   {
     id: 'worki-ldpe-120l-brazowe-25',
     name: 'EN worki LDPE 120l (25) brązowe',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'brązowy',
   },
   {
     id: 'worki-ldpe-120l-czarne-25',
     name: 'EN worki LDPE 120l (25) czarne',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'czarny',
   },
   {
     id: 'worki-ldpe-120l-czerwone-25',
     name: 'EN worki LDPE 120l (25) czerwone',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'czerwony',
   },
   {
     id: 'worki-ldpe-120l-niebieskie-25',
     name: 'EN worki LDPE 120l (25) niebieskie',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'niebieski',
   },
   {
     id: 'worki-ldpe-120l-zielone-25',
     name: 'EN worki LDPE 120l (25) zielone',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'zielony',
   },
   {
     id: 'worki-ldpe-120l-zolte-25',
     name: 'EN worki LDPE 120l (25) żółte',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 120,
+    color: 'żółty',
   },
   {
     id: 'worki-cleanpro-160l-czarne-20',
     name: 'Worki na śmieci CleanPRO, 160l, czarne, LDPE, 20 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 160,
+    color: 'czarny',
   },
   {
     id: 'worki-cleanpro-160l-czerwone-20',
     name: 'Worki na śmieci CleanPRO, 160l, czerwone, LDPE, 20 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 160,
+    color: 'czerwony',
   },
   {
     id: 'worki-cleanpro-160l-niebieskie-20',
     name: 'Worki na śmieci CleanPRO, 160l, niebieskie, LDPE, 20 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 160,
+    color: 'niebieski',
   },
   {
     id: 'worki-cleanpro-160l-zielone-20',
     name: 'Worki na śmieci CleanPRO, 160l, zielone, LDPE, 20 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 160,
+    color: 'zielony',
   },
   {
     id: 'worki-cleanpro-160l-zolte-20',
     name: 'Worki na śmieci CleanPRO, 160l, żółte, LDPE, 20 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 160,
+    color: 'żółty',
   },
   {
     id: 'worki-cleanpro-35l-czarne-50',
     name: 'Worki na śmieci CleanPRO, 35l, czarne, LDPE, 50 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 35,
+    color: 'czarny',
   },
   {
     id: 'worki-cleanpro-35l-czerwone-50',
     name: 'Worki na śmieci CleanPRO, 35l, czerwone, LDPE, 50 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 35,
+    color: 'czerwony',
   },
   {
     id: 'worki-cleanpro-35l-niebieskie-50',
     name: 'Worki na śmieci CleanPRO, 35l, niebieskie, LDPE, 50 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 35,
+    color: 'niebieski',
   },
   {
     id: 'worki-ldpe-60l-czarne-50',
     name: 'EN worki LDPE 60l (50) czarne',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 60,
+    color: 'czarny',
   },
   {
     id: 'worki-ldpe-60l-czerwone-50',
     name: 'EN worki LDPE 60l (50) czerwone',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 60,
+    color: 'czerwony',
   },
   {
     id: 'worki-ldpe-60l-niebieskie-50',
     name: 'EN worki LDPE 60l (50) niebieskie',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 60,
+    color: 'niebieski',
   },
   {
     id: 'worki-cleanpro-90l-czarne-25',
     name: 'Worki na śmieci CleanPRO, 90l, czarne, LDPE, 25 sztuk',
     category: 'Worki',
-    application: [],
+    application: ['Kuchnia', 'Sanitariaty'],
+    capacity: 90,
+    color: 'czarny',
   },
 
   // Miotły i szczotki (4 produktów)

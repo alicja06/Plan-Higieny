@@ -1,4 +1,4 @@
-import { ArrowLeft, Download, Droplets } from 'lucide-react';
+import { ArrowLeft, Download } from 'lucide-react';
 import type { Product } from './data/products';
 import type { Accessory } from './data/accessories';
 import jsPDF from 'jspdf';
@@ -67,7 +67,15 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
         body: selectedChemistry.map((p) => ['', p.name, p.phLabel, p.dosage, p.application.join(', '), p.surfaces.join(', '), p.usage]),
         styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 7, cellPadding: 2, overflow: 'linebreak', valign: 'top' },
         headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 7, halign: 'center', valign: 'middle' },
-        columnStyles: { 0: { cellWidth: 14 }, 1: { cellWidth: 27 }, 2: { cellWidth: 10 }, 3: { cellWidth: 24 }, 4: { cellWidth: 27 }, 5: { cellWidth: 30 }, 6: { cellWidth: 33 } },
+        columnStyles: {
+  0: { cellWidth: 14 },
+  1: { cellWidth: 32 },
+  2: { cellWidth: 10 },
+  3: { cellWidth: 28 },
+  4: { cellWidth: 30 },
+  5: { cellWidth: 32 },
+  6: { cellWidth: 34 },
+},
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
         didDrawCell: (data) => {
@@ -96,10 +104,11 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
       pdf.text('Akcesoria i artykuły higieniczne', 15, nextY);
       autoTable(pdf, {
         startY: nextY + 4,
+        tableWidth: 'wrap',
         head: [['Produkt', 'Kategoria', 'Zastosowanie']],
         body: selectedAccessories.map((p) => [p.name, p.category, p.application.join(', ') || 'Nie przypisano']),
-        styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 8, cellPadding: 3, overflow: 'linebreak', valign: 'top' },
-        headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 8, halign: 'center', valign: 'middle' },
+        styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 7, cellPadding: 2, overflow: 'linebreak', valign: 'top' },
+        headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 7, halign: 'center', valign: 'middle' },
         columnStyles: { 0: { cellWidth: 80 }, 1: { cellWidth: 45 }, 2: { cellWidth: 55 } },
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
@@ -115,10 +124,22 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
         <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-white"><Droplets className="h-5 w-5" /></div>
+              <div className="flex h-10 w-10 items-center justify-center">
+  <img
+    src="/images/logo-kawido1.png"
+    alt="Kawido"
+    className="h-full w-full object-contain"
+  />
+</div>
               <div>
                 <h1 className="text-lg font-semibold tracking-tight text-primary sm:text-xl">Plan higieny</h1>
-                <p className="text-sm text-slate-500">Wygenerowano {today} · {totalSelected} {totalSelected === 1 ? 'produkt' : 'produktów'}</p>
+                <p className="text-sm text-slate-500">Wygenerowano {today} · {totalSelected} {totalSelected === 1
+  ? 'produkt'
+  : totalSelected % 100 >= 12 && totalSelected % 100 <= 14
+    ? 'produktów'
+    : totalSelected % 10 >= 2 && totalSelected % 10 <= 4
+      ? 'produkty'
+      : 'produktów'}</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
