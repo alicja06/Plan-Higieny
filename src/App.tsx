@@ -1075,6 +1075,7 @@ function App() {
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                        <th className="px-4 py-3 font-medium">Zdjęcie</th>
                         <th className="px-4 py-3 font-medium">Produkt</th>
                         <th className="px-4 py-3 font-medium">Kategoria</th>
                         <th className="px-4 py-3 font-medium">Zastosowanie</th>
@@ -1087,14 +1088,25 @@ function App() {
                         const key = `acc:${p.id}`;
                         const isSelected = selected.has(key);
 
+                        
                         return (
                           <tr
                             key={p.id}
                             className="transition hover:bg-slate-50"
-                          >
-                            <td className="px-4 py-3 font-medium text-primary">
-                              {p.name}
-                            </td>
+  >
+                          <td className="px-4 py-3">
+                            {p.image && (
+                            <img
+                            src={p.image}
+                            alt={p.name}
+                            className="h-16 w-16 rounded object-contain"
+                            />
+                            )}
+                          </td>
+                          <td className="px-4 py-3 font-medium text-primary">
+                            {p.name}
+                          </td>
+
                             <td className="px-4 py-3 text-slate-600">
                               {p.category}
                             </td>
@@ -1137,11 +1149,21 @@ function App() {
                     const isSelected = selected.has(key);
 
                     return (
-                      <div
-                        key={p.id}
-                        className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-                      >
-                        <h3 className="font-medium text-primary">{p.name}</h3>
+                      
+                    <div
+                      key={p.id}
+                      className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                    >
+                    {p.image && (
+                      <img
+                      src={p.image}
+                      alt={p.name}
+                      className="mb-3 h-32 w-full rounded-lg object-contain"
+                    />
+                    )}
+
+  <h3 className="font-medium text-primary">{p.name}</h3>
+
                         <p className="mt-1 text-xs text-slate-500">
                           {p.category}
                         </p>

@@ -35,6 +35,21 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
       img.src = src;
     });
 
+  const loadOptionalImage = async (
+  src?: string
+): Promise<HTMLImageElement | null> => {
+  if (!src) return null;
+
+  try {
+    return await loadImage(src);
+  } catch {
+    return null;
+  }
+};
+
+const getImageFormat = (src?: string): 'PNG' | 'JPEG' =>
+  src?.toLowerCase().split('?')[0].endsWith('.png') ? 'PNG' : 'JPEG';
+
   const generatePDF = async () => {
     const pdf = new jsPDF('p', 'mm', 'a4');
 
@@ -58,6 +73,14 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
 
     let nextY = 48;
 
+  const chemistryImages = await Promise.all(
+  selectedChemistry.map((p) => loadOptionalImage(p.image))
+);
+
+const accessoryImages = await Promise.all(
+  selectedAccessories.map((p) => loadOptionalImage(p.image))
+);
+
     if (selectedChemistry.length > 0) {
       pdf.setFontSize(13);
       pdf.text('Chemia', 15, nextY);
@@ -78,18 +101,23 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
 },
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
-        didDrawCell: (data) => {
-          if (data.section === 'body' && data.column.index === 0) {
-            const product = selectedChemistry[data.row.index];
-            if (product?.image) {
-              try {
-                pdf.addImage(product.image, 'JPEG', data.cell.x + 1, data.cell.y + 1, 12, 12);
-              } catch {
-                // Pominięcie niedostępnego obrazu produktu.
-              }
-            }
-          }
-        },
+didDrawCell: (data) => {
+  if (data.section === 'body' && data.column.index === 0) {
+    const product = selectedChemistry[data.row.index];
+    const image = chemistryImages[data.row.index];
+
+    if (product?.image && image) {
+      pdf.addImage(
+        image,
+        getImageFormat(product.image),
+        data.cell.x + 1,
+        data.cell.y + 1,
+        12,
+        12
+      );
+    }
+  }
+},
       });
       nextY = (pdf as jsPDF & { lastAutoTable?: { finalY: number } }).lastAutoTable?.finalY ?? nextY + 20;
       nextY += 12;
@@ -102,17 +130,59 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
       }
       pdf.setFontSize(13);
       pdf.text('Akcesoria i artykuły higieniczne', 15, nextY);
-      autoTable(pdf, {
-        startY: nextY + 4,
-        tableWidth: 'wrap',
-        head: [['Produkt', 'Kategoria', 'Zastosowanie']],
-        body: selectedAccessories.map((p) => [p.name, p.category, p.application.join(', ') || 'Nie przypisano']),
-        styles: { font: 'Montserrat', fontStyle: 'normal', fontSize: 7, cellPadding: 2, overflow: 'linebreak', valign: 'top' },
-        headStyles: { fillColor: [44, 90, 63], textColor: 255, font: 'Montserrat', fontStyle: 'normal', fontSize: 7, halign: 'center', valign: 'middle' },
-        columnStyles: { 0: { cellWidth: 80 }, 1: { cellWidth: 45 }, 2: { cellWidth: 55 } },
-        pageBreak: 'auto',
-        rowPageBreak: 'avoid',
-      });
+autoTable(pdf, {
+  startY: nextY + 4,
+  tableWidth: 'wrap',
+  head: [['Zdjęcie', 'Produkt', 'Kategoria', 'Zastosowanie']],
+  body: selectedAccessories.map((p) => [
+    '',
+    p.name,
+    p.category,
+    p.application.join(', ') || 'Nie przypisano',
+  ]),
+  styles: {
+    font: 'Montserrat',
+    fontStyle: 'normal',
+    fontSize: 7,
+    cellPadding: 2,
+    overflow: 'linebreak',
+    valign: 'middle',
+  },
+  headStyles: {
+    fillColor: [44, 90, 63],
+    textColor: 255,
+    font: 'Montserrat',
+    fontStyle: 'normal',
+    fontSize: 7,
+    halign: 'center',
+    valign: 'middle',
+  },
+  columnStyles: {
+    0: { cellWidth: 18, minCellHeight: 18 },
+    1: { cellWidth: 60 },
+    2: { cellWidth: 40 },
+    3: { cellWidth: 60 },
+  },
+  pageBreak: 'auto',
+  rowPageBreak: 'avoid',
+  didDrawCell: (data) => {
+    if (data.section === 'body' && data.column.index === 0) {
+      const product = selectedAccessories[data.row.index];
+      const image = accessoryImages[data.row.index];
+
+      if (product?.image && image) {
+        pdf.addImage(
+          image,
+          getImageFormat(product.image),
+          data.cell.x + 1,
+          data.cell.y + 1,
+          16,
+          16
+        );
+      }
+    }
+  },
+});
     }
 
     pdf.save('plan-higieny.pdf');
@@ -192,15 +262,64 @@ function HygienePlan({ selectedChemistry, selectedAccessories, onBack }: Props) 
                 <div className="border-b border-slate-200 bg-slate-50 px-4 py-3"><h2 className="font-semibold text-primary">Akcesoria i artykuły higieniczne</h2></div>
                 <div className="hidden overflow-x-auto sm:block">
                   <table className="w-full text-left text-sm">
-                    <thead><tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500"><th className="px-4 py-3 font-medium">Produkt</th><th className="px-4 py-3 font-medium">Kategoria</th><th className="px-4 py-3 font-medium">Zastosowanie</th></tr></thead>
-                    <tbody className="divide-y divide-slate-100">
-                      {selectedAccessories.map((p) => <tr key={p.id} className="align-top hover:bg-slate-50"><td className="px-4 py-3 font-medium text-primary">{p.name}</td><td className="px-4 py-3 text-slate-600">{p.category}</td><td className="px-4 py-3 text-slate-600">{p.application.length ? p.application.join(', ') : 'Nie przypisano'}</td></tr>)}
-                    </tbody>
+                    <thead>
+                      <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+                        <th className="px-4 py-3 font-medium">Zdjęcie</th>
+                        <th className="px-4 py-3 font-medium">Produkt</th>
+                        <th className="px-4 py-3 font-medium">Kategoria</th>
+                        <th className="px-4 py-3 font-medium">Zastosowanie</th>
+                      </tr>
+                    </thead>
+<tbody className="divide-y divide-slate-100">
+  {selectedAccessories.map((p) => (
+    <tr key={p.id} className="align-top hover:bg-slate-50">
+      <td className="px-4 py-3">
+        {p.image && (
+          <img
+            src={p.image}
+            alt={p.name}
+            className="h-16 w-16 rounded object-contain"
+          />
+        )}
+      </td>
+      <td className="px-4 py-3 font-medium text-primary">
+        {p.name}
+      </td>
+      <td className="px-4 py-3 text-slate-600">
+        {p.category}
+      </td>
+      <td className="px-4 py-3 text-slate-600">
+        {p.application.length
+          ? p.application.join(', ')
+          : 'Nie przypisano'}
+      </td>
+    </tr>
+  ))}
+</tbody>
                   </table>
                 </div>
-                <div className="divide-y divide-slate-100 sm:hidden">
-                  {selectedAccessories.map((p) => <div key={p.id} className="p-4"><h3 className="font-medium text-primary">{p.name}</h3><p className="mt-1 text-xs text-slate-500">{p.category}</p><p className="mt-3 text-sm text-slate-700"><span className="text-slate-500">Zastosowanie: </span>{p.application.length ? p.application.join(', ') : 'Nie przypisano'}</p></div>)}
-                </div>
+<div className="divide-y divide-slate-100 sm:hidden">
+  {selectedAccessories.map((p) => (
+    <div key={p.id} className="p-4">
+      {p.image && (
+        <img
+          src={p.image}
+          alt={p.name}
+          className="mb-3 h-32 w-full rounded-lg object-contain"
+        />
+      )}
+
+      <h3 className="font-medium text-primary">{p.name}</h3>
+      <p className="mt-1 text-xs text-slate-500">{p.category}</p>
+      <p className="mt-3 text-sm text-slate-700">
+        <span className="text-slate-500">Zastosowanie: </span>
+        {p.application.length
+          ? p.application.join(', ')
+          : 'Nie przypisano'}
+      </p>
+    </div>
+  ))}
+</div>
               </section>
             )}
           </>

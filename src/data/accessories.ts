@@ -43,6 +43,8 @@ export interface Accessory {
   rollDiameter?: number;
   capacity?: number;
   color?: AccessoryBagColor;
+  image?: string;
+
 }
 
 export const accessories: Accessory[] = [
@@ -55,6 +57,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'makulatura',
     rollDiameter: 18,
+    image: '/images/305034.png',
   },
   {
     id: 'recznik-mak-biel-150m-1w-6-305035',
