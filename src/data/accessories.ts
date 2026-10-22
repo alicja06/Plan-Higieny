@@ -67,6 +67,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'makulatura',
     rollDiameter: 18,
+    image: '/images/305035.png',
   },
   {
     id: 'recznik-celuloza-280m-1w-6-305029',
@@ -76,6 +77,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305035.png',
   },
   {
     id: 'recznik-celuloza-150m-1w-6-305030',
@@ -85,6 +87,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305030.png',
   },
   {
     id: 'recznik-celuloza-lux-150m-1w-6-305033',
@@ -94,6 +97,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305033.png',
   },
   {
     id: 'recznik-zz-1520-celuloza-25x23-2w-305003',
@@ -102,6 +106,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'celuloza',
+    image: '/images/305003.png',
   },
   {
     id: 'recznik-zz-4000-celuloza-25x23-2w-305037',
@@ -110,6 +115,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'celuloza',
+    image: '/images/305037.png',
   },
   {
     id: 'recznik-zz-4000-mak-biel-25x23-1w-305039',
@@ -118,6 +124,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'makulatura',
+    image: '/images/305039.png',
   },
   {
     id: 'recznik-zz-4000-mak-biel-22x23-1w-305040',
@@ -126,6 +133,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'makulatura',
+    image: '/images/305040.png',
   },
   {
     id: 'recznik-zz-4000-celuloza-21x23-2w-305038',
@@ -134,6 +142,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'celuloza',
+    image: '/images/305038.png',
   },
   {
     id: 'recznik-zz-4000-zielony-25x23-1w',
@@ -142,6 +151,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'makulatura',
+    image: '/images/511278.png',
   },
   {
     id: 'recznik-zz-4000-szary-25x23-1w',
@@ -150,6 +160,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     type: 'składane',
     material: 'makulatura',
+    image: '/images/505258.jpg',
   },
   {
     id: 'recznik-autocut-celuloza-1w-6x260m',
@@ -159,6 +170,7 @@ export const accessories: Accessory[] = [
     type: 'w roli',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305033.png',
   },
 
   // Papiery toaletowe (7 produktów)
@@ -170,6 +182,7 @@ export const accessories: Accessory[] = [
     type: 'Jumbo',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305028.png',
   },
   {
     id: 'jumbo-mak-biel-190m-1w-12-305016',
@@ -179,6 +192,7 @@ export const accessories: Accessory[] = [
     type: 'Jumbo',
     material: 'makulatura',
     rollDiameter: 18,
+    image: '/images/305016.png',
   },
   {
     id: 'jumbo-mak-biel-190m-1w-6-305017',
@@ -188,6 +202,7 @@ export const accessories: Accessory[] = [
     type: 'Jumbo',
     material: 'makulatura',
     rollDiameter: 18,
+    image: '/images/305017.png',
   },
   {
     id: 'papier-jumbo-celuloza-150m-2w-12',
@@ -197,6 +212,7 @@ export const accessories: Accessory[] = [
     type: 'Jumbo',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305001.png',
   },
   {
     id: 'papier-jumbo-celuloza-150m-2w-6',
@@ -206,6 +222,7 @@ export const accessories: Accessory[] = [
     type: 'Jumbo',
     material: 'celuloza',
     rollDiameter: 18,
+    image: '/images/305002.png',
   },
   {
     id: 'papier-toaletowy-jumbo-cleanpro-2w-12x100m',
