@@ -51,6 +51,24 @@ function phColor(ph: number): string {
   return 'bg-indigo-100 text-indigo-700 ring-indigo-200';
 }
 
+function getAccessorySize(p: Accessory): string | null {
+  const text = `${p.name} ${p.id}`;
+
+  if (p.category === 'Ścierki') {
+    const match = text.match(/(\d{2,3})\s*[x×]\s*(\d{2,3})/i);
+
+    return match ? `${match[1]} × ${match[2]} cm` : null;
+  }
+
+  if (p.category === 'Mopy') {
+    const match = text.match(/(\d{2,3})\s*cm\b/i);
+
+    return match ? `${match[1]} cm` : null;
+  }
+
+  return null;
+}
+
 function App() {
   const [group, setGroup] = useState<ProductGroup | null>(null);
   const [application, setApplication] = useState('');
@@ -66,6 +84,7 @@ function App() {
   const [rollDiameter, setRollDiameter] = useState('');
   const [bagCapacity, setBagCapacity] = useState('');
   const [bagColor, setBagColor] = useState('');
+  const [accessorySize, setAccessorySize] = useState('');
 
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [view, setView] = useState<'config' | 'plan'>('config');
@@ -93,6 +112,26 @@ function App() {
         : [],
     [accessoryApplication],
   );
+
+  const accessorySizes = useMemo(
+  () =>
+    Array.from(
+      new Set(
+        accessories
+          .filter(
+            (p) =>
+              p.category === accessoryCategory &&
+              (!accessoryApplication ||
+                p.application.includes(accessoryApplication)),
+          )
+          .map(getAccessorySize)
+          .filter((size): size is string => size !== null),
+      ),
+    ).sort((a, b) =>
+      a.localeCompare(b, 'pl', { numeric: true }),
+    ),
+  [accessoryCategory, accessoryApplication],
+);
 
   const filteredChemistry: Product[] = useMemo(
     () =>
@@ -128,6 +167,10 @@ function App() {
         }
 
         if (accessoryCategory && p.category !== accessoryCategory) {
+          return false;
+        }
+
+        if (accessorySize && getAccessorySize(p) !== accessorySize) {
           return false;
         }
 
@@ -172,6 +215,7 @@ function App() {
       [
       accessoryApplication,
       accessoryCategory,
+      accessorySize,
       paperType,
       paperMaterial,
       rollDiameter,
@@ -216,6 +260,7 @@ function App() {
     phRange,
     accessoryApplication,
     accessoryCategory,
+    accessorySize,
     paperType,
     paperMaterial,
     rollDiameter,
@@ -233,6 +278,7 @@ function App() {
   const resetAccessoryFilters = () => {
     setAccessoryApplication('');
     setAccessoryCategory('');
+    setAccessorySize('');
     setPaperType('');
     setPaperMaterial('');
     setRollDiameter('');
@@ -364,13 +410,14 @@ function App() {
 
   const isChemistry = group === 'chemistry';
 
-  const hasFilters = isChemistry
+    const hasFilters = isChemistry
     ? application !== '' || frequency !== '' || phRange !== 'all'
     : accessoryApplication !== '' ||
       accessoryCategory !== '' ||
+      accessorySize !== '' ||
       paperType !== '' ||
       paperMaterial !== '' ||
-      rollDiameter !== ''
+      rollDiameter !== '' ||
       bagCapacity !== '' ||
       bagColor !== '';
 
@@ -555,6 +602,7 @@ function App() {
                         onClick={() => {
                           setAccessoryApplication(a);
                           setAccessoryCategory('');
+                          setAccessorySize('');
                           setPaperType('');
                           setPaperMaterial('');
                           setRollDiameter('');
@@ -606,6 +654,7 @@ function App() {
                             setRollDiameter('');
                             setBagCapacity('');
                             setBagColor('');
+                            setAccessorySize('');
                           }}
                           className="rounded-lg border border-slate-200 bg-white px-4 py-4 text-left text-sm font-medium text-slate-700 shadow-sm transition hover:border-primary hover:bg-slate-50 hover:text-primary"
                         >
@@ -645,6 +694,7 @@ function App() {
                         setRollDiameter('');
                         setBagCapacity('');
                         setBagColor('');
+                        setAccessorySize('');
                       }}
                       className="font-medium text-primary hover:underline"
                     >
@@ -791,6 +841,29 @@ function App() {
                       </div>
                     </div>
                   )}
+
+                                {(accessoryCategory === 'Ścierki' ||
+                accessoryCategory === 'Mopy') && (
+                <div className="mt-5 max-w-md">
+                  <label className="mb-1.5 block text-xs font-medium uppercase tracking-wide text-slate-500">
+                    Rozmiar
+                  </label>
+
+                  <select
+                    value={accessorySize}
+                    onChange={(e) => setAccessorySize(e.target.value)}
+                    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 shadow-sm focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+                  >
+                    <option value="">Wszystkie rozmiary</option>
+
+                    {accessorySizes.map((size) => (
+                      <option key={size} value={size}>
+                        {size}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
             </div>
           )}
         </section>
