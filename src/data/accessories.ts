@@ -916,6 +916,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'bezbarwny',
+    image: '/images/EN_worki_LDPE_120l_25_bezbarwne.jpg',
   },
   {
     id: 'worki-ldpe-120l-biale-25',
@@ -924,6 +925,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'biały',
+    image: '/images/EN_worki_LDPE_120l_25_biale.jpg',
   },
   {
     id: 'worki-ldpe-120l-brazowe-25',
@@ -932,6 +934,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'brązowy',
+    image: '/images/EN worki LDPE 120l (25) brązowe.jpg',
   },
   {
     id: 'worki-ldpe-120l-czarne-25',
@@ -940,6 +943,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'czarny',
+    image: '/images/czarne-120L-ldpe-25szt...jpg',
   },
   {
     id: 'worki-ldpe-120l-czerwone-25',
@@ -948,6 +952,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'czerwony',
+    image: '/images/czerwone-120L-ldpe-25szt..jpg',
   },
   {
     id: 'worki-ldpe-120l-niebieskie-25',
@@ -956,6 +961,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'niebieski',
+    image: '/images/niebieskie-120L-ldpe-25szt..jpg',
   },
   {
     id: 'worki-ldpe-120l-zielone-25',
@@ -964,6 +970,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'zielony',
+    image: '/images/EN worki LDPE 120l (25) zielone.jpg',
   },
   {
     id: 'worki-ldpe-120l-zolte-25',
@@ -972,6 +979,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 120,
     color: 'żółty',
+    image: '/images/EN worki LDPE 120l (25) żółte.jpg',
   },
   {
     id: 'worki-cleanpro-160l-czarne-20',
@@ -980,6 +988,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 160,
     color: 'czarny',
+    image: '/images/czarne-160-l-20-szt-505934.jpg',
   },
   {
     id: 'worki-cleanpro-160l-czerwone-20',
@@ -988,6 +997,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 160,
     color: 'czerwony',
+    image: '/images/C2C worki LDPE 160l (20) czerwone.jpg',
   },
   {
     id: 'worki-cleanpro-160l-niebieskie-20',
@@ -996,6 +1006,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 160,
     color: 'niebieski',
+    image: '/images/C2C worki LDPE 160L (20) niebieskie.jpg',
   },
   {
     id: 'worki-cleanpro-160l-zielone-20',
@@ -1004,6 +1015,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 160,
     color: 'zielony',
+    image: '/images/C2C worki LDPE 160L (20) zielone.jpg',
   },
   {
     id: 'worki-cleanpro-160l-zolte-20',
@@ -1012,6 +1024,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 160,
     color: 'żółty',
+    image: '/images/C2C worki LDPE 160L (20) żółte.jpg',
   },
   {
     id: 'worki-cleanpro-35l-czarne-50',
@@ -1020,6 +1033,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 35,
     color: 'czarny',
+    image: '/images/czarne-35L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-cleanpro-35l-czerwone-50',
@@ -1028,6 +1042,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 35,
     color: 'czerwony',
+    image: '/images/czerwone-35L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-cleanpro-35l-niebieskie-50',
@@ -1036,6 +1051,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 35,
     color: 'niebieski',
+    image: '/images/niebieskie-35L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-ldpe-60l-czarne-50',
@@ -1044,6 +1060,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 60,
     color: 'czarny',
+    image: '/images/czarne-60L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-ldpe-60l-czerwone-50',
@@ -1052,6 +1069,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 60,
     color: 'czerwony',
+    image: '/images/czerwone-60L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-ldpe-60l-niebieskie-50',
@@ -1060,6 +1078,7 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 60,
     color: 'niebieski',
+    image: '/images/niebieskie-60L-ldpe-50szt..jpg',
   },
   {
     id: 'worki-cleanpro-90l-czarne-25',
@@ -1068,31 +1087,29 @@ export const accessories: Accessory[] = [
     application: ['Kuchnia', 'Sanitariaty'],
     capacity: 90,
     color: 'czarny',
+    image: '/images/czarne-90L-ldpe-25szt.png',
   },
 
   // Miotły i szczotki (4 produktów)
-  {
-    id: 'zamiatacz-ogrodowy-23cm',
-    name: 'CLEANPRO ZAMIATACZ OGRODOWY 23CM',
-    category: 'Miotły i szczotki',
-    application: ['Teren zewnętrzny'],
-  },
   {
     id: 'szczotka-do-szorowania-27cm',
     name: 'CLEANPRO SZCZOTKA DO SZOROWANIA 27CM',
     category: 'Miotły i szczotki',
     application: ['Mycie podłóg'],
+    image: '/images/368171.jpg',
   },
   {
     id: 'miotla-plastikowa-30cm',
     name: 'CLEANPRO MIOTŁA PLASTIKOWA 30CM',
     category: 'Miotły i szczotki',
     application: ['Mycie podłóg', 'Teren zewnętrzny'],
+    image: '/images/368174.jpg',
   },
   {
     id: 'zestaw-leniuch-niebieski',
     name: 'CLEANPRO ZESTAW LENIUCH NIEBIESKI KPL',
     category: 'Miotły i szczotki',
     application: ['Mycie podłóg'],
+    image: '/images/368177.jpg',
   },
 ];
