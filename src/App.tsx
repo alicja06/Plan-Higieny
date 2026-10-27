@@ -11,7 +11,7 @@ import {
   FileText,
   X,
 } from 'lucide-react';
-import { products, type Product } from './data/products';
+import { products } from './data/products';
 import { accessories } from './data/accessories';
 import HygienePlan from './HygienePlan';
 
