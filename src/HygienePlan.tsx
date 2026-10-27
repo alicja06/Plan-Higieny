@@ -369,9 +369,6 @@ function HygienePlan({
               <h2 className="text-lg font-semibold text-slate-800">
                 Środki czyszczące
               </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Wybrane produkty chemiczne wraz z informacjami o ich stosowaniu.
-              </p>
             </div>
 
             <div className="hidden overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm lg:block">
@@ -499,6 +496,54 @@ function HygienePlan({
           </section>
         )}
 
+                {selectedAccessories.length > 0 && (
+          <section>
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold text-slate-800">
+                Akcesoria i artykuły higieniczne
+              </h2>
+            </div>
+
+            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+              <ul className="divide-y divide-slate-100">
+                {selectedAccessories.map((accessory) => (
+                  <li
+                    key={accessory.id}
+                    className="flex items-center gap-3 p-4"
+                  >
+                    {accessory.image && (
+                      <img
+                        src={accessory.image}
+                        alt={accessory.name}
+                        className="h-14 w-14 shrink-0 rounded object-contain"
+                      />
+                    )}
+
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-primary">
+                        {accessory.name}
+                      </p>
+                      <p className="mt-1 text-xs text-slate-500">
+                        {accessory.category} ·{' '}
+                        {accessory.application.join(', ')}
+                      </p>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => onToggleAccessory(accessory.id)}
+                      className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-slate-300 px-3 py-2 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
+                    >
+                      <X className="h-3.5 w-3.5" />
+                      Usuń
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
+
         <section>
           <div className="mb-4">
             <h2 className="text-lg font-semibold text-slate-800">
@@ -575,57 +620,7 @@ function HygienePlan({
           )}
         </section>
 
-        {selectedAccessories.length > 0 && (
-          <section>
-            <div className="mb-4">
-              <h2 className="text-lg font-semibold text-slate-800">
-                Akcesoria dodane do planu
-              </h2>
-              <p className="mt-1 text-sm text-slate-500">
-                Wybrane akcesoria zostaną uwzględnione w osobnej tabeli w pliku
-                PDF.
-              </p>
-            </div>
 
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-              <ul className="divide-y divide-slate-100">
-                {selectedAccessories.map((accessory) => (
-                  <li
-                    key={accessory.id}
-                    className="flex items-center gap-3 p-4"
-                  >
-                    {accessory.image && (
-                      <img
-                        src={accessory.image}
-                        alt={accessory.name}
-                        className="h-14 w-14 shrink-0 rounded object-contain"
-                      />
-                    )}
-
-                    <div className="min-w-0 flex-1">
-                      <p className="font-medium text-primary">
-                        {accessory.name}
-                      </p>
-                      <p className="mt-1 text-xs text-slate-500">
-                        {accessory.category} ·{' '}
-                        {accessory.application.join(', ')}
-                      </p>
-                    </div>
-
-                    <button
-                      type="button"
-                      onClick={() => onToggleAccessory(accessory.id)}
-                      className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-slate-300 px-3 py-2 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                      Usuń
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </section>
-        )}
       </main>
 
       <footer className="border-t border-slate-200 bg-white">
