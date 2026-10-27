@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from 'react';
 import {
   ArrowLeft,
@@ -15,10 +14,11 @@ import autoTable from 'jspdf-autotable';
 import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
 
 type Props = {
-  selectedChemistry: Product[];
+  selected: Product[];
   selectedAccessories: Accessory[];
   allAccessories: Accessory[];
   onToggleAccessory: (id: string) => void;
+  onRemoveProduct: (name: string) => void;
   onBack: () => void;
 };
 
@@ -31,10 +31,11 @@ function phColor(ph: number): string {
 }
 
 function HygienePlan({
-  selectedChemistry,
+  selected,
   selectedAccessories,
   allAccessories,
   onToggleAccessory,
+  onRemoveProduct,
   onBack,
 }: Props) {
   const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
@@ -50,9 +51,8 @@ function HygienePlan({
 
   // Zastosowania wybrane na podstawie dodanych do planu środków.
   const selectedApplications = useMemo(
-    () =>
-      new Set(selectedChemistry.flatMap((product) => product.application)),
-    [selectedChemistry],
+    () => new Set(selected.flatMap((product) => product.application)),
+    [selected],
   );
 
   // Zachowujemy dotychczasowe dopasowanie akcesoriów.
@@ -125,7 +125,7 @@ function HygienePlan({
 
     let nextY = 50;
 
-    if (selectedChemistry.length > 0) {
+    if (selected.length > 0) {
       pdf.setFontSize(12);
       pdf.text('Środki czyszczące', 15, 45);
 
@@ -139,7 +139,7 @@ function HygienePlan({
           'Zastosowanie',
           'Instrukcja użycia',
         ]],
-        body: selectedChemistry.map((product) => [
+        body: selected.map((product) => [
           '',
           product.name,
           product.phLabel,
@@ -176,7 +176,7 @@ function HygienePlan({
         rowPageBreak: 'avoid',
         didDrawCell: (data) => {
           if (data.section === 'body' && data.column.index === 0) {
-            const product = selectedChemistry[data.row.index];
+            const product = selected[data.row.index];
 
             if (product?.image) {
               try {
@@ -270,8 +270,7 @@ function HygienePlan({
     pdf.save('plan-higieny.pdf');
   };
 
-  const totalSelected =
-    selectedChemistry.length + selectedAccessories.length;
+  const totalSelected = selected.length + selectedAccessories.length;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -290,7 +289,7 @@ function HygienePlan({
                   : 'produktów'}
             </p>
             <p className="mt-1 text-xs text-slate-400">
-              Środki czyszczące: {selectedChemistry.length} · Akcesoria:{' '}
+              Środki czyszczące: {selected.length} · Akcesoria:{' '}
               {selectedAccessories.length}
             </p>
           </div>
@@ -321,8 +320,7 @@ function HygienePlan({
         id="hygiene-plan"
         className="mx-auto max-w-6xl space-y-8 px-4 py-6 sm:px-6 sm:py-8"
       >
-        {selectedChemistry.length === 0 &&
-          selectedAccessories.length === 0 && (
+        {selected.length === 0 && selectedAccessories.length === 0 && (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
             <p className="text-sm text-slate-500">
               Brak produktów w planie. Wróć i dodaj produkty do planu higieny.
@@ -330,57 +328,76 @@ function HygienePlan({
           </div>
         )}
 
-        {selectedChemistry.length > 0 && (
-          <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-            <div className="hidden overflow-x-auto sm:block">
+        {selected.length > 0 && (
+          <section>
+            <div className="mb-4">
+              <h2 className="text-lg font-semibold text-slate-800">
+                Środki czyszczące
+              </h2>
+              <p className="mt-1 text-sm text-slate-500">
+                Wybrane produkty chemiczne wraz z informacjami o ich stosowaniu.
+              </p>
+            </div>
+
+            <div className="hidden overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm lg:block">
               <table className="w-full text-left text-sm">
                 <thead>
                   <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-                    <th className="px-4 py-3 font-medium">Zdjęcie</th>
-                    <th className="px-4 py-3 font-medium">Produkt</th>
-                    <th className="px-4 py-3 font-medium">Zastosowanie</th>
-                    <th className="px-4 py-3 font-medium">Powierzchnie</th>
-                    <th className="px-4 py-3 font-medium">pH</th>
-                    <th className="px-4 py-3 font-medium">Dozowanie</th>
-                    <th className="px-4 py-3 font-medium">Rodzaj</th>
-                    <th className="px-4 py-3 font-medium">Częstotliwość</th>
+                    <th className="px-3 py-3 font-medium">Zdjęcie</th>
+                    <th className="px-3 py-3 font-medium">Produkt</th>
+                    <th className="px-3 py-3 font-medium">Opis</th>
+                    <th className="px-3 py-3 font-medium">Zastosowanie</th>
+                    <th className="px-3 py-3 font-medium">pH</th>
+                    <th className="px-3 py-3 font-medium">Dozowanie</th>
+                    <th className="px-3 py-3 font-medium">Instrukcja użycia</th>
+                    <th className="px-3 py-3 font-medium">Częstotliwość</th>
+                    <th className="px-3 py-3 font-medium"></th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {selectedChemistry.map((p) => (
-                    <tr
-                      key={p.name}
-                      className="align-top transition hover:bg-slate-50"
-                    >
-                      <td className="px-4 py-3">
+                  {selected.map((product) => (
+                    <tr key={product.name} className="align-top">
+                      <td className="px-3 py-3">
                         <img
-                          src={p.image}
-                          alt={p.name}
-                          className="h-20 w-20 rounded-lg object-contain"
+                          src={product.image}
+                          alt={product.name}
+                          className="h-16 w-16 rounded object-contain"
                         />
                       </td>
-                      <td className="px-4 py-3 font-medium text-primary">
-                        {p.name}
+                      <td className="px-3 py-3 font-medium text-primary">
+                        {product.name}
                       </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {p.application.join(', ')}
+                      <td className="px-3 py-3 text-slate-600">
+                        {product.description}
                       </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {p.surfaces.join(', ')}
+                      <td className="px-3 py-3 text-slate-600">
+                        {product.application.join(', ')}
                       </td>
-                      <td className="px-4 py-3">
+                      <td className="px-3 py-3">
                         <span
-                          className={`inline-flex items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
+                          className={`inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(product.ph)}`}
                         >
-                          {p.phLabel}
+                          {product.phLabel}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {p.dosage}
+                      <td className="px-3 py-3 text-slate-600">
+                        {product.dosage}
                       </td>
-                      <td className="px-4 py-3 text-slate-600">{p.type}</td>
-                      <td className="px-4 py-3 text-slate-600">
-                        {p.frequency.join(', ')}
+                      <td className="px-3 py-3 text-slate-600">
+                        {product.usage}
+                      </td>
+                      <td className="px-3 py-3 text-slate-600">
+                        {product.frequency.join(', ')}
+                      </td>
+                      <td className="px-3 py-3">
+                        <button
+                          type="button"
+                          onClick={() => onRemoveProduct(product.name)}
+                          title="Usuń z planu"
+                          className="rounded-md p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
                       </td>
                     </tr>
                   ))}
@@ -388,75 +405,86 @@ function HygienePlan({
               </table>
             </div>
 
-            <div className="divide-y divide-slate-100 sm:hidden">
-              {selectedChemistry.map((p) => (
-                <div key={p.name} className="p-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <h3 className="font-medium text-primary">{p.name}</h3>
-                    <span
-                      className={`inline-flex shrink-0 items-center justify-center rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(p.ph)}`}
+            <div className="space-y-3 lg:hidden">
+              {selected.map((product) => (
+                <article
+                  key={product.name}
+                  className="rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
+                >
+                  <div className="flex items-start gap-3">
+                    <img
+                      src={product.image}
+                      alt={product.name}
+                      className="h-20 w-20 shrink-0 rounded object-contain"
+                    />
+                    <div className="min-w-0 flex-1">
+                      <h3 className="font-medium text-primary">
+                        {product.name}
+                      </h3>
+                      <span
+                        className={`mt-2 inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(product.ph)}`}
+                      >
+                        pH {product.phLabel}
+                      </span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => onRemoveProduct(product.name)}
+                      aria-label={`Usuń ${product.name} z planu`}
+                      className="rounded-md p-1.5 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
                     >
-                      pH {p.phLabel}
-                    </span>
+                      <X className="h-4 w-4" />
+                    </button>
                   </div>
+                  <p className="mt-3 text-sm text-slate-600">
+                    {product.description}
+                  </p>
                   <dl className="mt-3 space-y-2 text-sm">
                     <div>
                       <dt className="text-slate-500">Zastosowanie</dt>
-                      <dd className="text-right text-slate-700">
-                        {p.application.join(', ')}
-                      </dd>
+                      <dd>{product.application.join(', ')}</dd>
                     </div>
                     <div>
-                      <dt className="text-slate-500">Powierzchnie</dt>
-                      <dd className="text-right text-slate-700">
-                        {p.surfaces.join(', ')}
-                      </dd>
-                    </div>
-                    <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Dozowanie</dt>
-                      <dd className="text-right text-slate-700">{p.dosage}</dd>
+                      <dd>{product.dosage}</dd>
                     </div>
-                    <div className="flex justify-between gap-3">
-                      <dt className="text-slate-500">Rodzaj</dt>
-                      <dd className="text-right text-slate-700">{p.type}</dd>
+                    <div>
+                      <dt className="text-slate-500">Instrukcja użycia</dt>
+                      <dd>{product.usage}</dd>
                     </div>
-                    <div className="flex justify-between gap-3">
+                    <div>
                       <dt className="text-slate-500">Częstotliwość</dt>
-                      <dd className="text-right text-slate-700">
-                        {p.frequency.join(', ')}
-                      </dd>
+                      <dd>{product.frequency.join(', ')}</dd>
                     </div>
                   </dl>
-                </div>
+                </article>
               ))}
             </div>
           </section>
         )}
 
-
-      <section>
-        <div className="mb-4">
-          <h2 className="text-lg font-semibold text-slate-800">
-            Rekomendowane akcesoria i artykuły higieniczne
-          </h2>
-          <p className="mt-1 text-sm text-slate-500">
-            Wybierz kategorię, aby zobaczyć pasujące akcesoria. Dodajesz je do
-            planu samodzielnie — nic nie zostanie dodane automatycznie.
-          </p>
-        </div>
-
-        {selectedChemistry.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
-            Najpierw dodaj środek czyszczący do planu, aby zobaczyć powiązane
-            zastosowaniem akcesoria.
+        <section>
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-slate-800">
+              Rekomendowane akcesoria i artykuły higieniczne
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Wybierz kategorię, aby zobaczyć pasujące akcesoria. Dodajesz je do
+              planu samodzielnie — nic nie zostanie dodane automatycznie.
+            </p>
           </div>
-        ) : recommendedAccessories.length === 0 ? (
-          <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
-            Nie znaleziono akcesoriów przypisanych do zastosowań wybranych
-            środków.
-          </div>
-        ) : (
-          <>
+
+          {selected.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
+              Najpierw dodaj środek czyszczący do planu, aby zobaczyć powiązane
+              zastosowaniem akcesoria.
+            </div>
+          ) : recommendedAccessories.length === 0 ? (
+            <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
+              Nie znaleziono akcesoriów przypisanych do zastosowań wybranych
+              środków.
+            </div>
+          ) : (
             <div className="grid grid-cols-2 items-start gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {accessoryCategories.map((category) => {
                 const categoryAccessories = recommendedAccessories.filter(
@@ -464,92 +492,114 @@ function HygienePlan({
                 );
 
                 const isExpanded = expandedCategory === category;
-                const isShowingAll = showAllCategories.has(category);
-                const visibleAccessories = isShowingAll
-                  ? categoryAccessories
-                  : categoryAccessories.slice(0, 3);
                 const categoryImage = categoryAccessories.find(
                   (accessory) => accessory.image,
                 )?.image;
 
+                const isShowingAll = showAllCategories.has(category);
+                const visibleAccessories = isShowingAll
+                  ? categoryAccessories
+                  : categoryAccessories.slice(0, 3);
+
                 return (
-                  <div
-                    key={category}
-                    className={`overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${
-                      isExpanded ? 'col-span-full ring-2 ring-primary/20' : ''
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => toggleCategory(category)}
-                      aria-expanded={isExpanded}
-                      className={`group relative block w-full overflow-hidden text-left ${
-                        isExpanded ? 'aspect-[4/1]' : 'aspect-[4/3]'
-                      }`}
-                    >
-                      {categoryImage ? (
-                        <img
-                          src={categoryImage}
-                          alt=""
-                          loading="lazy"
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-slate-200 text-4xl text-slate-400">
-                          ▧
-                        </div>
-                      )}
+<div
+  key={category}
+  className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm"
+>
 
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+<button
+  type="button"
+  onClick={() => toggleCategory(category)}
+  aria-expanded={isExpanded}
+  className="group relative block aspect-[4/3] w-full overflow-hidden text-left"
+>
+  {categoryImage ? (
+    <img
+      src={categoryImage}
+      alt=""
+      loading="lazy"
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+    />
+  ) : (
+    <div className="absolute inset-0 flex items-center justify-center bg-slate-200 text-4xl text-slate-400">
+      ▧
+    </div>
+  )}
 
-                      <span className="absolute right-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow-sm">
-                        {categoryAccessories.length}
-                      </span>
+  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
-                      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-4">
-                        <span className="text-base font-semibold leading-snug text-white drop-shadow sm:text-lg">
-                          {category}
-                        </span>
+  <span className="absolute right-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow-sm">
+    {categoryAccessories.length}
+  </span>
 
-                        {isExpanded ? (
-                          <ChevronDown className="h-5 w-5 shrink-0 text-white" />
-                        ) : (
-                          <ChevronRight className="h-5 w-5 shrink-0 text-white" />
-                        )}
-                      </div>
-                    </button>
+  <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-4">
+    <span className="text-base font-semibold leading-snug text-white drop-shadow sm:text-lg">
+      {category}
+    </span>
+
+    {isExpanded ? (
+      <ChevronDown className="h-5 w-5 shrink-0 text-white" />
+    ) : (
+      <ChevronRight className="h-5 w-5 shrink-0 text-white" />
+    )}
+  </div>
+</button>
+
 
                     {isExpanded && (
-                      <div className="border-t border-slate-200 p-3 sm:p-5">
-                        <div className="grid grid-cols-1 items-stretch gap-3">
+                      <div className="border-t border-slate-200 p-3 sm:p-4">
+                        <div className="mb-3 flex items-center justify-between gap-3">
+                          <h3 className="text-base font-semibold text-slate-800">
+                            Produkty: {category}
+                          </h3>
+                          <button
+                            type="button"
+                            onClick={() => setExpandedCategory(null)}
+                            aria-label={`Zwiń kategorię ${category}`}
+                            className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
                           {visibleAccessories.map((accessory) => (
                             <article
                               key={accessory.id}
                               className="flex min-w-0 flex-col rounded-xl border border-slate-200 bg-white p-3 sm:p-4"
                             >
-                              <div className="flex min-w-0 items-start gap-3">
-                                {accessory.image ? (
-                                  <img
-                                    src={accessory.image}
-                                    alt={accessory.name}
-                                    loading="lazy"
-                                    className="h-16 w-16 shrink-0 rounded-lg bg-slate-50 object-contain p-1"
-                                  />
-                                ) : (
-                                  <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-center text-xs text-slate-400">
-                                    Brak zdjęcia
-                                  </div>
-                                )}
+<div className="mb-3 flex items-start gap-3">
+  {accessory.image ? (
+    <img
+      src={accessory.image}
+      alt={accessory.name}
+      loading="lazy"
+      className="h-16 w-16 shrink-0 rounded-lg bg-slate-50 object-contain p-1"
+    />
+  ) : (
+    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-center text-xs text-slate-400">
+      Brak zdjęcia
+    </div>
+  )}
 
-                                <div className="min-w-0 flex-1">
-                                  <h4 className="break-words font-medium text-primary">
-                                    {accessory.name}
-                                  </h4>
-                                  <p className="mt-1 break-words text-xs text-slate-500">
-                                    {accessory.application.join(', ')}
-                                  </p>
-                                </div>
-                              </div>
+  <div className="min-w-0 flex-1">
+    <h4 className="font-medium text-primary">
+      {accessory.name}
+    </h4>
+
+    <p className="mt-1 text-xs text-slate-500">
+      {accessory.application.join(', ')}
+    </p>
+  </div>
+</div>
+
+                              <h4 className="font-medium text-primary">
+                                {accessory.name}
+                              </h4>
+
+                              <p className="mt-1 text-xs text-slate-500">
+                                {accessory.application.join(', ')}
+                              </p>
 
                               {(accessory.type ||
                                 accessory.material ||
@@ -565,7 +615,6 @@ function HygienePlan({
                                       </dd>
                                     </div>
                                   )}
-
                                   {accessory.material && (
                                     <div className="flex justify-between gap-3">
                                       <dt className="shrink-0">Materiał</dt>
@@ -574,7 +623,6 @@ function HygienePlan({
                                       </dd>
                                     </div>
                                   )}
-
                                   {accessory.rollDiameter != null && (
                                     <div className="flex justify-between gap-3">
                                       <dt className="shrink-0">
@@ -585,7 +633,6 @@ function HygienePlan({
                                       </dd>
                                     </div>
                                   )}
-
                                   {accessory.capacity != null && (
                                     <div className="flex justify-between gap-3">
                                       <dt className="shrink-0">Pojemność</dt>
@@ -594,7 +641,6 @@ function HygienePlan({
                                       </dd>
                                     </div>
                                   )}
-
                                   {accessory.color && (
                                     <div className="flex justify-between gap-3">
                                       <dt className="shrink-0">Kolor</dt>
@@ -609,12 +655,10 @@ function HygienePlan({
                               <button
                                 type="button"
                                 onClick={() => onToggleAccessory(accessory.id)}
-                                className="mt-auto inline-flex items-center justify-center gap-2 pt-4"
+                                className="mt-4 inline-flex items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
                               >
-                                <span className="inline-flex w-full items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-sm font-medium text-white transition hover:bg-primary-dark">
-                                  <Plus className="h-4 w-4" />
-                                  Dodaj do planu
-                                </span>
+                                <Plus className="h-4 w-4" />
+                                Dodaj do planu
                               </button>
                             </article>
                           ))}
@@ -629,7 +673,7 @@ function HygienePlan({
                             >
                               {isShowingAll
                                 ? 'Pokaż mniej'
-                                : `Pokaż więcej (${categoryAccessories.length - 3})`}
+                                : `Pokaż wszystkie (${categoryAccessories.length})`}
                             </button>
                           </div>
                         )}
@@ -639,10 +683,8 @@ function HygienePlan({
                 );
               })}
             </div>
-          </>
-        )}
-      </section>
-
+          )}
+        </section>
 
         {selectedAccessories.length > 0 && (
           <section>
@@ -706,4 +748,4 @@ function HygienePlan({
   );
 }
 
-export default HygienePlan;
+export default HygienePlan;\
