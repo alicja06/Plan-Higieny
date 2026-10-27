@@ -15,11 +15,10 @@ import autoTable from 'jspdf-autotable';
 import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
 
 type Props = {
-  selected: Product[];
+  selectedChemistry: Product[];
   selectedAccessories: Accessory[];
   allAccessories: Accessory[];
   onToggleAccessory: (id: string) => void;
-  onRemoveProduct: (name: string) => void;
   onBack: () => void;
 };
 
@@ -32,7 +31,7 @@ function phColor(ph: number): string {
 }
 
 function HygienePlan({
-  selected,
+  selectedChemistry,
   selectedAccessories,
   allAccessories,
   onToggleAccessory,
@@ -51,8 +50,9 @@ function HygienePlan({
 
   // Zastosowania wybrane na podstawie dodanych do planu środków.
   const selectedApplications = useMemo(
-    () => new Set(selected.flatMap((product) => product.application)),
-    [selected],
+    () =>
+      new Set(selectedChemistry.flatMap((product) => product.application)),
+    [selectedChemistry],
   );
 
   // Zachowujemy dotychczasowe dopasowanie akcesoriów.
@@ -125,7 +125,7 @@ function HygienePlan({
 
     let nextY = 50;
 
-    if (selected.length > 0) {
+    if (selectedChemistry.length > 0) {
       pdf.setFontSize(12);
       pdf.text('Środki czyszczące', 15, 45);
 
@@ -139,7 +139,7 @@ function HygienePlan({
           'Zastosowanie',
           'Instrukcja użycia',
         ]],
-        body: selected.map((product) => [
+        body: selectedChemistry.map((product) => [
           '',
           product.name,
           product.phLabel,
@@ -176,7 +176,7 @@ function HygienePlan({
         rowPageBreak: 'avoid',
         didDrawCell: (data) => {
           if (data.section === 'body' && data.column.index === 0) {
-            const product = selected[data.row.index];
+            const product = selectedChemistry[data.row.index];
 
             if (product?.image) {
               try {
@@ -270,7 +270,8 @@ function HygienePlan({
     pdf.save('plan-higieny.pdf');
   };
 
-  const totalSelected = selected.length + selectedAccessories.length;
+  const totalSelected =
+    selectedChemistry.length + selectedAccessories.length;
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
@@ -289,7 +290,7 @@ function HygienePlan({
                   : 'produktów'}
             </p>
             <p className="mt-1 text-xs text-slate-400">
-              Środki czyszczące: {selected.length} · Akcesoria:{' '}
+              Środki czyszczące: {selectedChemistry.length} · Akcesoria:{' '}
               {selectedAccessories.length}
             </p>
           </div>
@@ -320,7 +321,8 @@ function HygienePlan({
         id="hygiene-plan"
         className="mx-auto max-w-6xl space-y-8 px-4 py-6 sm:px-6 sm:py-8"
       >
-        {selected.length === 0 && selectedAccessories.length === 0 && (
+        {selectedChemistry.length === 0 &&
+          selectedAccessories.length === 0 && (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
             <p className="text-sm text-slate-500">
               Brak produktów w planie. Wróć i dodaj produkty do planu higieny.
@@ -328,7 +330,7 @@ function HygienePlan({
           </div>
         )}
 
-        {selected.length > 0 && (
+        {selectedChemistry.length > 0 && (
           <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="hidden overflow-x-auto sm:block">
               <table className="w-full text-left text-sm">
@@ -336,16 +338,16 @@ function HygienePlan({
                   <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                     <th className="px-4 py-3 font-medium">Zdjęcie</th>
                     <th className="px-4 py-3 font-medium">Produkt</th>
-                    <th className="px-4 py-3 font-medium">Opis</th>
                     <th className="px-4 py-3 font-medium">Zastosowanie</th>
+                    <th className="px-4 py-3 font-medium">Powierzchnie</th>
                     <th className="px-4 py-3 font-medium">pH</th>
                     <th className="px-4 py-3 font-medium">Dozowanie</th>
-                    <th className="px-4 py-3 font-medium">Instrukcja użycia</th>
+                    <th className="px-4 py-3 font-medium">Rodzaj</th>
                     <th className="px-4 py-3 font-medium">Częstotliwość</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {selected.map((p) => (
+                  {selectedChemistry.map((p) => (
                     <tr
                       key={p.name}
                       className="align-top transition hover:bg-slate-50"
@@ -360,11 +362,11 @@ function HygienePlan({
                       <td className="px-4 py-3 font-medium text-primary">
                         {p.name}
                       </td>
-                      <td className="max-w-xs px-4 py-3 text-slate-600">
-                        {p.description}
-                      </td>
                       <td className="px-4 py-3 text-slate-600">
                         {p.application.join(', ')}
+                      </td>
+                      <td className="px-4 py-3 text-slate-600">
+                        {p.surfaces.join(', ')}
                       </td>
                       <td className="px-4 py-3">
                         <span
@@ -376,9 +378,7 @@ function HygienePlan({
                       <td className="px-4 py-3 text-slate-600">
                         {p.dosage}
                       </td>
-                      <td className="max-w-xs px-4 py-3 text-slate-600">
-                        {p.usage}
-                      </td>
+                      <td className="px-4 py-3 text-slate-600">{p.type}</td>
                       <td className="px-4 py-3 text-slate-600">
                         {p.frequency.join(', ')}
                       </td>
@@ -389,7 +389,7 @@ function HygienePlan({
             </div>
 
             <div className="divide-y divide-slate-100 sm:hidden">
-              {selected.map((p) => (
+              {selectedChemistry.map((p) => (
                 <div key={p.name} className="p-4">
                   <div className="flex items-start justify-between gap-2">
                     <h3 className="font-medium text-primary">{p.name}</h3>
@@ -401,26 +401,24 @@ function HygienePlan({
                   </div>
                   <dl className="mt-3 space-y-2 text-sm">
                     <div>
-                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        Opis
-                      </dt>
-                      <dd className="mt-0.5 text-slate-600">{p.description}</dd>
-                    </div>
-                    <div>
                       <dt className="text-slate-500">Zastosowanie</dt>
                       <dd className="text-right text-slate-700">
                         {p.application.join(', ')}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-slate-500">Powierzchnie</dt>
+                      <dd className="text-right text-slate-700">
+                        {p.surfaces.join(', ')}
                       </dd>
                     </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Dozowanie</dt>
                       <dd className="text-right text-slate-700">{p.dosage}</dd>
                     </div>
-                    <div>
-                      <dt className="text-xs font-medium uppercase tracking-wide text-slate-400">
-                        Instrukcja użycia
-                      </dt>
-                      <dd className="mt-0.5 text-slate-600">{p.usage}</dd>
+                    <div className="flex justify-between gap-3">
+                      <dt className="text-slate-500">Rodzaj</dt>
+                      <dd className="text-right text-slate-700">{p.type}</dd>
                     </div>
                     <div className="flex justify-between gap-3">
                       <dt className="text-slate-500">Częstotliwość</dt>
@@ -447,7 +445,7 @@ function HygienePlan({
           </p>
         </div>
 
-        {selected.length === 0 ? (
+        {selectedChemistry.length === 0 ? (
           <div className="rounded-xl border border-dashed border-slate-300 bg-white p-6 text-sm text-slate-500">
             Najpierw dodaj środek czyszczący do planu, aby zobaczyć powiązane
             zastosowaniem akcesoria.
