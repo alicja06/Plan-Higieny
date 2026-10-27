@@ -1,11 +1,10 @@
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ArrowLeft,
   Download,
   Plus,
   X,
-  ChevronDown,
   ChevronRight,
   Check,
 } from 'lucide-react';
@@ -44,6 +43,28 @@ function HygienePlan({
   const [showAllCategories, setShowAllCategories] = useState<Set<string>>(
     new Set(),
   );
+
+  // Zamknięcie modala klawiszem Escape i blokada przewijania tła.
+  useEffect(() => {
+    if (!expandedCategory) return;
+
+    const previousOverflow = document.body.style.overflow;
+
+    document.body.style.overflow = 'hidden';
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setExpandedCategory(null);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [expandedCategory]);
 
   const today = new Date().toLocaleDateString('pl-PL', {
     day: 'numeric',
@@ -272,6 +293,20 @@ function HygienePlan({
 
   const totalSelected = selected.length + selectedAccessories.length;
 
+  const activeCategoryAccessories = expandedCategory
+    ? recommendedAccessories.filter(
+        (accessory) => accessory.category === expandedCategory,
+      )
+    : [];
+
+  const isShowingAll = expandedCategory
+    ? showAllCategories.has(expandedCategory)
+    : false;
+
+  const visibleAccessories = isShowingAll
+    ? activeCategoryAccessories
+    : activeCategoryAccessories.slice(0, 3);
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <header className="border-b border-slate-200 bg-white">
@@ -491,206 +526,49 @@ function HygienePlan({
                   (accessory) => accessory.category === category,
                 );
 
-                const isExpanded = expandedCategory === category;
                 const categoryImage = categoryAccessories.find(
                   (accessory) => accessory.image,
                 )?.image;
 
-                const isShowingAll = showAllCategories.has(category);
-                const visibleAccessories = isShowingAll
-                  ? categoryAccessories
-                  : categoryAccessories.slice(0, 3);
+                const isExpanded = expandedCategory === category;
 
                 return (
-                  <div
+                  <button
                     key={category}
-                    className={`overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm ${
+                    type="button"
+                    onClick={() => toggleCategory(category)}
+                    aria-haspopup="dialog"
+                    aria-expanded={isExpanded}
+                    className={`group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-slate-200 bg-white text-left shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                       isExpanded ? 'ring-2 ring-primary/20' : ''
                     }`}
                   >
-                    <button
-                      type="button"
-                      onClick={() => toggleCategory(category)}
-                      aria-expanded={isExpanded}
-                      className="group relative block aspect-[4/3] w-full overflow-hidden text-left"
-                    >
-                      {categoryImage ? (
-                        <img
-                          src={categoryImage}
-                          alt=""
-                          loading="lazy"
-                          className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        />
-                      ) : (
-                        <div className="absolute inset-0 flex items-center justify-center bg-slate-200 text-4xl text-slate-400">
-                          ▧
-                        </div>
-                      )}
-
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                      <span className="absolute right-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow-sm">
-                        {categoryAccessories.length}
-                      </span>
-
-                      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-4">
-                        <span className="text-base font-semibold leading-snug text-white drop-shadow sm:text-lg">
-                          {category}
-                        </span>
-
-                        {isExpanded ? (
-                          <ChevronDown className="h-5 w-5 shrink-0 text-white" />
-                        ) : (
-                          <ChevronRight className="h-5 w-5 shrink-0 text-white" />
-                        )}
-                      </div>
-                    </button>
-
-                    {isExpanded && (
-                      <div className="border-t border-slate-200 p-3 sm:p-4">
-                        <div className="mb-3 flex items-center justify-between gap-3">
-                          <h3 className="text-base font-semibold text-slate-800">
-                            Produkty: {category}
-                          </h3>
-                          <button
-                            type="button"
-                            onClick={() => setExpandedCategory(null)}
-                            aria-label={`Zwiń kategorię ${category}`}
-                            className="rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-3">
-                          {visibleAccessories.map((accessory) => {
-                            const isSelected = selectedAccessories.some(
-                              (chosen) => chosen.id === accessory.id,
-                            );
-
-                            return (
-                              <article
-                                key={accessory.id}
-                                className="flex min-w-0 flex-col rounded-xl border border-slate-200 bg-white p-3 sm:p-4"
-                              >
-                                <div className="mb-3 flex min-w-0 items-start gap-3">
-                                  {accessory.image ? (
-                                    <img
-                                      src={accessory.image}
-                                      alt={accessory.name}
-                                      loading="lazy"
-                                      className="h-16 w-16 shrink-0 rounded-lg bg-slate-50 object-contain p-1"
-                                    />
-                                  ) : (
-                                    <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-center text-xs text-slate-400">
-                                      Brak zdjęcia
-                                    </div>
-                                  )}
-
-                                  <div className="min-w-0 flex-1">
-                                    <h4 className="break-words font-medium text-primary">
-                                      {accessory.name}
-                                    </h4>
-                                    <p className="mt-1 break-words text-xs text-slate-500">
-                                      {accessory.application.join(', ')}
-                                    </p>
-                                  </div>
-                                </div>
-
-                                {(accessory.type ||
-                                  accessory.material ||
-                                  accessory.rollDiameter != null ||
-                                  accessory.capacity != null ||
-                                  accessory.color) && (
-                                  <dl className="mt-3 space-y-1.5 text-sm text-slate-600">
-                                    {accessory.type && (
-                                      <div className="flex justify-between gap-3">
-                                        <dt className="shrink-0">Typ</dt>
-                                        <dd className="text-right">
-                                          {accessory.type}
-                                        </dd>
-                                      </div>
-                                    )}
-                                    {accessory.material && (
-                                      <div className="flex justify-between gap-3">
-                                        <dt className="shrink-0">Materiał</dt>
-                                        <dd className="text-right">
-                                          {accessory.material}
-                                        </dd>
-                                      </div>
-                                    )}
-                                    {accessory.rollDiameter != null && (
-                                      <div className="flex justify-between gap-3">
-                                        <dt className="shrink-0">
-                                          Średnica rolki
-                                        </dt>
-                                        <dd className="text-right">
-                                          {accessory.rollDiameter} cm
-                                        </dd>
-                                      </div>
-                                    )}
-                                    {accessory.capacity != null && (
-                                      <div className="flex justify-between gap-3">
-                                        <dt className="shrink-0">Pojemność</dt>
-                                        <dd className="text-right">
-                                          {accessory.capacity} l
-                                        </dd>
-                                      </div>
-                                    )}
-                                    {accessory.color && (
-                                      <div className="flex justify-between gap-3">
-                                        <dt className="shrink-0">Kolor</dt>
-                                        <dd className="text-right">
-                                          {accessory.color}
-                                        </dd>
-                                      </div>
-                                    )}
-                                  </dl>
-                                )}
-
-                                <button
-                                  type="button"
-                                  onClick={() => onToggleAccessory(accessory.id)}
-                                  aria-pressed={isSelected}
-                                  className={`mt-4 inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition ${
-                                    isSelected
-                                      ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
-                                      : 'bg-primary text-white hover:bg-primary-dark'
-                                  }`}
-                                >
-                                  {isSelected ? (
-                                    <>
-                                      <Check className="h-4 w-4" />
-                                      W planie
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Plus className="h-4 w-4" />
-                                      Dodaj do planu
-                                    </>
-                                  )}
-                                </button>
-                              </article>
-                            );
-                          })}
-                        </div>
-
-                        {categoryAccessories.length > 3 && (
-                          <div className="mt-4 flex justify-center">
-                            <button
-                              type="button"
-                              onClick={() => toggleShowAll(category)}
-                              className="rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-primary transition hover:bg-slate-50"
-                            >
-                              {isShowingAll
-                                ? 'Pokaż mniej'
-                                : `Pokaż więcej (${categoryAccessories.length - 3})`}
-                            </button>
-                          </div>
-                        )}
+                    {categoryImage ? (
+                      <img
+                        src={categoryImage}
+                        alt=""
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center bg-slate-200 text-4xl text-slate-400">
+                        ▧
                       </div>
                     )}
-                  </div>
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+
+                    <span className="absolute right-2 top-2 rounded-full bg-white/95 px-2.5 py-1 text-xs font-semibold text-slate-800 shadow-sm">
+                      {categoryAccessories.length}
+                    </span>
+
+                    <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-3 sm:p-4">
+                      <span className="text-base font-semibold leading-snug text-white drop-shadow sm:text-lg">
+                        {category}
+                      </span>
+                      <ChevronRight className="h-5 w-5 shrink-0 text-white" />
+                    </div>
+                  </button>
                 );
               })}
             </div>
@@ -755,6 +633,204 @@ function HygienePlan({
           Konfigurator planu higieny Kawido
         </div>
       </footer>
+
+      {/* Okno modalne z produktami wybranej kategorii */}
+      {expandedCategory && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-3 backdrop-blur-sm sm:p-6"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) {
+              setExpandedCategory(null);
+            }
+          }}
+        >
+          <section
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="accessory-modal-title"
+            className="flex max-h-[92vh] w-full max-w-4xl flex-col overflow-hidden rounded-2xl bg-slate-50 shadow-2xl sm:max-h-[88vh]"
+          >
+            <header className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200 bg-white px-4 py-4 sm:px-6 sm:py-5">
+              <div className="min-w-0">
+                <h2
+                  id="accessory-modal-title"
+                  className="text-lg font-semibold text-slate-800 sm:text-xl"
+                >
+                  {expandedCategory}
+                </h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  Wybierz produkty do planu higieny. Wybrane pozycje pozostaną
+                  zaznaczone po zamknięciu okna.
+                </p>
+                <p className="mt-2 text-xs text-slate-400">
+                  Liczba produktów w kategorii:{' '}
+                  {activeCategoryAccessories.length}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setExpandedCategory(null)}
+                aria-label="Zamknij okno wyboru produktów"
+                title="Zamknij"
+                className="shrink-0 rounded-lg p-2 text-slate-500 transition hover:bg-slate-100 hover:text-slate-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+              >
+                <X className="h-6 w-6" />
+              </button>
+            </header>
+
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-4 sm:p-6">
+              {activeCategoryAccessories.length === 0 ? (
+                <p className="py-8 text-center text-sm text-slate-500">
+                  Brak produktów w tej kategorii.
+                </p>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                    {visibleAccessories.map((accessory) => {
+                      const isSelected = selectedAccessories.some(
+                        (chosen) => chosen.id === accessory.id,
+                      );
+
+                      return (
+                        <article
+                          key={accessory.id}
+                          className="flex min-w-0 flex-col rounded-xl border border-slate-200 bg-white p-3 shadow-sm sm:p-4"
+                        >
+                          <div className="flex min-w-0 items-start gap-3">
+                            {accessory.image ? (
+                              <img
+                                src={accessory.image}
+                                alt={accessory.name}
+                                loading="lazy"
+                                className="h-16 w-16 shrink-0 rounded-lg bg-slate-50 object-contain p-1 sm:h-20 sm:w-20"
+                              />
+                            ) : (
+                              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-slate-50 text-center text-xs text-slate-400 sm:h-20 sm:w-20">
+                                Brak zdjęcia
+                              </div>
+                            )}
+
+                            <div className="min-w-0 flex-1">
+                              <h3 className="break-words font-medium text-primary">
+                                {accessory.name}
+                              </h3>
+                              <p className="mt-1 break-words text-xs text-slate-500">
+                                {accessory.application.join(', ')}
+                              </p>
+                            </div>
+                          </div>
+
+                          {(accessory.type ||
+                            accessory.material ||
+                            accessory.rollDiameter != null ||
+                            accessory.capacity != null ||
+                            accessory.color) && (
+                            <dl className="mt-4 space-y-1.5 text-sm text-slate-600">
+                              {accessory.type && (
+                                <div className="flex justify-between gap-3">
+                                  <dt className="shrink-0">Typ</dt>
+                                  <dd className="text-right">
+                                    {accessory.type}
+                                  </dd>
+                                </div>
+                              )}
+                              {accessory.material && (
+                                <div className="flex justify-between gap-3">
+                                  <dt className="shrink-0">Materiał</dt>
+                                  <dd className="text-right">
+                                    {accessory.material}
+                                  </dd>
+                                </div>
+                              )}
+                              {accessory.rollDiameter != null && (
+                                <div className="flex justify-between gap-3">
+                                  <dt className="shrink-0">
+                                    Średnica rolki
+                                  </dt>
+                                  <dd className="text-right">
+                                    {accessory.rollDiameter} cm
+                                  </dd>
+                                </div>
+                              )}
+                              {accessory.capacity != null && (
+                                <div className="flex justify-between gap-3">
+                                  <dt className="shrink-0">Pojemność</dt>
+                                  <dd className="text-right">
+                                    {accessory.capacity} l
+                                  </dd>
+                                </div>
+                              )}
+                              {accessory.color && (
+                                <div className="flex justify-between gap-3">
+                                  <dt className="shrink-0">Kolor</dt>
+                                  <dd className="text-right">
+                                    {accessory.color}
+                                  </dd>
+                                </div>
+                              )}
+                            </dl>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => onToggleAccessory(accessory.id)}
+                            aria-pressed={isSelected}
+                            className={`mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg px-3 py-2.5 text-sm font-medium transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
+                              isSelected
+                                ? 'border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100'
+                                : 'bg-primary text-white hover:bg-primary-dark'
+                            }`}
+                          >
+                            {isSelected ? (
+                              <>
+                                <Check className="h-4 w-4" />
+                                W planie
+                              </>
+                            ) : (
+                              <>
+                                <Plus className="h-4 w-4" />
+                                Dodaj do planu
+                              </>
+                            )}
+                          </button>
+                        </article>
+                      );
+                    })}
+                  </div>
+
+                  {activeCategoryAccessories.length > 3 && (
+                    <div className="mt-5 flex justify-center">
+                      <button
+                        type="button"
+                        onClick={() => toggleShowAll(expandedCategory)}
+                        className="rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-medium text-primary transition hover:bg-slate-100"
+                      >
+                        {isShowingAll
+                          ? 'Pokaż mniej'
+                          : `Pokaż więcej (${activeCategoryAccessories.length - 3})`}
+                      </button>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+
+            <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 bg-white px-4 py-3 sm:px-6 sm:py-4">
+              <p className="text-sm text-slate-500">
+                W planie: <span className="font-semibold text-slate-800">{selectedAccessories.length}</span>
+              </p>
+              <button
+                type="button"
+                onClick={() => setExpandedCategory(null)}
+                className="rounded-lg bg-primary px-5 py-2.5 text-sm font-medium text-white transition hover:bg-primary-dark"
+              >
+                Gotowe
+              </button>
+            </footer>
+          </section>
+        </div>
+      )}
     </div>
   );
 }
