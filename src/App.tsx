@@ -37,6 +37,22 @@ function phColor(ph: number): string {
   return 'bg-indigo-100 text-indigo-700 ring-indigo-200';
 }
 
+function getProductLabel(count: number): string {
+  if (count === 1) return 'produkt';
+
+  const lastTwoDigits = count % 100;
+  if (lastTwoDigits >= 12 && lastTwoDigits <= 14) {
+    return 'produktów';
+  }
+
+  const lastDigit = count % 10;
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'produkty';
+  }
+
+  return 'produktów';
+}
+
 function App() {
   const applications = useMemo(
     () => Array.from(new Set(products.flatMap((p) => p.application))).sort(),
@@ -199,7 +215,7 @@ function App() {
                 {totalSelected}
               </span>
               <span className="hidden text-sm font-medium text-slate-700 sm:inline">
-                {totalSelected === 1 ? 'produkt w planie' : 'produkty w planie'}
+                {getProductLabel(totalSelected)} w planie
               </span>
               {totalSelected > 0 && (
                 <FileText className="h-4 w-4 text-slate-500 transition group-hover:text-primary" />
@@ -286,7 +302,7 @@ function App() {
               Rekomendowane produkty
             </h2>
             <span className="rounded-full bg-slate-200 px-2.5 py-0.5 text-xs font-medium text-slate-700">
-              {filtered.length} {filtered.length === 1 ? 'produkt' : 'produktów'}
+              {filtered.length} {getProductLabel(filtered.length)}
             </span>
           </div>
 
@@ -481,7 +497,26 @@ function App() {
                 {totalSelected}
               </span>
               <span className="text-sm font-medium text-slate-700">
-                {selected.size} środków · {selectedAccessoryIds.size} akcesoriów
+                
+{selected.size}{' '}
+{selected.size === 1
+  ? 'środek'
+  : selected.size % 10 >= 2 &&
+      selected.size % 10 <= 4 &&
+      (selected.size % 100 < 12 || selected.size % 100 > 14)
+    ? 'środki'
+    : 'środków'}
+{' · '}
+{selectedAccessoryIds.size}{' '}
+{selectedAccessoryIds.size === 1
+  ? 'akcesorium'
+  : selectedAccessoryIds.size % 10 >= 2 &&
+      selectedAccessoryIds.size % 10 <= 4 &&
+      (selectedAccessoryIds.size % 100 < 12 ||
+        selectedAccessoryIds.size % 100 > 14)
+    ? 'akcesoria'
+    : 'akcesoriów'}
+
               </span>
               <button
                 type="button"

@@ -136,7 +136,6 @@ function HygienePlan({
       const logoHeight = (logo.height * logoWidth) / logo.width;
       pdf.addImage(logo, 'PNG', 150, 10, logoWidth, logoHeight);
     } catch {
-      // Brak logo nie powinien blokować generowania dokumentu.
     }
 
     pdf.setFontSize(18);
@@ -153,7 +152,7 @@ function HygienePlan({
       autoTable(pdf, {
         startY: nextY,
         head: [[
-          'Zdjęcie',
+          '',
           'Produkt',
           'pH',
           'Dozowanie',
@@ -232,34 +231,35 @@ function HygienePlan({
       pdf.setFontSize(12);
       pdf.text('Akcesoria i artykuły higieniczne', 15, nextY - 3);
 
+
+      // Wczytujemy zdjęcia akcesoriów przed utworzeniem tabeli PDF.
+      const accessoryImages = new Map<string, HTMLImageElement>();
+
+      for (const accessory of selectedAccessories) {
+        if (!accessory.image) continue;
+
+        try {
+          const image = await loadImage(accessory.image);
+          accessoryImages.set(accessory.id, image);
+        } catch {
+          // Pomijamy niedostępne zdjęcia.
+        }
+      }
+
       autoTable(pdf, {
         startY: nextY,
         head: [[
-          'Nazwa produktu',
+          '',
+          'Produkt',
           'Kategoria',
           'Zastosowanie',
-          'Informacje dodatkowe',
         ]],
-        body: selectedAccessories.map((accessory) => {
-          const details: string[] = [];
-
-          if (accessory.type) details.push(`Typ: ${accessory.type}`);
-          if (accessory.material) details.push(`Materiał: ${accessory.material}`);
-          if (accessory.rollDiameter != null) {
-            details.push(`Średnica rolki: ${accessory.rollDiameter} cm`);
-          }
-          if (accessory.capacity != null) {
-            details.push(`Pojemność: ${accessory.capacity} l`);
-          }
-          if (accessory.color) details.push(`Kolor: ${accessory.color}`);
-
-          return [
-            accessory.name,
-            accessory.category,
-            accessory.application.join(', '),
-            details.join('\n') || '—',
-          ];
-        }),
+        body: selectedAccessories.map((accessory) => [
+          '',
+          accessory.name,
+          accessory.category,
+          accessory.application.join(', '),
+        ]),
         styles: {
           font: 'Montserrat',
           fontStyle: 'normal',
@@ -278,20 +278,65 @@ function HygienePlan({
           valign: 'middle',
         },
         columnStyles: {
-          0: { cellWidth: 55 },
-          1: { cellWidth: 35 },
-          2: { cellWidth: 45 },
-          3: { cellWidth: 47 },
+          0: { cellWidth: 18 }, // Zdjęcie
+          1: { cellWidth: 50 }, // Nazwa produktu
+          2: { cellWidth: 45 }, // Kategoria
+          3: { cellWidth: 69 }, // Zastosowanie
         },
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
+        didDrawCell: (data) => {
+          if (data.section !== 'body' || data.column.index !== 0) {
+            return;
+          }
+
+          const accessory = selectedAccessories[data.row.index];
+          const image = accessoryImages.get(accessory.id);
+
+          if (!image) return;
+
+          try {
+            const imageWidth = 12;
+            const imageHeight = (image.height * imageWidth) / image.width;
+
+            pdf.addImage(
+              image,
+              'JPEG',
+              data.cell.x + 2,
+              data.cell.y + 2,
+              imageWidth,
+              Math.min(imageHeight, 16),
+            );
+          } catch {
+            // Pomijamy zdjęcia w nieobsługiwanym formacie.
+          }
+        },
       });
+
     }
 
     pdf.save('plan-higieny.pdf');
   };
 
   const totalSelected = selected.length + selectedAccessories.length;
+
+  const getProductLabel = (count: number): string => {
+  if (count === 1) return 'produkt';
+
+  const lastTwoDigits = count % 100;
+
+  if (lastTwoDigits >= 12 && lastTwoDigits <= 14) {
+    return 'produktów';
+  }
+
+  const lastDigit = count % 10;
+
+  if (lastDigit >= 2 && lastDigit <= 4) {
+    return 'produkty';
+  }
+
+  return 'produktów';
+};
 
   const activeCategoryAccessories = expandedCategory
     ? recommendedAccessories.filter(
@@ -317,11 +362,7 @@ function HygienePlan({
             </h1>
             <p className="mt-1 text-sm text-slate-500">
               Wygenerowano {today} · {totalSelected}{' '}
-              {totalSelected === 1
-                ? 'produkt'
-                : totalSelected >= 2 && totalSelected <= 4
-                  ? 'produkty'
-                  : 'produktów'}
+              {getProductLabel(totalSelected)}
             </p>
             <p className="mt-1 text-xs text-slate-400">
               Środki czyszczące: {selected.length} · Akcesoria:{' '}
@@ -367,7 +408,7 @@ function HygienePlan({
           <section>
             <div className="mb-4">
               <h2 className="text-lg font-semibold text-slate-800">
-                Środki czyszczące
+                Chemia
               </h2>
             </div>
 
@@ -520,23 +561,24 @@ function HygienePlan({
                     )}
 
                     <div className="min-w-0 flex-1">
-                      <p className="font-medium text-primary">
-                        {accessory.name}
-                      </p>
+<p className="text-sm font-medium text-primary">
+  {accessory.name}
+</p>
                       <p className="mt-1 text-xs text-slate-500">
                         {accessory.category} ·{' '}
                         {accessory.application.join(', ')}
                       </p>
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() => onToggleAccessory(accessory.id)}
-                      className="inline-flex shrink-0 items-center gap-1.5 rounded-md border border-slate-300 px-3 py-2 text-xs font-medium text-slate-600 transition hover:border-red-200 hover:bg-red-50 hover:text-red-700"
-                    >
-                      <X className="h-3.5 w-3.5" />
-                      Usuń
-                    </button>
+<button
+  type="button"
+  onClick={() => onToggleAccessory(accessory.id)}
+  className="shrink-0 rounded-md p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
+  aria-label={`Usuń ${accessory.name} z planu`}
+  title="Usuń z planu"
+>
+  <X className="h-4 w-4" />
+</button>
                   </li>
                 ))}
               </ul>
