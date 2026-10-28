@@ -64,11 +64,10 @@ function App() {
   const [application, setApplication] = useState('');
   const [frequency, setFrequency] = useState('');
   const [phRange, setPhRange] = useState<PhRangeKey>('all');
+  const [productType, setProductType] = useState('');
 
-  // Chemia jest nadal identyfikowana po nazwie produktu.
   const [selected, setSelected] = useState<Set<string>>(new Set());
 
-  // Akcesoria mają osobny wybór, identyfikowany po id.
   const [selectedAccessoryIds, setSelectedAccessoryIds] =
     useState<Set<string>>(new Set());
 
@@ -82,6 +81,7 @@ function App() {
     () =>
       products.filter((p) => {
         if (application && !p.application.includes(application)) return false;
+        if (productType && p.type !== productType) return false;
         if (frequency && !p.frequency.includes(frequency)) return false;
         if (
           phRange !== 'all' &&
@@ -91,7 +91,7 @@ function App() {
         }
         return true;
       }),
-    [application, frequency, phRange, activeRange],
+    [application, frequency, phRange, activeRange, productType],
   );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
@@ -103,7 +103,7 @@ function App() {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [application, frequency, phRange]);
+  }, [application, frequency, phRange, productType]);
 
   const selectedProducts = useMemo(
     () => products.filter((p) => selected.has(p.name)),
@@ -116,12 +116,13 @@ function App() {
   );
 
   const hasFilters =
-    application !== '' || frequency !== '' || phRange !== 'all';
+    application !== '' || frequency !== '' || phRange !== 'all' || productType !== '';
 
   const reset = () => {
     setApplication('');
     setFrequency('');
     setPhRange('all');
+    setProductType('');
     setCurrentPage(1);
   };
 
@@ -243,7 +244,7 @@ function App() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <div>
               <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
                 <Layers className="h-3.5 w-3.5" />
@@ -293,6 +294,22 @@ function App() {
                 ))}
               </select>
             </div>
+            <div>
+  <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+    <FlaskConical className="h-3.5 w-3.5" />
+    Rodzaj
+  </label>
+  <select
+    value={productType}
+    onChange={(e) => setProductType(e.target.value)}
+    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 shadow-sm focus:border-slate-900 focus:outline-none focus:ring-1 focus:ring-slate-900"
+  >
+    <option value="">Wszystkie</option>
+    <option value="Koncentrat">Koncentrat</option>
+    <option value="Gotowy do użycia">Gotowy do użycia</option>
+    <option value="Żel">Żel</option>
+  </select>
+</div>
           </div>
         </section>
 
