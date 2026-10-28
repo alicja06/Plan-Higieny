@@ -695,14 +695,6 @@ function HygienePlan({
                 >
                   {expandedCategory}
                 </h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Wybierz produkty do planu higieny. Wybrane pozycje pozostaną
-                  zaznaczone po zamknięciu okna.
-                </p>
-                <p className="mt-2 text-xs text-slate-400">
-                  Liczba produktów w kategorii:{' '}
-                  {activeCategoryAccessories.length}
-                </p>
               </div>
 
               <button
