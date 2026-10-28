@@ -1,12 +1,3 @@
-/**
- * Akcesoria i artykuły higieniczne do konfiguratora planu higieny.
- *
- * Produkty są pogrupowane według kategorii sklepowych. Kategoria i zastosowania
- * są przypisane bezpośrednio do każdego rekordu — bez funkcji zmieniających dane.
- * Pusta tablica application oznacza, że nie przypisano produktu do obszaru
- * bez wystarczających informacji o jego przeznaczeniu.
- */
-
 export type AccessoryApplication =
   | 'Kuchnia'
   | 'Mycie podłóg'
@@ -839,7 +830,7 @@ export const accessories: Accessory[] = [
     image: '/images/352037.jpg',
   },
 
-  // Kije (4 produktów)
+  // Kije (4 produkty)
   {
     id: 'kij-aluminiowy-140cm-25mm',
     name: 'CleanPRO Kij 140cm aluminiowy śr 25mm',
@@ -892,7 +883,7 @@ export const accessories: Accessory[] = [
     image: '/images/354316.jpg',
   },
 
-  // Pozostałe (2 produktów)
+  // Pozostałe (2 produkty)
   {
     id: 'tablica-sliska-podloga-bez-logo',
     name: 'CleanPRO Tablica Śliska podłoga bez logo',
@@ -1090,7 +1081,7 @@ export const accessories: Accessory[] = [
     image: '/images/czarne-90L-ldpe-25szt.png',
   },
 
-  // Miotły i szczotki (4 produktów)
+  // Miotły i szczotki (4 produkty)
   {
     id: 'szczotka-do-szorowania-27cm',
     name: 'CLEANPRO SZCZOTKA DO SZOROWANIA 27CM',
