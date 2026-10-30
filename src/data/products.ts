@@ -1,5 +1,6 @@
 export interface Product {
   name: string;
+  safetyDataSheetUrl?: string;
   type: string;
   ph: number;
   phLabel: string;
@@ -17,6 +18,7 @@ export interface Product {
 export const products: Product[] = [
   {
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_SZYBY_I_LUSTRA_E1.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'lustra', 'okna', 'szyby samochodowe'],
     areas: {
@@ -34,11 +36,13 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny płyn do mycia powierzchni Biopur E2',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_UNIWERSALNY_E2.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'szkło', 'metal', 'kamień'],
     areas: {
     Kuchnia: ['Blaty'],
     'Dom i biuro': ['Powierzchnie ponadpodłogowe'],
+    Pozostałe: ['Szkło i lustra']
   },
     ph: 7,
     phLabel: '7',
@@ -53,16 +57,15 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny płyn do mycia sanitariatów Biopur E3',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_SANITARIATY_E3.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
-    areas: {
-    Sanitariaty: ['Armatura'],
-  },
+    areas: {Sanitariaty: ['Armatura','WC']},
     ph: 2,
     phLabel: '2',
     usageModes: ['manual'],
     application: ['Sanitariaty'],
-    tasks: ['Armatura'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na kilkanaście sekund, a przy uporczywych zabrudzeniach na 2–3 minuty. Wyczyść powierzchnię, a następnie spłucz wodą lub wytrzyj wilgotną ściereczką.',
@@ -71,17 +74,18 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia powierzchni Biopur E4',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_KONCENTRAT_UNIWERSALNY_E4.pdf',
     type: 'Koncentrat',
     surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'drewno', 'metal'],
     areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    'Dom i biuro': ['Podłogi'],
+    Kuchnia: ['Blaty'],
+    'Dom i biuro': ['Podłogi', 'Powierzchnie ponadpodłogowe'],
   },
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
-    application: ['Dom i biuro', 'Kuchnia'],
-    tasks: ['Blaty', 'Podłogi'],
+    usageModes: ['manual', 'machine'],
+    application: ['Powierzchnie ponadpodłogowe', 'Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię.',
@@ -90,16 +94,15 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia sanitariatów Biopur E5',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_KONCENTRAT_SANITARIATY_E5.pdf',
     type: 'Koncentrat',
     surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
-    areas: {
-    Sanitariaty: ['Armatura'],
-  },
+    areas: {Sanitariaty: ['Armatura', 'Podłogi']},
     ph: 1,
     phLabel: '1',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Sanitariaty'],
-    tasks: ['Armatura', 'WC'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 1% (100 ml koncentratu / 10 l roztworu). Nanieś przygotowany roztwór na powierzchnię i wyczyść.',
@@ -108,23 +111,15 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg manualnie Biopur E6',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_KONCENTRAT_DO_MYCIA_POD%C5%81OGI_E6.pdf',
     type: 'Koncentrat',
-    surfaces: [
-  "PCV",
-  "linoleum",
-  "kauczuk",
-  "płytki ceramiczne",
-  "posadzki kamienne",
-  "gres"
-  ],
-    areas: {
-  'Dom i biuro': ['Podłogi'],    Kuchnia: ['Podłogi'],
-  },
+    surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres'],
+    areas: {'Dom i biuro': ['Podłogi'], Kuchnia: ['Podłogi'],},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
-    application: ['Dom i biuro', 'Kuchnia'],
-    tasks: ['Podłogi'],
+    application: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -133,24 +128,15 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny koncentrat do mycia podłóg maszynowo Biopur E9',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_KONCENTRAT_DO_MYCIA_POD%C5%81OGI_E9.pdf',
     type: 'Koncentrat',
-    surfaces: [
-  "PCV",
-  "linoleum",
-  "kauczuk",
-  "płytki ceramiczne",
-  "posadzki kamienne",
-  "gres"
-],
-    areas: {
-    'Dom i biuro': ['Podłogi'],
-    Kuchnia: ['Podłogi'],
-  },
+    surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres'],
+    areas: {'Dom i biuro': ['Podłogi'], Kuchnia: ['Podłogi']},
     ph: 7,
     phLabel: '7',
     usageModes: ['machine'],
-    application: ['Dom i biuro', 'Kuchnia'],
-    tasks: ['Podłogi'],
+    application: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -159,17 +145,15 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny żel do WC Biopur E10',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR__WC_%C5%BBEL_E10.pdf',
     type: 'Żel',
     surfaces: ['toalety', 'pisuary'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Sanitariaty: ['WC'],},
     ph: 2,
     phLabel: '2',
     usageModes: ['manual'],
     application: ['Sanitariaty'],
-    tasks: ['WC'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Przeczyść muszlę wodą, używając szczotki, aby zwiększyć skuteczność działania żelu. Odkręć korek tak, aby aplikator pozostał na miejscu. Rozprowadź żel pod obrzeżem muszli klozetowej lub pisuaru. Pozostaw do 15 minut w celu aktywnego działania. Ponownie użyj szczotki w celu pozbycia się rozpuszczonych zabrudzeń i spłucz muszlę wodą.',
@@ -178,12 +162,10 @@ export const products: Product[] = [
   },
   {
     name: 'Ekologiczny uniwersalny odtłuszczacz Biopur E11',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_BURNY_CLEANER_E11_2026.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['grille', 'płyty grzewcze', 'okapy kuchenne', 'stal', 'piekarniki', 'kominki'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Piekarniki i grille']},
     ph: 14,
     phLabel: '14',
     usageModes: ['manual'],
@@ -197,17 +179,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny płyn do czyszczenia powierzchni szklanych Biopur F100',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F100_Universal_Glass_Cleaner.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'okna', 'tworzywo sztuczne', 'lustra', 'szyby samochodowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Szkło i lustra']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
     application: ['Mycie szyb'],
-    tasks: [''],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ściereczkę preparatem. Przetrzyj powierzchnię, równomiernie rozprowadzając płyn, po czym wytrzyj do sucha lub użyj ściągaczki gumowej.',
@@ -216,17 +196,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny płyn do mycia ekranów Biopur F101',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F101_LCD_CLEANER.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['tworzywo sztuczne', 'ekrany', 'urządzenia biurowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {'Dom i biuro': ['Ekrany']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
-    application: ['Biuro'],
-    tasks: ['Mycie ekranów'],
+    application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Zwilż czystą ściereczkę preparatem. Delikatnie przetrzyj czyszczoną powierzchnię. Pozostaw do wyschnięcia.',
@@ -235,17 +213,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny płyn do czyszczenia powierzchni szklanych Biopur F111',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F111_Glass_cleaner.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'okna', 'tworzywo sztuczne', 'lustra', 'szyby samochodowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Szkło i lustra'],},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
     application: ['Mycie szyb'],
-    tasks: ['Mycie szyb'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ściereczkę preparatem. Przetrzyj powierzchnię, równomiernie rozprowadzając płyn, po czym wytrzyj do sucha lub użyj ściągaczki gumowej.',
@@ -254,17 +230,15 @@ export const products: Product[] = [
   },
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F121, do -25°C',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F121_Freeze_Cleaner1.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['chłodnie', 'mroźnie', 'zamrażarki', 'lodówki'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Urządzenia chłodnicze']},
     ph: 10,
     phLabel: '10',
     usageModes: ['manual'],
     application: ['Kuchnia'],
-    tasks: ['Mycie zimnych powierzchni'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Okresowo'],
     usage:
       'Usuń mechanicznie warstwę lodu powyżej 3 mm. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw na 15 minut. Wyczyść powierzchnię odpowiednim narzędziem (szczotka, pad, szorowarka, gąbka lub ściereczka). Usuń pozostałości preparatu i wytrzyj powierzchnię do sucha.',
@@ -273,17 +247,15 @@ export const products: Product[] = [
   },
   {
     name: 'Niskotemperaturowy środek czyszczący Biopur F122, do -5°C',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F122_Freeze_Light_cleaner1.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['lodówki', 'szkło', 'tworzywo sztuczne'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Urządzenia chłodnicze']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
     application: ['Kuchnia'],
-    tasks: ['Mycie zimnych powierzchni'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Okresowo'],
     usage:
       'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha.',
@@ -292,12 +264,10 @@ export const products: Product[] = [
   },
   {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Berry',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F211_Air_Spray1.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Odświeżanie powietrza']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
@@ -311,12 +281,10 @@ export const products: Product[] = [
   },
   {
     name: 'Odświeżacz powietrza w płynie Biopur F211, Orange',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F211_Air_Spray1.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Odświeżanie powietrza']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
@@ -330,12 +298,10 @@ export const products: Product[] = [
   },
   {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Aquanilla',
-      type: 'Gotowy do użycia',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F212_Air_Spray_Premium_Aquanilla1.pdf',
+    type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Odświeżanie powietrza']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
@@ -349,12 +315,10 @@ export const products: Product[] = [
   },
   {
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Thanilla',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/karta-charakterystyki-biopur-f212-thanilla.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Pozostałe: ['Odświeżanie powietrza']},
     ph: 7,
     phLabel: '7',
     usageModes: ['manual'],
@@ -368,17 +332,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur F300',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F300_UNIVERSAL_Floor_Cleaner.pdf',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
-    tasks: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 2% (200 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -387,24 +349,15 @@ export const products: Product[] = [
   },
   {
     name: 'Alkaliczny koncentrat do mycia podłóg Biopur F301',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F301_Alkaline_Floor_Cleaner1.pdf',
     type: 'Koncentrat',
     ph: 11,
     phLabel: '11',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
     tasks: ['Mycie podłóg'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
-    surfaces: [
-  "PCV",
-  "linoleum",
-  "kauczuk",
-  "płytki ceramiczne",
-  "posadzki kamienne",
-  "gres"
-],
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
+    surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 1% (100 ml / 10 l roztworu); doczyszczanie powierzchni: 1–5% (100–500 ml / 10 l roztworu); trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem, a następnie dokładnie spłucz czystą wodą.',
@@ -413,17 +366,15 @@ export const products: Product[] = [
   },
   {
     name: 'Środek myjąco-pielęgnujący do codziennego mycia podłóg Biopur F311',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F311_Floor_Cleaner_&_Care.pdf',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe', 'posadzki kamienne'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
-    tasks: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące', 'Pielęgnacja'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), powierzchnie średnio zabrudzone: 0,5% (50 ml / 10 l roztworu), stare lub trudne zabrudzenia: 2% (200 ml / 10 l roztworu). Nanieś roztwór na powierzchnię i umyj mopem lub innym odpowiednim sprzętem. Pozostaw podłogę do wyschnięcia.',
@@ -432,17 +383,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur F321, Orange',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_Biopur_F321_Floor_Orange.pdf',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
-    tasks: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 2% (200 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -451,17 +400,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur Premium F322, Aquanilla',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F322_Floor_Cleaner_Aquanilla.pdf',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
-    tasks: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 1% (100 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -470,17 +417,15 @@ export const products: Product[] = [
   },
   {
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur Premium F322, Thanilla',
+    safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/KCH_-_BIOPUR_F322_Floor_Cleaner_Thanilla.pdf',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
-    areas: {
-    Kuchnia: ['Blaty', 'Odtłuszczanie'],
-    Sanitariaty: ['Umywalki'],
-  },
+    areas: {Kuchnia: ['Podłogi'], 'Dom i biuro': ['Podłogi']},
     ph: 7,
     phLabel: '7',
-    usageModes: ['manual'],
+    usageModes: ['manual', 'machine'],
     application: ['Mycie podłóg'],
-    tasks: ['Mycie podłóg'],
+    tasks: ['Mycie bieżące'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 1% (100 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',

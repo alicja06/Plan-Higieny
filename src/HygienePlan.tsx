@@ -12,6 +12,7 @@ import type { Product } from './data/products';
 import type { Accessory } from './data/accessories';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import QRCode from 'qrcode';
 import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
 
 type Props = {
@@ -128,8 +129,7 @@ function HygienePlan({
     });
 
   const generatePDF = async () => {
-    const pdf = new jsPDF('p', 'mm', 'a4');
-
+    const pdf = new jsPDF('l', 'mm', 'a4');
     pdf.addFileToVFS('Montserrat-Regular.ttf', MontserratRegular);
     pdf.addFont('Montserrat-Regular.ttf', 'Montserrat', 'normal');
     pdf.setFont('Montserrat', 'normal');
@@ -138,8 +138,7 @@ function HygienePlan({
       const logo = await loadImage('/images/logo-kawido.png');
       const logoWidth = 45;
       const logoHeight = (logo.height * logoWidth) / logo.width;
-      pdf.addImage(logo, 'PNG', 150, 10, logoWidth, logoHeight);
-    } catch {
+      pdf.addImage(logo, 'PNG', 237, 10, logoWidth, logoHeight);    } catch {
     }
 
     pdf.setFontSize(18);
@@ -150,6 +149,31 @@ function HygienePlan({
     let nextY = 50;
 
     if (selected.length > 0) {
+      // Generujemy kody QR przed utworzeniem tabeli.
+      const qrCodes = new Map<number, string>();
+
+      for (const [index, product] of selected.entries()) {
+        if (!product.safetyDataSheetUrl) continue;
+
+        try {
+          const qrCode = await QRCode.toDataURL(
+            product.safetyDataSheetUrl,
+            {
+              errorCorrectionLevel: 'M',
+              margin: 1,
+              width: 160,
+            },
+          );
+
+          qrCodes.set(index, qrCode);
+        } catch (error) {
+          console.error(
+            `Nie udało się wygenerować kodu QR dla produktu ${product.name}:`,
+            error,
+          );
+        }
+      }
+
       pdf.setFontSize(12);
       pdf.text('Środki czyszczące', 15, 45);
 
@@ -163,7 +187,8 @@ function HygienePlan({
           'Zastosowanie',
           'Instrukcja użycia',
           'Częstotliwość',
-        ]],
+          'Karta\ncharakterystyki',        
+              ]],
         body: selected.map((product) => [
           '',
           product.name,
@@ -172,6 +197,7 @@ function HygienePlan({
           product.application.join(', '),
           product.usage,
           frequencyValues[product.name] ?? product.frequency.join(', '),
+          '',
         ]),
         styles: {
           font: 'Montserrat',
@@ -187,36 +213,74 @@ function HygienePlan({
           font: 'Montserrat',
           fontStyle: 'normal',
           fontSize: 8,
-          halign: 'center',
+          halign: 'left',
           valign: 'middle',
         },
-columnStyles: {
-  0: { cellWidth: 16 }, // zdjęcie
-  1: { cellWidth: 31 }, // produkt
-  2: { cellWidth: 10 }, // pH
-  3: { cellWidth: 24 }, // dozowanie
-  4: { cellWidth: 27 }, // zastosowanie
-  5: { cellWidth: 42 }, // instrukcja użycia
-  6: { cellWidth: 30 }, // częstotliwość
-},
+        columnStyles: {
+          0: { cellWidth: 18 },
+          1: { cellWidth: 42 },
+          2: { cellWidth: 12 },
+          3: { cellWidth: 28 },
+          4: { cellWidth: 38 },
+          5: { cellWidth: 52 },
+          6: { cellWidth: 34 },
+          7: { cellWidth: 39 },
+        },
+        margin: { left: 10, right: 10 },
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
-        didDrawCell: (data) => {
-          if (data.section === 'body' && data.column.index === 0) {
-            const product = selected[data.row.index];
 
-            if (product?.image) {
-              try {
-                pdf.addImage(
-                  product.image,
-                  'JPEG',
-                  data.cell.x + 2,
-                  data.cell.y + 2,
-                  12,
-                  12,
-                );
-              } catch {
-              }
+      didParseCell: (data) => {
+        if (data.section === 'head' && data.column.index === 7) {
+          data.cell.text = ['Karta', 'charakterystyki'];
+        }
+          if (
+            data.section === 'body' &&
+            data.column.index === 7 &&
+            qrCodes.has(data.row.index)
+          ) {
+            data.cell.styles.minCellHeight = 24;
+          }
+        },
+
+        didDrawCell: (data) => {
+          if (data.section !== 'body') return;
+
+          const product = selected[data.row.index];
+
+          // Zdjęcie produktu.
+          if (data.column.index === 0 && product?.image) {
+            try {
+              pdf.addImage(
+                product.image,
+                'JPEG',
+                data.cell.x + 1,
+                data.cell.y + 2,
+                12,
+                12,
+              );
+            } catch {
+              // Pomijamy zdjęcie, jeśli nie można go dodać.
+            }
+          }
+
+          // Kod QR do karty charakterystyki.
+          if (data.column.index === 7) {
+            const qrCode = qrCodes.get(data.row.index);
+
+            if (!qrCode) return;
+
+            try {
+              pdf.addImage(
+                qrCode,
+                'PNG',
+                data.cell.x + 3,
+                data.cell.y + 3,
+                18,
+                18,
+              );
+            } catch (error) {
+              console.error('Nie udało się dodać kodu QR do PDF:', error);
             }
           }
         },
@@ -229,14 +293,13 @@ columnStyles: {
     }
 
     if (selectedAccessories.length > 0) {
-      if (nextY > 255) {
+      if (nextY > 175) {
         pdf.addPage();
         nextY = 20;
       }
 
       pdf.setFontSize(12);
       pdf.text('Akcesoria i artykuły higieniczne', 15, nextY - 3);
-
 
       // Wczytujemy zdjęcia akcesoriów przed utworzeniem tabeli PDF.
       const accessoryImages = new Map<string, HTMLImageElement>();
@@ -248,7 +311,6 @@ columnStyles: {
           const image = await loadImage(accessory.image);
           accessoryImages.set(accessory.id, image);
         } catch {
-          // Pomijamy niedostępne zdjęcia.
         }
       }
 
@@ -270,7 +332,7 @@ columnStyles: {
           font: 'Montserrat',
           fontStyle: 'normal',
           fontSize: 8,
-          cellPadding: 3,
+          cellPadding: 2.5,
           overflow: 'linebreak',
           valign: 'top',
         },
@@ -280,14 +342,18 @@ columnStyles: {
           font: 'Montserrat',
           fontStyle: 'normal',
           fontSize: 8,
-          halign: 'center',
+          halign: 'left',
           valign: 'middle',
         },
         columnStyles: {
-          0: { cellWidth: 18 }, // Zdjęcie
-          1: { cellWidth: 50 }, // Nazwa produktu
-          2: { cellWidth: 45 }, // Kategoria
-          3: { cellWidth: 69 }, // Zastosowanie
+          0: { cellWidth: 18 },
+          1: { cellWidth: 100 },
+          2: { cellWidth: 65 },
+          3: { cellWidth: 80 },
+        },
+        margin: {
+          left: 10,
+          right: 10,
         },
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
@@ -318,7 +384,6 @@ columnStyles: {
           }
         },
       });
-
     }
 
     pdf.save('plan-higieny.pdf');
@@ -327,22 +392,22 @@ columnStyles: {
   const totalSelected = selected.length + selectedAccessories.length;
 
   const getProductLabel = (count: number): string => {
-  if (count === 1) return 'produkt';
+    if (count === 1) return 'produkt';
 
-  const lastTwoDigits = count % 100;
+    const lastTwoDigits = count % 100;
 
-  if (lastTwoDigits >= 12 && lastTwoDigits <= 14) {
+    if (lastTwoDigits >= 12 && lastTwoDigits <= 14) {
+      return 'produktów';
+    }
+
+    const lastDigit = count % 10;
+
+    if (lastDigit >= 2 && lastDigit <= 4) {
+      return 'produkty';
+    }
+
     return 'produktów';
-  }
-
-  const lastDigit = count % 10;
-
-  if (lastDigit >= 2 && lastDigit <= 4) {
-    return 'produkty';
-  }
-
-  return 'produktów';
-};
+  };
 
   const activeCategoryAccessories = expandedCategory
     ? recommendedAccessories.filter(
@@ -444,7 +509,18 @@ columnStyles: {
                         />
                       </td>
                       <td className="px-3 py-3 font-medium text-primary">
-                        {product.name}
+                        <div>{product.name}</div>
+
+                        {product.safetyDataSheetUrl && (
+                          <a
+                            href={product.safetyDataSheetUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="mt-1 inline-block text-xs font-normal text-primary underline hover:text-primary-dark"
+                          >
+                            Karta charakterystyki (PDF)
+                          </a>
+                        )}
                       </td>
                       <td className="px-3 py-3 text-slate-600">
                         {product.surfaces.join(', ')}
@@ -465,17 +541,17 @@ columnStyles: {
                       <td className="px-3 py-3 text-slate-600">
                         {product.usage}
                       </td>
-<td className="px-3 py-3">
-  <input
-    type="text"
-    value={frequencyValues[product.name] ?? product.frequency.join(', ')}
-    onChange={(e) =>
-      onFrequencyChange(product.name, e.target.value)
-    }
-    placeholder="Wpisz częstotliwość"
-    className="w-full min-w-[150px] rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-  />
-</td>
+                      <td className="px-3 py-3">
+                        <input
+                          type="text"
+                          value={frequencyValues[product.name] ?? product.frequency.join(', ')}
+                          onChange={(e) =>
+                            onFrequencyChange(product.name, e.target.value)
+                          }
+                          placeholder="Wpisz częstotliwość"
+                          className="w-full min-w-[150px] rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                      </td>
                       <td className="px-3 py-3">
                         <button
                           type="button"
@@ -508,6 +584,17 @@ columnStyles: {
                       <h3 className="font-medium text-primary">
                         {product.name}
                       </h3>
+
+                      {product.safetyDataSheetUrl && (
+                        <a
+                          href={product.safetyDataSheetUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-block text-sm text-primary underline hover:text-primary-dark"
+                        >
+                          Karta charakterystyki (PDF)
+                        </a>
+                      )}
                       <span
                         className={`mt-2 inline-flex rounded-md px-2 py-0.5 text-xs font-semibold ring-1 ${phColor(product.ph)}`}
                       >
@@ -540,20 +627,20 @@ columnStyles: {
                       <dt className="text-slate-500">Instrukcja użycia</dt>
                       <dd>{product.usage}</dd>
                     </div>
-<div>
-  <dt className="text-slate-500">Częstotliwość wykonywania czynności</dt>
-  <dd className="mt-1">
-    <input
-      type="text"
-      value={frequencyValues[product.name] ?? product.frequency.join(', ')}
-      onChange={(e) =>
-        onFrequencyChange(product.name, e.target.value)
-      }
-      placeholder="Wpisz częstotliwość"
-      className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
-    />
-  </dd>
-</div>
+                    <div>
+                      <dt className="text-slate-500">Częstotliwość wykonywania czynności</dt>
+                      <dd className="mt-1">
+                        <input
+                          type="text"
+                          value={frequencyValues[product.name] ?? product.frequency.join(', ')}
+                          onChange={(e) =>
+                            onFrequencyChange(product.name, e.target.value)
+                          }
+                          placeholder="Wpisz częstotliwość"
+                          className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                        />
+                      </dd>
+                    </div>
                   </dl>
                 </article>
               ))}
@@ -561,7 +648,7 @@ columnStyles: {
           </section>
         )}
 
-                {selectedAccessories.length > 0 && (
+        {selectedAccessories.length > 0 && (
           <section>
             <div className="mb-4">
               <h2 className="text-lg font-semibold text-slate-800">
@@ -585,24 +672,24 @@ columnStyles: {
                     )}
 
                     <div className="min-w-0 flex-1">
-<p className="text-sm font-medium text-primary">
-  {accessory.name}
-</p>
+                      <p className="text-sm font-medium text-primary">
+                        {accessory.name}
+                      </p>
                       <p className="mt-1 text-xs text-slate-500">
                         {accessory.category} ·{' '}
                         {accessory.application.join(', ')}
                       </p>
                     </div>
 
-<button
-  type="button"
-  onClick={() => onToggleAccessory(accessory.id)}
-  className="shrink-0 rounded-md p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
-  aria-label={`Usuń ${accessory.name} z planu`}
-  title="Usuń z planu"
->
-  <X className="h-4 w-4" />
-</button>
+                    <button
+                      type="button"
+                      onClick={() => onToggleAccessory(accessory.id)}
+                      className="shrink-0 rounded-md p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
+                      aria-label={`Usuń ${accessory.name} z planu`}
+                      title="Usuń z planu"
+                    >
+                      <X className="h-4 w-4" />
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -685,8 +772,6 @@ columnStyles: {
             </div>
           )}
         </section>
-
-
       </main>
 
       <footer className="border-t border-slate-200 bg-white">
@@ -871,7 +956,10 @@ columnStyles: {
 
             <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-slate-200 bg-white px-4 py-3 sm:px-6 sm:py-4">
               <p className="text-sm text-slate-500">
-                W planie: <span className="font-semibold text-slate-800">{selectedAccessories.length}</span>
+                W planie:{' '}
+                <span className="font-semibold text-slate-800">
+                  {selectedAccessories.length}
+                </span>
               </p>
               <button
                 type="button"
