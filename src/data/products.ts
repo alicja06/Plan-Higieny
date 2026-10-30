@@ -5,10 +5,13 @@ export interface Product {
   phLabel: string;
   application: string[];
   surfaces: string[];
+  areas: Record<string, string[]>;
+  tasks: string[];
   frequency: string[];
   usage: string;
   dosage: string;
   image: string;
+  usageModes: ('manual' | 'machine')[];
 }
 
 export const products: Product[] = [
@@ -16,9 +19,13 @@ export const products: Product[] = [
     name: 'Ekologiczny płyn do czyszczenia powierzchni szklanych Biopur E1',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'lustra', 'okna', 'szyby samochodowe'],
+    areas: {
+    Pozostałe: ['Szkło i lustra']},
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie szyb'],
+    tasks: ['Mycie bieżące'],  
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ścierkę płynem. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -29,9 +36,15 @@ export const products: Product[] = [
     name: 'Ekologiczny płyn do mycia powierzchni Biopur E2',
     type: 'Gotowy do użycia',
     surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'szkło', 'metal', 'kamień'],
+    areas: {
+    Kuchnia: ['Blaty'],
+    'Dom i biuro': ['Powierzchnie ponadpodłogowe'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Mycie bieżące'],  
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz płynem czystą ścierkę. Wyczyść powierzchnię i wytrzyj ją do sucha. W przypadku silniejszych zabrudzeń powtórz czynność.',
@@ -42,9 +55,14 @@ export const products: Product[] = [
     name: 'Ekologiczny uniwersalny płyn do mycia sanitariatów Biopur E3',
     type: 'Gotowy do użycia',
     surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
+    areas: {
+    Sanitariaty: ['Armatura'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Armatura'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj raz czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na kilkanaście sekund, a przy uporczywych zabrudzeniach na 2–3 minuty. Wyczyść powierzchnię, a następnie spłucz wodą lub wytrzyj wilgotną ściereczką.',
@@ -55,9 +73,15 @@ export const products: Product[] = [
     name: 'Ekologiczny uniwersalny koncentrat do mycia powierzchni Biopur E4',
     type: 'Koncentrat',
     surfaces: ['tworzywa sztuczne', 'powierzchnie lakierowane', 'emalia', 'drewno', 'metal'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    'Dom i biuro': ['Podłogi'],
+  },
     ph: 7,
     phLabel: '7',
-    application: ['Mycie podłóg', 'Powierzchnie ponadpodłogowe'],
+    usageModes: ['manual'],
+    application: ['Dom i biuro', 'Kuchnia'],
+    tasks: ['Blaty', 'Podłogi'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu),trudne zabrudzenia: 1% (100 ml / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię.',
@@ -68,9 +92,14 @@ export const products: Product[] = [
     name: 'Ekologiczny uniwersalny koncentrat do mycia sanitariatów Biopur E5',
     type: 'Koncentrat',
     surfaces: ['urządzenia sanitarne', 'armatura łazienkowa', 'kabiny prysznicowe', 'wanny kąpielowe', 'glazura i terakota'],
+    areas: {
+    Sanitariaty: ['Armatura'],
+  },
     ph: 1,
     phLabel: '1',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Armatura', 'WC'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 1% (100 ml koncentratu / 10 l roztworu). Nanieś przygotowany roztwór na powierzchnię i wyczyść.',
@@ -88,9 +117,14 @@ export const products: Product[] = [
   "posadzki kamienne",
   "gres"
   ],
+    areas: {
+  'Dom i biuro': ['Podłogi'],    Kuchnia: ['Podłogi'],
+  },
     ph: 7,
     phLabel: '7',
-    application: ['Mycie podłóg'],
+    usageModes: ['manual'],
+    application: ['Dom i biuro', 'Kuchnia'],
+    tasks: ['Podłogi'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -108,9 +142,15 @@ export const products: Product[] = [
   "posadzki kamienne",
   "gres"
 ],
+    areas: {
+    'Dom i biuro': ['Podłogi'],
+    Kuchnia: ['Podłogi'],
+  },
     ph: 7,
     phLabel: '7',
-    application: ['Mycie podłóg'],
+    usageModes: ['machine'],
+    application: ['Dom i biuro', 'Kuchnia'],
+    tasks: ['Podłogi'],
     frequency: ['Codziennie'],
     usage:
       'Lekkie zabrudzenia: 0,25% (25 ml koncentratu / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml koncentratu / 10 l roztworu), trudne zabrudzenia: 2% (200 ml koncentratu / 10 l roztworu). Nanieś roztwór, równomiernie pokrywając powierzchnię.',
@@ -121,9 +161,15 @@ export const products: Product[] = [
     name: 'Ekologiczny uniwersalny żel do WC Biopur E10',
     type: 'Żel',
     surfaces: ['toalety', 'pisuary'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['WC'],
     frequency: ['Codziennie'],
     usage:
       'Przeczyść muszlę wodą, używając szczotki, aby zwiększyć skuteczność działania żelu. Odkręć korek tak, aby aplikator pozostał na miejscu. Rozprowadź żel pod obrzeżem muszli klozetowej lub pisuaru. Pozostaw do 15 minut w celu aktywnego działania. Ponownie użyj szczotki w celu pozbycia się rozpuszczonych zabrudzeń i spłucz muszlę wodą.',
@@ -134,9 +180,15 @@ export const products: Product[] = [
     name: 'Ekologiczny uniwersalny odtłuszczacz Biopur E11',
     type: 'Gotowy do użycia',
     surfaces: ['grille', 'płyty grzewcze', 'okapy kuchenne', 'stal', 'piekarniki', 'kominki'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
+    usageModes: ['manual'],
     application: ['Kuchnia'],
+    tasks: ['Odtłuszczanie'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 2–5 minut. Wyczyść powierzchnię. Dokładnie spłucz wodą i wytrzyj do sucha.',
@@ -147,9 +199,15 @@ export const products: Product[] = [
     name: 'Uniwersalny płyn do czyszczenia powierzchni szklanych Biopur F100',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'okna', 'tworzywo sztuczne', 'lustra', 'szyby samochodowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie szyb'],
+    tasks: [''],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ściereczkę preparatem. Przetrzyj powierzchnię, równomiernie rozprowadzając płyn, po czym wytrzyj do sucha lub użyj ściągaczki gumowej.',
@@ -160,9 +218,15 @@ export const products: Product[] = [
     name: 'Uniwersalny płyn do mycia ekranów Biopur F101',
     type: 'Gotowy do użycia',
     surfaces: ['tworzywo sztuczne', 'ekrany', 'urządzenia biurowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
-    application: ['Powierzchnie ponadpodłogowe'],
+    usageModes: ['manual'],
+    application: ['Biuro'],
+    tasks: ['Mycie ekranów'],
     frequency: ['Codziennie'],
     usage:
       'Zwilż czystą ściereczkę preparatem. Delikatnie przetrzyj czyszczoną powierzchnię. Pozostaw do wyschnięcia.',
@@ -173,9 +237,15 @@ export const products: Product[] = [
     name: 'Uniwersalny płyn do czyszczenia powierzchni szklanych Biopur F111',
     type: 'Gotowy do użycia',
     surfaces: ['przeszklenia wewnętrzne', 'okna', 'tworzywo sztuczne', 'lustra', 'szyby samochodowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie szyb'],
+    tasks: ['Mycie szyb'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czystą ściereczkę preparatem. Przetrzyj powierzchnię, równomiernie rozprowadzając płyn, po czym wytrzyj do sucha lub użyj ściągaczki gumowej.',
@@ -186,9 +256,15 @@ export const products: Product[] = [
     name: 'Niskotemperaturowy środek czyszczący Biopur F121, do -25°C',
     type: 'Gotowy do użycia',
     surfaces: ['chłodnie', 'mroźnie', 'zamrażarki', 'lodówki'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 10,
     phLabel: '10',
+    usageModes: ['manual'],
     application: ['Kuchnia'],
+    tasks: ['Mycie zimnych powierzchni'],
     frequency: ['Okresowo'],
     usage:
       'Usuń mechanicznie warstwę lodu powyżej 3 mm. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw na 15 minut. Wyczyść powierzchnię odpowiednim narzędziem (szczotka, pad, szorowarka, gąbka lub ściereczka). Usuń pozostałości preparatu i wytrzyj powierzchnię do sucha.',
@@ -199,9 +275,15 @@ export const products: Product[] = [
     name: 'Niskotemperaturowy środek czyszczący Biopur F122, do -5°C',
     type: 'Gotowy do użycia',
     surfaces: ['lodówki', 'szkło', 'tworzywo sztuczne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Kuchnia'],
+    tasks: ['Mycie zimnych powierzchni'],
     frequency: ['Okresowo'],
     usage:
       'Jeżeli warstwa lodu na powierzchni przekracza 3 mm, przed myciem usuń ją mechanicznie. Nanieś preparat na powierzchnię (bezpośrednio, spryskiwaczem lub gąbką). Pozostaw preparat na powierzchni na co najmniej 2–5 minut. Wyczyść powierzchnię i wytrzyj ją do sucha.',
@@ -212,9 +294,15 @@ export const products: Product[] = [
     name: 'Odświeżacz powietrza w płynie Biopur F211, Berry',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Neutralizacja zapachów'],
+    tasks: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -225,9 +313,15 @@ export const products: Product[] = [
     name: 'Odświeżacz powietrza w płynie Biopur F211, Orange',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Neutralizacja zapachów'],
+    tasks: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -238,9 +332,15 @@ export const products: Product[] = [
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Aquanilla',
       type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Neutralizacja zapachów'],
+    tasks: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -251,9 +351,15 @@ export const products: Product[] = [
     name: 'Odświeżacz powietrza w płynie Biopur Premium F212, Thanilla',
     type: 'Gotowy do użycia',
     surfaces: ['dodatek do roztworów myjących', 'dowolne pomieszczenie'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Neutralizacja zapachów'],
+    tasks: ['Neutralizacja zapachów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Rozpyl płyn równomiernie w pomieszczeniu za pomocą atomizera lub punktowo w trudno dostępnych miejscach. Jako dodatek do roztworów myjących powierzchnie: Rozcieńcz 10–50 ml środka w 10 l wody.',
@@ -264,9 +370,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur F300',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 2% (200 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -278,7 +390,13 @@ export const products: Product[] = [
     type: 'Koncentrat',
     ph: 11,
     phLabel: '11',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     surfaces: [
   "PCV",
   "linoleum",
@@ -297,9 +415,15 @@ export const products: Product[] = [
     name: 'Środek myjąco-pielęgnujący do codziennego mycia podłóg Biopur F311',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe', 'posadzki kamienne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), powierzchnie średnio zabrudzone: 0,5% (50 ml / 10 l roztworu), stare lub trudne zabrudzenia: 2% (200 ml / 10 l roztworu). Nanieś roztwór na powierzchnię i umyj mopem lub innym odpowiednim sprzętem. Pozostaw podłogę do wyschnięcia.',
@@ -310,9 +434,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur F321, Orange',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 2% (200 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -323,9 +453,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur Premium F322, Aquanilla',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 1% (100 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -336,9 +472,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do mycia podłóg Biopur Premium F322, Thanilla',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml / 10 l roztworu), trudne zabrudzenia: do 1% (100 ml / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem i pozostaw do wyschnięcia.',
@@ -349,9 +491,15 @@ export const products: Product[] = [
     name: 'Silnie kwasowy koncentrat do mycia podłóg Biopur F331',
     type: 'Koncentrat',
     surfaces: ['płytki ceramiczne', 'gres'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['W razie potrzeby'],
     usage:
       'Mycie bieżące: 1% (100 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Wyczyść powierzchnię uzyskanym roztworem, a następnie spłucz dokładnie wodą.',
@@ -362,9 +510,15 @@ export const products: Product[] = [
     name: 'Silnie zasadowy koncentrat do mycia podłóg Biopur F341',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne', 'posadzki akrylowe'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['W razie potrzeby'],
     usage:
       'Mycie bieżące: 0,5% (50 ml / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i rozprowadź równomiernie. Po umyciu powierzchni spłucz dokładnie wodą.',
@@ -375,9 +529,15 @@ export const products: Product[] = [
     name: 'Silnie rozpuszczalnikowy koncentrat do mycia podłóg Biopur F351',
     type: 'Koncentrat',
     surfaces: ['PCV', 'linoleum', 'kauczuk', 'płytki ceramiczne', 'posadzki kamienne', 'gres', 'tworzywo sztuczne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 12,
     phLabel: '12',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['W razie potrzeby'],
     usage:
       'Przygotuj roztwór: 10–50% do mycia ręcznego, 1–5% do automatów i myjek ciśnieniowych. Umyj powierzchnię ręcznie lub maszynowo. Spłucz dokładnie wodą.',
@@ -388,9 +548,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do czyszczenia powierzchni Biopur F400',
     type: 'Koncentrat',
     surfaces: ['powierzchnie lakierowane', 'emalia', 'szkło', 'metal', 'kamień', 'tworzywo sztuczne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Mycie powierzchni'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 1% (100 ml środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem. Pozostaw do wyschnięcia lub wytrzyj do sucha.',
@@ -401,9 +567,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, neutralny koncentrat do czyszczenia powierzchni Biopur F421',
     type: 'Koncentrat',
     surfaces: ['powierzchnie lakierowane', 'emalia', 'szkło', 'metal', 'kamień', 'tworzywo sztuczne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Mycie powierzchni'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 1% (100 ml środka / 10 l roztworu). Umyj powierzchnię przygotowanym roztworem. Pozostaw do wyschnięcia lub wytrzyj do sucha.',
@@ -414,9 +586,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, kwasowy koncentrat do czyszczenia sanitariatów Biopur F500',
     type: 'Koncentrat',
     surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'armatura chromowana', 'kabiny prysznicowe', 'wanny', 'urządzenia sanitarne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 1,
     phLabel: '1',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 10% (1 l środka / 10 l roztworu), silny kamień: 50% (0,5 l środka / 1 l wody) i stosować w butelce ze spryskiwaczem. Umyj powierzchnię przygotowanym roztworem. Dokładnie spłucz zimną wodą.',
@@ -427,9 +605,15 @@ export const products: Product[] = [
     name: 'Pianka do czyszczenia sanitariatów Biopur F511',
     type: 'Gotowy do użycia',
     surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'armatura chromowana', 'szkło', 'tworzywo sztuczne', 'wanny', 'urządzenia sanitarne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Codziennie'],
     usage:
       'Nanieś piankę równomiernie na czyszczoną powierzchnię. Pozostaw na 2–5 minut w zależności od stopnia zabrudzenia. Zmyj przy pomocy gąbki i spłucz dokładnie zimną wodą.',
@@ -440,9 +624,15 @@ export const products: Product[] = [
     name: 'Żel do czyszczenia sanitariatów Biopur F512',
     type: 'Gotowy do użycia',
     surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'armatura chromowana', 'kabiny prysznicowe', 'wanny', 'urządzenia sanitarne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Codziennie'],
     usage:
       'Nanieś żel równomiernie na czyszczoną powierzchnię. Pozostaw na 2–5 minut. Usuń zabrudzenia przy pomocy gąbki lub szczotki. Spłucz dokładnie zimną wodą.',
@@ -453,9 +643,15 @@ export const products: Product[] = [
     name: 'Kwasowy koncentrat do czyszczenia sanitariatów Biopur F521',
     type: 'Koncentrat',
     surfaces: ['tworzywo sztuczne', 'płytki ceramiczne', 'kabiny prysznicowe', 'stal nierdzewna'],
+    areas: {
+      Kuchnia: ['Blaty', 'Odtłuszczanie'],
+      Sanitariaty: ['Umywalki'],
+    },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,25% (25 ml środka / 10 l roztworu), średnie zabrudzenia: 0,5% (50 ml środka / 10 l roztworu), trudne zabrudzenia: 10% (1 l środka / 10 l roztworu), silnie zakamienione powierzchnie: 50% (0,5 l środka w 1 l wody + spryskiwacz). Umyj powierzchnię przygotowanym roztworem. Dokładnie spłucz zimną wodą.',
@@ -466,9 +662,15 @@ export const products: Product[] = [
     name: 'Silnie kwasowy koncentrat do czyszczenia sanitariatów Biopur F522',
     type: 'Koncentrat',
     surfaces: ['stal nierdzewna', 'płytki ceramiczne', 'mokre i basenowe powierzchnie', 'wanny'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Okresowo', 'W razie potrzeby'],
     usage:
       'Mycie bieżące: 0,5% (50 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu). Nanieś roztwór na czyszczoną powierzchnię i wyczyść.Dokładnie spłucz powierzchnię wodą.',
@@ -479,9 +681,15 @@ export const products: Product[] = [
     name: 'Kwasowy uniwersalny żel do WC Biopur F531',
     type: 'Żel',
     surfaces: ['toalety', 'pisuary'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Sanitariaty'],
+    tasks: ['Mycie sanitariatów'],
     frequency: ['Codziennie'],
     usage:
       'Przed zastosowaniem żelu przeczyść muszlę za pomocą szczotki, aby usunąć luźne zabrudzenia. Odkręć korek tak, aby aplikator pozostał na miejscu, a następnie rozprowadź żel pod obrzeżem muszli lub pisuaru. Pozostaw preparat na powierzchni do 15 minut. W razie potrzeby użyj szczotki do WC, aby dokładniej oczyścić powierzchnię. Spłucz muszlę wodą.',
@@ -492,9 +700,15 @@ export const products: Product[] = [
     name: 'Uniwersalny, zasadowy koncentrat do czyszczenia powierzchni Biopur F600',
     type: 'Koncentrat',
     surfaces: ['posadzki kamienne', 'płytki ceramiczne', 'gres'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe', 'Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Codziennie'],
     usage:
       'Mycie bieżące: 0,5% (50 ml środka / 10 l roztworu), doczyszczanie: 1–5% (100–500 ml środka / 10 l roztworu), stare lub trudne zabrudzenia: 10–50% (1–5 l środka / 10 l roztworu), silnie zatłuszczone powierzchnie: stosować środek bez rozcieńczania w butelce wyposażonej w spryskiwacz. Nanieś przygotowany roztwór na powierzchnię za pomocą mopa, ścierki lub gąbki, a następnie spłucz zimną wodą.',
@@ -505,9 +719,15 @@ export const products: Product[] = [
     name: 'Uniwersalne mleczko do czyszczenia Biopur F601',
     type: 'Gotowy do użycia',
     surfaces: ['armatura kuchenna i łazienkowa', 'zlewozmywaki i umywalki', 'płyta grzewcza', 'stal nierdzewna'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe', 'Kuchnia', 'Sanitariaty'],
+    tasks: ['Mycie powierzchni'],
     frequency: ['Codziennie'],
     usage:
       'Przed użyciem wstrząśnij butelką, aby równomiernie wymieszać składniki. Na zabrudzoną powierzchnię nanieś niewielką ilość mleczka przy pomocy wilgotnej gąbki lub miękkiej ściereczki. Dokładnie wyczyść powierzchnię, po czym spłucz wodą.',
@@ -518,9 +738,15 @@ export const products: Product[] = [
     name: 'Silnie zasadowy środek czyszczący i odtłuszczający Biopur F611',
     type: 'Gotowy do użycia',
     surfaces: ['grill', 'piekarnik', 'płyta grzewcza', 'kominek'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
+    usageModes: ['manual'],
     application: ['Kuchnia'],
+    tasks: ['Mycie powierzchni'],
     frequency: ['W razie potrzeby'],
     usage:
       'Spryskaj czyszczoną powierzchnię z odległości około 10 cm i pozostaw preparat na 2–5 minut. Wyczyść zabrudzenia gąbką. Dokładnie spłucz wodą i wytrzyj do sucha.',
@@ -531,9 +757,15 @@ export const products: Product[] = [
     name: 'Zasadowy środek czyszczący i odtłuszczający Biopur F612',
     type: 'Gotowy do użycia',
     surfaces: ['armatura kuchenna i łazienkowa', 'zlewozmywaki i umywalki', 'drewno', 'laminat', 'stal nierdzewna'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 10,
     phLabel: '10',
+    usageModes: ['manual'],
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    tasks: ['Mycie powierzchni'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj czyszczoną powierzchnię z odległości około 10 cm. Pozostaw środek na 2–5 minut. Wyczyść powierzchnię. Przetrzyj wilgotną ściereczką lub spłucz wodą, a następnie wytrzyj do sucha.',
@@ -544,9 +776,15 @@ export const products: Product[] = [
     name: 'Ultra silnie zasadowy koncentrat do czyszczenia powierzchni Biopur F621',
     type: 'Koncentrat',
     surfaces: ['posadzki kamienne', 'płytki ceramiczne', 'gres'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
+    usageModes: ['manual'],
     application: ['Mycie podłóg'],
+    tasks: ['Mycie podłóg'],
     frequency: ['Okresowo', 'W razie potrzeby'],
     usage:
       'Mycie bieżące: 0,5–3% (50–300 ml preparatu / 10 l roztworu), silne zabrudzenia: 10–15% (1–1,5 l preparatu / 10 l roztworu). Nanieś przygotowany roztwór na posadzkę za pomocą maszyny sprzątającej i pozostaw na 5–10 minut. Wyszoruj powierzchnię, zbierz rozpuszczony brud i dokładnie spłucz wodą.',
@@ -557,9 +795,15 @@ export const products: Product[] = [
     name: 'Płyn do mycia naczyń Biopur F701, cytryna',
     type: 'Gotowy do użycia',
     surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
+    usageModes: ['manual'],
     application: ['Mycie naczyń'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -570,9 +814,15 @@ export const products: Product[] = [
     name: 'Płyn do mycia naczyń Biopur F701, mięta',
     type: 'Gotowy do użycia',
     surfaces: ['stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -583,9 +833,15 @@ export const products: Product[] = [
     name: 'Płyn do mycia naczyń Biopur Premium F702, citro',
     type: 'Gotowy do użycia',
     surfaces: ['stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -596,9 +852,15 @@ export const products: Product[] = [
     name: 'Płyn do mycia naczyń Biopur Premium F702, mintigo',
     type: 'Gotowy do użycia',
     surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przygotuj roztwór: odmierz 5 ml płynu (około 1 łyżeczki) na 5 l wody. Zanurz naczynia w przygotowanej wodzie. Nie używaj wody bieżącej, aby ograniczyć zużycie energii i wody oraz zmniejszyć wpływ na środowisko. Umyj naczynia ręcznie, rozprowadzając płyn na wszystkich powierzchniach. Spłucz dokładnie zimną wodą po zakończeniu mycia.',
@@ -609,9 +871,15 @@ export const products: Product[] = [
     name: 'Płyn do płukania i nabłyszczania naczyń Biopur F711',
     type: 'Gotowy do użycia',
     surfaces: ['ceramika', 'stal', 'aluminium', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 4,
     phLabel: '4',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Przed użyciem dobrze wstrząśnij butelkę. Wlej płyn do dozownika na nabłyszczacz w zmywarce (10–15 ml na cykl zmywania). Dawkę można dostosować w zależności od twardości wody, stopnia zabrudzenia naczyń i wybranego programu zmywania. Zamknij dozownik i wybierz odpowiedni cykl zmywania.',
@@ -622,9 +890,15 @@ export const products: Product[] = [
     name: 'Silnie zasadowy koncentrat do mycia naczyń Biopur F721',
     type: 'Koncentrat',
     surfaces: ['ceramika', 'stal', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 14,
     phLabel: '14',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['W razie potrzeby'],
     usage:
       'Ustaw dozowanie: 0,5–5 ml/ 1 l wody, temperatura 40–60°C. Umieść naczynia odporne na alkalia w zmywarce. Uruchom program mycia zgodnie z instrukcją urządzenia.',
@@ -635,9 +909,15 @@ export const products: Product[] = [
     name: 'Enzymatyczny koncentrat do mycia naczyń Biopur F731',
     type: 'Koncentrat',
     surfaces: ['ceramika', 'aluminium','stal nierdzewna', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 8,
     phLabel: '8',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Ustaw odpowiednie parametry dozowania (1–5 ml środka na 1 l wody, temperatura wody: 40–60°C). Umieść naczynia w zmywarce. Uruchom cykl mycia zgodnie z instrukcją producenta zmywarki.',
@@ -648,9 +928,15 @@ export const products: Product[] = [
     name: 'Enzymatyczny żel do mycia naczyń Biopur F732',
     type: 'Żel',
     surfaces: ['ceramika', 'aluminium','stal nierdzewna', 'tworzywo sztuczne', 'szkło'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 8,
     phLabel: '8',
-    application: ['Mycie naczyń'],
+    usageModes: ['manual'],
+    application: ['Kuchnia'],
+    tasks: ['Mycie naczyń'],
     frequency: ['Codziennie'],
     usage:
       'Wlej żel do dozownika na detergent znajdującego się w zmywarce gastronomicznej (10–20 ml). Zamknij dozownik i uruchom odpowiedni cykl zmywania w temperaturze 40–60°C.',
@@ -661,9 +947,15 @@ export const products: Product[] = [
     name: 'Zmywacz graffiti i klejów w formie płynu Biopur F801',
     type: 'Gotowy do użycia',
     surfaces: ['szkło', 'tworzywo sztuczne', 'metal', 'kamień'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
+    usageModes: ['manual'],
     application: ['Teren zewnętrzny', 'Powierzchnie ponadpodłogowe'],
+    tasks: ['Usuwanie graffiti', 'Usuwanie klejów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Spryskaj zabrudzoną powierzchnię z odległości około 10 cm. Pozostaw preparat na 5–10 minut. Delikatnie zetrzyj rozpuszczone zabrudzenie gąbką lub szmatką. Spłucz powierzchnię wodą i wytrzyj do sucha.',
@@ -674,9 +966,15 @@ export const products: Product[] = [
     name: 'Zmywacz graffiti i klejów w formie żelu Biopur F802',
     type: 'Gotowy do użycia',
     surfaces: ['szkło', 'tworzywo sztuczne', 'metal', 'kamień'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 6,
     phLabel: '6',
+    usageModes: ['manual'],
     application: ['Teren zewnętrzny', 'Powierzchnie ponadpodłogowe'],
+    tasks: ['Usuwanie graffiti', 'Usuwanie klejów'],
     frequency: ['W razie potrzeby'],
     usage:
       'Nanieś niewielką ilość żelu bezpośrednio na zabrudzenie. Delikatnie rozprowadź preparat przy pomocy miękkiej gąbki, pędzla lub szmatki. Pozostaw środek na 5–10 minut. Zetrzyj rozpuszczone zabrudzenie miękką gąbką lub ściereczką. Spłucz powierzchnię wodą i wytrzyj ją do sucha.',
@@ -687,9 +985,15 @@ export const products: Product[] = [
     name: 'Płyn do nabłyszczania i czyszczenia powierzchni meblowych Biopur F811',
     type: 'Gotowy do użycia',
     surfaces: ['drewno', 'powierzchnie lakierowane', 'skórzane meble'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Nabłyszczanie i czyszczenie mebli'],
     frequency: ['Codziennie'],
     usage:
       'Spryskaj suchą ściereczkę płynem. Przetrzyj zabrudzoną powierzchnię, równomiernie rozprowadzając preparat. Po wyczyszczeniu przetrzyj powierzchnię do sucha.',
@@ -700,9 +1004,15 @@ export const products: Product[] = [
     name: 'Żel do nabłyszczania i czyszczenia powierzchni meblowych Biopur F812',
     type: 'Żel',
     surfaces: ['drewno', 'powierzchnie lakierowane', 'skórzane meble', 'tworzywo sztuczne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Powierzchnie ponadpodłogowe'],
+    tasks: ['Nabłyszczanie i czyszczenie mebli'],
     frequency: ['Codziennie'],
     usage:
       'Nanieś niewielką ilość żelu bezpośrednio na suchą i czystą ściereczkę. Rozprowadź preparat po zabrudzonej powierzchni. Przetrzyj powierzchnię do sucha.',
@@ -713,9 +1023,15 @@ export const products: Product[] = [
     name: 'Skoncentrowany odkamieniacz Biopur F821',
     type: 'Koncentrat',
     surfaces: ['ekspres do kawy', 'czajnik', 'żelazko', 'nawilżacz powietrza', 'urządzenia sanitarne'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 1,
     phLabel: '1',
+    usageModes: ['manual'],
     application: ['Kuchnia', 'Sanitariaty'],
+    tasks: ['Odkamienianie'],
     frequency: ['W razie potrzeby'],
     usage:
       'Przygotuj roztwór 5–10% (50–100 ml / 1 l wody), wlej do urządzenia i pozostaw na 15–30 min. W przypadku czajnika zagotuj roztwór. Następnie wylej i dokładnie wypłucz urządzenie 2–3 razy czystą wodą. Ekspresy do kawy: stosuj zgodnie z instrukcją producenta urządzenia.',
@@ -726,9 +1042,15 @@ export const products: Product[] = [
     name: 'Kwasowy koncentrat czyszczący Biopur F831',
     type: 'Koncentrat',
     surfaces: ['beton'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Teren zewnętrzny'],
+    tasks: ['Czyszczenie betonu'],
     frequency: ['Okresowo'],
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Rozprowadź środek po powierzchni. Pozostaw wytworzoną pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia. Przeszoruj powierzchnię szczotką ryżową lub maszyną jednotarczową. Po zakończeniu procesu dokładnie spłucz zimną wodą.',
@@ -739,9 +1061,15 @@ export const products: Product[] = [
     name: 'Kwasowy koncentrat czyszczący Biopur F832',
     type: 'Koncentrat',
     surfaces: ['beton', 'elewacje i dachy'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 2,
     phLabel: '2',
+    usageModes: ['manual'],
     application: ['Teren zewnętrzny'],
+    tasks: ['Czyszczenie betonu'],
     frequency: ['Okresowo'],
     usage:
       'Delikatne zabrudzenia: 1–2% (100–200 ml środka / 10 l roztworu), średnie zabrudzenia: 5% (500 ml środka / 10 l roztworu), silne zabrudzenia: 10% (1000 ml środka / 10 l roztworu). Nanieś rozcieńczony preparat na powierzchnię elewacji lub dachu. Pozostaw pianę na powierzchni do 15 minut, nie dopuszczając do wyschnięcia mytej powierzchni. Spłucz dokładnie strumieniem wody.',
@@ -752,9 +1080,15 @@ export const products: Product[] = [
     name: 'Płyn do dezynfekcji powierzchni Medisoft APC 100',
     type: 'Gotowy do użycia',
     surfaces: ['dowolne powierzchnie'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Dezynfekcja'],
+    tasks: ['Dezynfekcja powierzchni'],
     frequency: ['W razie potrzeby'],
     usage:
       'Nanieś na dezynfekowaną powierzchnię w ilości odpowiedniej do całkowitego pokrycia. Zapewnij czas kontaktu (w temperaturze pokojowej): dla działania wirusobójczego na wirusy osłonkowe: minimum 1 minuta, dla działania bakteriobójczego: minimum 5 minut, dla działania grzybobójczego: minimum 15 minut.',
@@ -765,9 +1099,15 @@ export const products: Product[] = [
     name: 'Płyn do dezynfekcji rąk i skóry Medisoft APH 100',
     type: 'Gotowy do użycia',
     surfaces: ['skóra'],
+    areas: {
+    Kuchnia: ['Blaty', 'Odtłuszczanie'],
+    Sanitariaty: ['Umywalki'],
+  },
     ph: 7,
     phLabel: '7',
+    usageModes: ['manual'],
     application: ['Dezynfekcja'],
+    tasks: ['Dezynfekcja rąk i skóry'],
     frequency: ['W razie potrzeby'],
     usage:
       'Nanieś na czystą i suchą skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',

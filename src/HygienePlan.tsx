@@ -18,6 +18,8 @@ type Props = {
   selected: Product[];
   selectedAccessories: Accessory[];
   allAccessories: Accessory[];
+  frequencyValues: Record<string, string>;
+  onFrequencyChange: (productName: string, value: string) => void;
   onToggleAccessory: (id: string) => void;
   onRemoveProduct: (name: string) => void;
   onBack: () => void;
@@ -35,6 +37,8 @@ function HygienePlan({
   selected,
   selectedAccessories,
   allAccessories,
+  frequencyValues,
+  onFrequencyChange,
   onToggleAccessory,
   onRemoveProduct,
   onBack,
@@ -158,6 +162,7 @@ function HygienePlan({
           'Dozowanie',
           'Zastosowanie',
           'Instrukcja użycia',
+          'Częstotliwość',
         ]],
         body: selected.map((product) => [
           '',
@@ -166,6 +171,7 @@ function HygienePlan({
           product.dosage,
           product.application.join(', '),
           product.usage,
+          frequencyValues[product.name] ?? product.frequency.join(', '),
         ]),
         styles: {
           font: 'Montserrat',
@@ -184,14 +190,15 @@ function HygienePlan({
           halign: 'center',
           valign: 'middle',
         },
-        columnStyles: {
-          0: { cellWidth: 18 },
-          1: { cellWidth: 32 },
-          2: { cellWidth: 12 },
-          3: { cellWidth: 35 },
-          4: { cellWidth: 35 },
-          5: { cellWidth: 50 },
-        },
+columnStyles: {
+  0: { cellWidth: 16 }, // zdjęcie
+  1: { cellWidth: 31 }, // produkt
+  2: { cellWidth: 10 }, // pH
+  3: { cellWidth: 24 }, // dozowanie
+  4: { cellWidth: 27 }, // zastosowanie
+  5: { cellWidth: 42 }, // instrukcja użycia
+  6: { cellWidth: 30 }, // częstotliwość
+},
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
         didDrawCell: (data) => {
@@ -209,7 +216,6 @@ function HygienePlan({
                   12,
                 );
               } catch {
-                // Pomijamy niedostępne lub nieobsługiwane zdjęcie.
               }
             }
           }
@@ -459,9 +465,17 @@ function HygienePlan({
                       <td className="px-3 py-3 text-slate-600">
                         {product.usage}
                       </td>
-                      <td className="px-3 py-3 text-slate-600">
-                        {product.frequency.join(', ')}
-                      </td>
+<td className="px-3 py-3">
+  <input
+    type="text"
+    value={frequencyValues[product.name] ?? product.frequency.join(', ')}
+    onChange={(e) =>
+      onFrequencyChange(product.name, e.target.value)
+    }
+    placeholder="Wpisz częstotliwość"
+    className="w-full min-w-[150px] rounded-md border border-slate-300 bg-white px-2 py-1.5 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+  />
+</td>
                       <td className="px-3 py-3">
                         <button
                           type="button"
@@ -526,10 +540,20 @@ function HygienePlan({
                       <dt className="text-slate-500">Instrukcja użycia</dt>
                       <dd>{product.usage}</dd>
                     </div>
-                    <div>
-                      <dt className="text-slate-500">Częstotliwość</dt>
-                      <dd>{product.frequency.join(', ')}</dd>
-                    </div>
+<div>
+  <dt className="text-slate-500">Częstotliwość wykonywania czynności</dt>
+  <dd className="mt-1">
+    <input
+      type="text"
+      value={frequencyValues[product.name] ?? product.frequency.join(', ')}
+      onChange={(e) =>
+        onFrequencyChange(product.name, e.target.value)
+      }
+      placeholder="Wpisz częstotliwość"
+      className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-700 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+    />
+  </dd>
+</div>
                   </dl>
                 </article>
               ))}
