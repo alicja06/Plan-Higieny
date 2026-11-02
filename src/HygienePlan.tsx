@@ -14,6 +14,7 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import QRCode from 'qrcode';
 import MontserratRegular from './assets/fonts/Montserrat-Regular.js';
+import MontserratBoldUrl from './assets/fonts/Montserrat-Bold.ttf?url';
 
 type Props = {
   selected: Product[];
@@ -178,8 +179,21 @@ function HygienePlan({
 
   const generatePDF = async () => {
     const pdf = new jsPDF('l', 'mm', 'a4');
+      const boldFontResponse = await fetch(MontserratBoldUrl);
+  const boldFontBuffer = await boldFontResponse.arrayBuffer();
+
+  const boldFontBase64 = btoa(
+    new Uint8Array(boldFontBuffer).reduce(
+      (data, byte) => data + String.fromCharCode(byte),
+      '',
+    ),
+  );
     pdf.addFileToVFS('Montserrat-Regular.ttf', MontserratRegular);
     pdf.addFont('Montserrat-Regular.ttf', 'Montserrat', 'normal');
+
+    pdf.addFileToVFS('Montserrat-Bold.ttf', boldFontBase64);
+    pdf.addFont('Montserrat-Bold.ttf', 'Montserrat', 'bold');
+
     pdf.setFont('Montserrat', 'normal');
 
 try {
@@ -242,10 +256,55 @@ try {
     nextY = Math.max(nextY + 7, 63);
 
     if (selected.length > 0) {
-      // Generujemy kody QR przed utworzeniem tabeli.
-      const qrCodes = new Map<number, string>();
+      // Przypisujemy produkt do pierwszego zastosowania z jego danych.
+      const groupedProducts = new Map<string, Product[]>();
 
-      for (const [index, product] of selected.entries()) {
+  for (const product of selected) {
+    const application = product.application[0] ?? 'Pozostałe';
+
+    const group = groupedProducts.get(application) ?? [];
+    group.push(product);
+    groupedProducts.set(application, group);
+  }
+
+  // Przygotowujemy wiersze tabeli: nagłówki grup i produkty.
+  const pdfRows: (
+    | { type: 'group'; application: string }
+    | { type: 'product'; product: Product }
+  )[] = [];
+
+  // Grupy zachowują kolejność pierwszego wystąpienia zastosowania w danych.
+  for (const [application, products] of groupedProducts) {
+    pdfRows.push({
+      type: 'group',
+      application,
+    });
+
+    for (const product of products) {
+      pdfRows.push({
+        type: 'product',
+        product,
+      });
+    }
+  }
+
+  // Zapamiętujemy numery wierszy zawierających nagłówki grup
+  // oraz przypisujemy produkty do właściwych wierszy tabeli.
+  const groupRowIndexes = new Set<number>();
+  const productRows = new Map<number, Product>();
+
+  pdfRows.forEach((row, index) => {
+    if (row.type === 'group') {
+      groupRowIndexes.add(index);
+    } else {
+      productRows.set(index, row.product);
+    }
+  });
+
+  // Generujemy kody QR przed utworzeniem tabeli.
+  const qrCodes = new Map<number, string>();
+
+      for (const [index, product] of productRows.entries()) {
         if (!product.safetyDataSheetUrl) continue;
 
         try {
@@ -282,16 +341,33 @@ try {
           'Częstotliwość',
           'Karta\ncharakterystyki',        
               ]],
-        body: selected.map((product) => [
-          '',
-          product.name,
-          product.phLabel,
-          product.dosage,
-          product.application.join(', '),
-          product.usage,
-          frequencyValues[product.name] ?? product.frequency.join(', '),
-          '',
-        ]),
+body: pdfRows.map((row) => {
+  if (row.type === 'group') {
+    return [
+      '',
+      row.application,
+      '',
+      '',
+      '',
+      '',
+      '',
+      '',
+    ];
+  }
+
+  const product = row.product;
+
+  return [
+    '',
+    product.name,
+    product.phLabel,
+    product.dosage,
+    product.application.join(', '),
+    product.usage,
+    frequencyValues[product.name] ?? product.frequency.join(', '),
+    '',
+  ];
+}),
         styles: {
           font: 'Montserrat',
           fontStyle: 'normal',
@@ -330,8 +406,19 @@ try {
 
           if (
             data.section === 'body' &&
+            groupRowIndexes.has(data.row.index)
+          ) {
+            data.cell.styles.fillColor = [236, 243, 238];
+            data.cell.styles.textColor = [44, 90, 63];
+            data.cell.styles.fontSize = 8;
+            data.cell.styles.minCellHeight = 8;
+            data.cell.styles.fontStyle = 'bold';
+          }
+
+          if (
+            data.section === 'body' &&
             data.column.index === 7 &&
-            selected[data.row.index]?.safetyDataSheetUrl
+            productRows.get(data.row.index)?.safetyDataSheetUrl
           ) {
             data.cell.styles.minCellHeight = 24;
           }
@@ -340,10 +427,12 @@ try {
         didDrawCell: (data) => {
           if (data.section !== 'body') return;
 
-          const product = selected[data.row.index];
+          const product = productRows.get(data.row.index);
+
+          if (!product) return;
 
           // Zdjęcie produktu.
-          if (data.column.index === 0 && product?.image) {
+          if (data.column.index === 0 && product.image) {
             try {
               pdf.addImage(
                 product.image,
@@ -360,7 +449,7 @@ try {
 
           // Kod QR i aktywny link do karty charakterystyki.
           if (data.column.index === 7) {
-            if (!product?.safetyDataSheetUrl) return;
+            if (!product.safetyDataSheetUrl) return;
 
             const qrCode = qrCodes.get(data.row.index);
 
