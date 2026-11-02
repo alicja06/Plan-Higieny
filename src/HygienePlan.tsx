@@ -49,7 +49,10 @@ function HygienePlan({
     new Set(),
   );
 
-  // Zamknięcie modala klawiszem Escape i blokada przewijania tła.
+  const [customLogo, setCustomLogo] = useState<string | null>(null);
+  const [objectName, setObjectName] = useState('');
+  const [preparedBy, setPreparedBy] = useState('');
+
   useEffect(() => {
     if (!expandedCategory) return;
 
@@ -128,25 +131,115 @@ function HygienePlan({
       img.src = src;
     });
 
+  const handleLogoChange = async (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
+    const input = event.currentTarget;
+    const file = input.files?.[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      alert('Wybierz plik graficzny.');
+      input.value = '';
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+
+    try {
+      const image = await loadImage(objectUrl);
+
+      const scale = Math.min(
+        1,
+        1600 / Math.max(image.width, image.height),
+      );
+
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.round(image.width * scale);
+      canvas.height = Math.round(image.height * scale);
+
+      const context = canvas.getContext('2d');
+
+      if (!context) {
+        throw new Error('Nie udało się przetworzyć grafiki.');
+      }
+
+      context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      setCustomLogo(canvas.toDataURL('image/png'));
+    } catch (error) {
+      console.error('Nie udało się wczytać logo:', error);
+      alert('Nie udało się wczytać tego pliku graficznego.');
+    } finally {
+      URL.revokeObjectURL(objectUrl);
+      input.value = '';
+    }
+  };
+
   const generatePDF = async () => {
     const pdf = new jsPDF('l', 'mm', 'a4');
     pdf.addFileToVFS('Montserrat-Regular.ttf', MontserratRegular);
     pdf.addFont('Montserrat-Regular.ttf', 'Montserrat', 'normal');
     pdf.setFont('Montserrat', 'normal');
 
-    try {
-      const logo = await loadImage('/images/logo-kawido.png');
-      const logoWidth = 45;
-      const logoHeight = (logo.height * logoWidth) / logo.width;
-      pdf.addImage(logo, 'PNG', 237, 10, logoWidth, logoHeight);    } catch {
-    }
+try {
+  const logo = await loadImage(
+    customLogo ?? '/images/logo-kawido.png',
+  );
+
+  // Logo mieści się w obszarze 45 × 25 mm.
+  // Zachowujemy jego proporcje.
+  const scale = Math.min(
+    45 / logo.width,
+    25 / logo.height,
+  );
+
+  const logoWidth = logo.width * scale;
+  const logoHeight = logo.height * scale;
+
+  // Wyrównanie do prawej krawędzi.
+  pdf.addImage(
+    logo,
+    'PNG',
+    282 - logoWidth,
+    10,
+    logoWidth,
+    logoHeight,
+  );
+} catch (error) {
+  console.error('Nie udało się dodać logo do PDF:', error);
+}
 
     pdf.setFontSize(18);
     pdf.text('Plan higieny', 15, 35);
+
     pdf.setFontSize(10);
     pdf.text(`Wygenerowano: ${today}`, 15, 28);
 
-    let nextY = 50;
+    // Dane obiektu i osoby opracowującej plan.
+    // Puste pola nie są drukowane.
+    pdf.setFontSize(10);
+
+    let nextY = 44;
+
+    const addPdfDetail = (label: string, value: string) => {
+      const trimmedValue = value.trim();
+
+      if (!trimmedValue) return;
+
+      const lines = pdf.splitTextToSize(
+        `${label}: ${trimmedValue}`,
+        190,
+      );
+
+      pdf.text(lines, 15, nextY);
+      nextY += lines.length * 5;
+    };
+
+    addPdfDetail('Nazwa obiektu', objectName);
+    addPdfDetail('Opracowanie', preparedBy);
+
+    nextY = Math.max(nextY + 7, 63);
 
     if (selected.length > 0) {
       // Generujemy kody QR przed utworzeniem tabeli.
@@ -175,10 +268,10 @@ function HygienePlan({
       }
 
       pdf.setFontSize(12);
-      pdf.text('Środki czyszczące', 15, 45);
+      pdf.text('Środki czyszczące', 15, nextY);
 
       autoTable(pdf, {
-        startY: nextY,
+        startY: nextY + 5,
         head: [[
           '',
           'Produkt',
@@ -230,14 +323,15 @@ function HygienePlan({
         pageBreak: 'auto',
         rowPageBreak: 'avoid',
 
-      didParseCell: (data) => {
-        if (data.section === 'head' && data.column.index === 7) {
-          data.cell.text = ['Karta', 'charakterystyki'];
-        }
+        didParseCell: (data) => {
+          if (data.section === 'head' && data.column.index === 7) {
+            data.cell.text = ['Karta', 'charakterystyki'];
+          }
+
           if (
             data.section === 'body' &&
             data.column.index === 7 &&
-            qrCodes.has(data.row.index)
+            selected[data.row.index]?.safetyDataSheetUrl
           ) {
             data.cell.styles.minCellHeight = 24;
           }
@@ -264,24 +358,52 @@ function HygienePlan({
             }
           }
 
-          // Kod QR do karty charakterystyki.
+          // Kod QR i aktywny link do karty charakterystyki.
           if (data.column.index === 7) {
+            if (!product?.safetyDataSheetUrl) return;
+
             const qrCode = qrCodes.get(data.row.index);
 
-            if (!qrCode) return;
-
-            try {
-              pdf.addImage(
-                qrCode,
-                'PNG',
-                data.cell.x + 3,
-                data.cell.y + 3,
-                18,
-                18,
-              );
-            } catch (error) {
-              console.error('Nie udało się dodać kodu QR do PDF:', error);
+            if (qrCode) {
+              try {
+                pdf.addImage(
+                  qrCode,
+                  'PNG',
+                  data.cell.x + 2,
+                  data.cell.y + 3,
+                  18,
+                  18,
+                );
+              } catch (error) {
+                console.error(
+                  'Nie udało się dodać kodu QR do PDF:',
+                  error,
+                );
+              }
             }
+
+            // Tekst aktywnego linku.
+            pdf.setFont('Montserrat', 'normal');
+            pdf.setFontSize(6.5);
+            pdf.setTextColor(0, 90, 140);
+
+            pdf.text(
+              ['Otwórz', 'kartę'],
+              data.cell.x + 22,
+              data.cell.y + 10,
+            );
+
+            // Obszar klikalny linku.
+            pdf.link(
+              data.cell.x + 21,
+              data.cell.y + 4,
+              16,
+              16,
+              { url: product.safetyDataSheetUrl },
+            );
+
+            pdf.setFontSize(8);
+            pdf.setTextColor(0, 0, 0);
           }
         },
       });
@@ -441,7 +563,7 @@ function HygienePlan({
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <button
               type="button"
               onClick={generatePDF}
@@ -451,6 +573,7 @@ function HygienePlan({
               <Download className="h-4 w-4" />
               Pobierz PDF
             </button>
+
             <button
               type="button"
               onClick={onBack}
@@ -474,6 +597,98 @@ function HygienePlan({
             </p>
           </div>
         )}
+                <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div className="mb-4">
+            <h2 className="text-lg font-semibold text-slate-800">
+              Uzupełnij dane
+            </h2>
+            <p className="mt-1 text-sm text-slate-500">
+              Wszystkie pola są opcjonalne. Uzupełnione informacje zostaną
+              umieszczone w planie higieny.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <div>
+              <label
+                htmlFor="object-name"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
+                Nazwa obiektu
+              </label>
+              <input
+                id="object-name"
+                type="text"
+                value={objectName}
+                onChange={(event) => setObjectName(event.target.value)}
+                placeholder="Wpisz nazwę obiektu"
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+
+            <div>
+              <label
+                htmlFor="prepared-by"
+                className="mb-1.5 block text-sm font-medium text-slate-700"
+              >
+                Opracowanie
+              </label>
+              <input
+                id="prepared-by"
+                type="text"
+                value={preparedBy}
+                onChange={(event) => setPreparedBy(event.target.value)}
+                placeholder="Imię i nazwisko"
+                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-700 placeholder:text-slate-400 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="mb-1.5 block text-sm font-medium text-slate-700">
+                Logo
+              </label>
+
+              <div className="flex flex-wrap items-center gap-3">
+                {customLogo && (
+                  <div className="flex h-12 w-24 items-center justify-center rounded-lg border border-slate-200 bg-white p-2">
+                    <img
+                      src={customLogo}
+                      alt="Podgląd własnego logo"
+                      className="max-h-full max-w-full object-contain"
+                    />
+                  </div>
+                )}
+
+                <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+                  {customLogo ? 'Zmień logo' : 'Wgraj własne logo'}
+
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="sr-only"
+                    onChange={handleLogoChange}
+                  />
+                </label>
+
+                {customLogo && (
+                  <button
+                    type="button"
+                    onClick={() => setCustomLogo(null)}
+                    className="rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-600 transition hover:bg-slate-50"
+                  >
+                    Przywróć logo Kawido
+                  </button>
+                )}
+
+                {!customLogo && (
+                  <span className="text-xs text-slate-500">
+                    Domyślnie używane jest logo Kawido.
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+        </section>
 
         {selected.length > 0 && (
           <section>
