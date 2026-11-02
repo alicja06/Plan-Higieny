@@ -543,9 +543,9 @@ body: pdfRows.map((row) => {
           font: 'Montserrat',
           fontStyle: 'normal',
           fontSize: 8,
-          cellPadding: 2.5,
+          cellPadding: 3,
           overflow: 'linebreak',
-          valign: 'top',
+          valign: 'middle',
         },
         headStyles: {
           fillColor: [44, 90, 63],
@@ -556,11 +556,14 @@ body: pdfRows.map((row) => {
           halign: 'left',
           valign: 'middle',
         },
+        bodyStyles: {
+          minCellHeight: 22,
+        },
         columnStyles: {
           0: { cellWidth: 18 },
-          1: { cellWidth: 100 },
+          1: { cellWidth: 95 },
           2: { cellWidth: 65 },
-          3: { cellWidth: 80 },
+          3: { cellWidth: 85 },
         },
         margin: {
           left: 10,
@@ -578,21 +581,35 @@ body: pdfRows.map((row) => {
 
           if (!image) return;
 
-          try {
-            const imageWidth = 12;
-            const imageHeight = (image.height * imageWidth) / image.width;
+        try {
+          const maxWidth = 12;
+          const maxHeight = 16;
 
-            pdf.addImage(
-              image,
-              'JPEG',
-              data.cell.x + 2,
-              data.cell.y + 2,
-              imageWidth,
-              Math.min(imageHeight, 16),
-            );
-          } catch {
-            // Pomijamy zdjęcia w nieobsługiwanym formacie.
-          }
+          const scale = Math.min(
+            maxWidth / image.width,
+            maxHeight / image.height,
+          );
+
+          const imageWidth = image.width * scale;
+          const imageHeight = image.height * scale;
+
+          const imageX =
+            data.cell.x + (data.cell.width - imageWidth) / 2;
+
+          const imageY =
+            data.cell.y + (data.cell.height - imageHeight) / 2;
+
+          pdf.addImage(
+            image,
+            'JPEG',
+            imageX,
+            imageY,
+            imageWidth,
+            imageHeight,
+          );
+        } catch {
+          // Pomijamy zdjęcia w nieobsługiwanym formacie.
+        }
         },
       });
     }
