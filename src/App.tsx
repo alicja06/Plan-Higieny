@@ -11,10 +11,18 @@ import {
   X,
   Hand,
   Cog,
+  ChevronDown,
 } from 'lucide-react';
 import { products } from './data/products';
 import { accessories } from './data/accessories';
 import HygienePlan from './HygienePlan';
+
+type FilterOption = {
+  value: string;
+  label: string;
+  level?: number;
+  bold?: boolean;
+};
 
 function phColor(ph: number): string {
   if (ph < 5) return 'bg-red-100 text-red-700 ring-red-200';
@@ -40,83 +48,310 @@ function getProductLabel(count: number): string {
   return 'produktów';
 }
 
+type FilterDropdownProps = {
+  label: string;
+  placeholder: string;
+  selectedLabel: string;
+  selectedValue: string;
+  options: FilterOption[];
+  isOpen: boolean;
+  onToggle: () => void;
+  onSelect: (value: string) => void;
+  onClose: () => void;
+};
+
+function FilterDropdown({
+  label,
+  placeholder,
+  selectedLabel,
+  selectedValue,
+  options,
+  isOpen,
+  onToggle,
+  onSelect,
+  onClose,
+}: FilterDropdownProps) {
+  return (
+    <div className={`relative ${isOpen ? 'z-30' : 'z-0'}`}>
+      <button
+        type="button"
+        onClick={onToggle}
+        aria-label={label}
+        aria-expanded={isOpen}
+        className={`flex w-full items-center justify-between gap-3 rounded-lg border bg-white px-3 py-2.5 text-left text-sm shadow-sm transition ${
+          isOpen
+            ? 'border-slate-500 ring-2 ring-slate-100'
+            : 'border-slate-300 hover:border-slate-400'
+        }`}
+      >
+        <span className={selectedValue ? 'text-slate-800' : 'text-slate-400'}>
+          {selectedValue ? selectedLabel : placeholder}
+        </span>
+
+        <ChevronDown
+          className={`h-4 w-4 shrink-0 text-slate-400 transition-transform ${
+            isOpen ? 'rotate-180' : ''
+          }`}
+        />
+      </button>
+
+      {isOpen && (
+        <>
+          <button
+            type="button"
+            aria-label="Zamknij listę"
+            onClick={onClose}
+            className="fixed inset-0 z-20 cursor-default"
+          />
+
+          <div className="absolute left-0 top-full z-30 mt-1 max-h-64 w-full overflow-y-auto rounded-lg border border-slate-200 bg-white py-1 shadow-lg">
+            {options.length === 0 ? (
+              <div className="px-3 py-3 text-sm text-slate-400">
+                Brak dostępnych opcji
+              </div>
+            ) : (
+              options.map((option) => {
+                const isSelected = selectedValue === option.value;
+
+                return (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => {
+                      onSelect(option.value);
+                      onClose();
+                    }}
+                    className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition ${
+                      option.level === 1 ? 'pl-7' : ''
+                    } ${
+                      isSelected
+                        ? 'bg-slate-100 text-primary'
+                        : 'text-slate-700 hover:bg-slate-100'
+                    } ${option.bold ? 'font-semibold' : ''}`}
+                  >
+                    {option.level === 1 && (
+                      <span className="text-slate-300">–</span>
+                    )}
+
+                    <span>{option.label}</span>
+
+                    {isSelected && (
+                      <Check className="ml-auto h-4 w-4 shrink-0 text-primary" />
+                    )}
+                  </button>
+                );
+              })
+            )}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 function App() {
-const applicationGroups = useMemo(() => {
-  const groups = new Map<string, Set<string>>();
+  const [selectedApplication, setSelectedApplication] = useState('');
+  const [selectedArea, setSelectedArea] = useState('');
+  const [selectedTask, setSelectedTask] = useState('');
+  const [selectedIndustry, setSelectedIndustry] = useState('');
 
-  products.forEach((product) => {
-    Object.entries(product.areas ?? {}).forEach(([application, areas]) => {
-      if (!application) return;
-
-      if (!groups.has(application)) {
-        groups.set(application, new Set());
-      }
-
-      areas.forEach((area) => {
-        if (area) {
-          groups.get(application)!.add(area);
-        }
-      });
-    });
-  });
-
-  return Array.from(groups.entries())
-    .map(([application, areas]) => ({
-      application,
-      areas: Array.from(areas).sort((a, b) =>
-        a.localeCompare(b, 'pl'),
-      ),
-    }))
-    .sort((a, b) =>
-      a.application.localeCompare(b.application, 'pl'),
-    );
-}, []);
-
-const tasks = useMemo(
-  () =>
-    Array.from(new Set(products.flatMap((p) => p.tasks)))
-      .filter(Boolean)
-      .sort((a, b) => a.localeCompare(b, 'pl')),
-  [],
-);
-
-const [selectedApplication, setSelectedApplication] = useState('');
-const [selectedArea, setSelectedArea] = useState('');
-const [selectedTask, setSelectedTask] = useState('');
+  const [openFilter, setOpenFilter] = useState<
+    'area' | 'task' | 'industry' | null
+  >(null);
 
   const [selected, setSelected] = useState<Set<string>>(new Set());
+
   const [frequencyValues, setFrequencyValues] = useState<
-  Record<string, string>
->({});
+    Record<string, string>
+  >({});
 
   const [selectedAccessoryIds, setSelectedAccessoryIds] =
     useState<Set<string>>(new Set());
 
   const [view, setView] = useState<'config' | 'plan'>('config');
-  const [accessoriesStepVisited, setAccessoriesStepVisited] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
   const ITEMS_PER_PAGE = 15;
 
-const filtered = useMemo(
-  () =>
-    products.filter((p) => {
-      if (
-        selectedApplication &&
-        selectedArea &&
-        !p.areas[selectedApplication]?.includes(selectedArea)
-      ) {
-        return false;
-      }
+const matchesArea = (
+  product: (typeof products)[number],
+  application: string,
+  area: string,
+) => {
+  if (!application) return true;
 
-      if (selectedTask && !p.tasks.includes(selectedTask)) {
-        return false;
-      }
+  const productAreas = product.areas?.[application];
 
-      return true;
-    }),
-  [selectedApplication, selectedArea, selectedTask],
+  if (productAreas === undefined) return false;
+
+  if (!area) return true;
+
+  return productAreas.includes(area);
+};
+
+  const matchesTask = (
+    product: (typeof products)[number],
+    task: string,
+  ) => {
+    if (!task) return true;
+    return (product.tasks ?? []).includes(task);
+  };
+
+  const matchesIndustry = (
+    product: (typeof products)[number],
+    industry: string,
+  ) => {
+    if (!industry) return true;
+    return (product.industries ?? []).includes(industry);
+  };
+
+  // OBSZARY
+  // Dostępne sekcje i podobszary zależą od wybranej czynności i branży.
+
+  const applicationGroups = useMemo(() => {
+    const groups = new Map<string, Set<string>>();
+
+    products
+      .filter(
+        (product) =>
+          matchesTask(product, selectedTask) &&
+          matchesIndustry(product, selectedIndustry),
+      )
+      .forEach((product) => {
+        Object.entries(product.areas ?? {}).forEach(
+          ([application, areas]) => {
+            if (!application) return;
+
+            if (!groups.has(application)) {
+              groups.set(application, new Set());
+            }
+
+            areas.forEach((area) => {
+              if (area) {
+                groups.get(application)!.add(area);
+              }
+            });
+          },
+        );
+      });
+
+    return Array.from(groups.entries()).map(([application, areas]) => ({
+      application,
+      areas: Array.from(areas).sort((a, b) =>
+        a.localeCompare(b, 'pl'),
+      ),
+    }));
+  }, [selectedTask, selectedIndustry]);
+
+  const areaOptions = useMemo<FilterOption[]>(() => {
+    const options: FilterOption[] = [];
+    options.push({
+    value: '',
+    label: 'Wszystkie obszary',
+  });
+
+    applicationGroups.forEach((group) => {
+      options.push({
+        value: JSON.stringify([group.application, '']),
+        label: group.application,
+        bold: true,
+      });
+
+      group.areas.forEach((area) => {
+        options.push({
+          value: JSON.stringify([group.application, area]),
+          label: area,
+          level: 1,
+        });
+      });
+    });
+
+    return options;
+  }, [applicationGroups]);
+
+  // CZYNNOŚCI
+  // Dostępne czynności zależą od wybranego obszaru i branży.
+
+  const tasks = useMemo(() => {
+    return Array.from(
+      new Set(
+        products
+          .filter(
+            (product) =>
+              matchesArea(product, selectedApplication, selectedArea) &&
+              matchesIndustry(product, selectedIndustry),
+          )
+          .flatMap((product) => product.tasks ?? []),
+      ),
+    )
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b, 'pl'));
+  }, [selectedApplication, selectedArea, selectedIndustry]);
+
+  const taskOptions = useMemo<FilterOption[]>(
+  () => [
+    {
+      value: '',
+      label: 'Wszystkie czynności',
+    },
+    ...tasks.map((task) => ({
+      value: task,
+      label: task,
+    })),
+  ],
+  [tasks],
 );
+
+  // BRANŻE
+  // Dostępne branże zależą od wybranego obszaru i czynności.
+
+  const industries = useMemo(() => {
+    return Array.from(
+      new Set(
+        products
+          .filter(
+            (product) =>
+              matchesArea(product, selectedApplication, selectedArea) &&
+              matchesTask(product, selectedTask),
+          )
+          .flatMap((product) => product.industries ?? []),
+      ),
+    )
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b, 'pl'));
+  }, [selectedApplication, selectedArea, selectedTask]);
+
+  const industryOptions = useMemo<FilterOption[]>(
+  () => [
+    {
+      value: '',
+      label: 'Wszystkie branże',
+    },
+    ...industries.map((industry) => ({
+      value: industry,
+      label: industry,
+    })),
+  ],
+  [industries],
+);
+
+  // FILTROWANIE PRODUKTÓW
+
+  const filtered = useMemo(
+    () =>
+      products.filter(
+        (product) =>
+          matchesArea(product, selectedApplication, selectedArea) &&
+          matchesTask(product, selectedTask) &&
+          matchesIndustry(product, selectedIndustry),
+      ),
+    [
+      selectedApplication,
+      selectedArea,
+      selectedTask,
+      selectedIndustry,
+    ],
+  );
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE);
 
@@ -125,18 +360,43 @@ const filtered = useMemo(
     return filtered.slice(start, start + ITEMS_PER_PAGE);
   }, [filtered, currentPage]);
 
-useEffect(() => {
-  setCurrentPage(1);
-}, [selectedApplication, selectedArea, selectedTask]);
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [
+    selectedApplication,
+    selectedArea,
+    selectedTask,
+    selectedIndustry,
+  ]);
 
-const hasFilters = Boolean(selectedApplication || selectedArea || selectedTask);
+  const hasFilters = Boolean(
+    selectedApplication ||
+      selectedArea ||
+      selectedTask ||
+      selectedIndustry,
+  );
 
-const reset = () => {
-  setSelectedApplication('');
-  setSelectedArea('');
-  setSelectedTask('');
-  setCurrentPage(1);
-};
+  const reset = () => {
+    setSelectedApplication('');
+    setSelectedArea('');
+    setSelectedTask('');
+    setSelectedIndustry('');
+    setCurrentPage(1);
+    setOpenFilter(null);
+  };
+
+  const selectArea = (value: string) => {
+    if (!value) {
+      setSelectedApplication('');
+      setSelectedArea('');
+      return;
+    }
+
+    const [application, area] = JSON.parse(value) as [string, string];
+
+    setSelectedApplication(application);
+    setSelectedArea(area);
+  };
 
   const addProduct = (name: string) => {
     setSelected((prev) => new Set(prev).add(name));
@@ -151,11 +411,11 @@ const reset = () => {
   };
 
   const updateFrequency = (productName: string, value: string) => {
-  setFrequencyValues((prev) => ({
-    ...prev,
-    [productName]: value,
-  }));
-};
+    setFrequencyValues((prev) => ({
+      ...prev,
+      [productName]: value,
+    }));
+  };
 
   const clearSelection = () => setSelected(new Set());
 
@@ -173,7 +433,8 @@ const reset = () => {
     });
   };
 
-  const clearAccessorySelection = () => setSelectedAccessoryIds(new Set());
+  const clearAccessorySelection = () =>
+    setSelectedAccessoryIds(new Set());
 
   const getVisiblePages = (): (number | string)[] => {
     const pages: (number | string)[] = [];
@@ -206,18 +467,27 @@ const reset = () => {
 
   const totalSelected = selected.size + selectedAccessoryIds.size;
 
+  const selectedAreaValue = JSON.stringify([
+    selectedApplication,
+    selectedArea,
+  ]);
+
+  const selectedAreaLabel = selectedArea
+    ? `${selectedApplication} · ${selectedArea}`
+    : selectedApplication;
+
   if (view === 'plan') {
     return (
-<HygienePlan
-  selected={selectedProducts}
-  selectedAccessories={selectedAccessories}
-  allAccessories={accessories}
-  frequencyValues={frequencyValues}
-  onFrequencyChange={updateFrequency}
-  onToggleAccessory={toggleAccessory}
-  onRemoveProduct={removeProduct}
-  onBack={() => setView('config')}
-/>
+      <HygienePlan
+        selected={selectedProducts}
+        selectedAccessories={selectedAccessories}
+        allAccessories={accessories}
+        frequencyValues={frequencyValues}
+        onFrequencyChange={updateFrequency}
+        onToggleAccessory={toggleAccessory}
+        onRemoveProduct={removeProduct}
+        onBack={() => setView('config')}
+      />
     );
   }
 
@@ -238,7 +508,6 @@ const reset = () => {
             <button
               type="button"
               onClick={() => {
-                setAccessoriesStepVisited(true);
                 setView('plan');
               }}
               disabled={totalSelected === 0}
@@ -247,9 +516,11 @@ const reset = () => {
               <span className="flex h-7 w-7 items-center justify-center rounded-full bg-primary text-xs font-semibold text-white">
                 {totalSelected}
               </span>
+
               <span className="hidden text-sm font-medium text-slate-700 sm:inline">
                 {getProductLabel(totalSelected)} w planie
               </span>
+
               {totalSelected > 0 && (
                 <FileText className="h-4 w-4 text-slate-500 transition group-hover:text-primary" />
               )}
@@ -277,74 +548,68 @@ const reset = () => {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-<div>
-  <label
-    htmlFor="area-filter"
-    className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500"
-  >
-    <Layers className="h-3.5 w-3.5" />
-    Strefa i obszar
-  </label>
-
-  <select
-    id="area-filter"
-    value={
-      selectedApplication && selectedArea
-        ? `${selectedApplication}|${selectedArea}`
-        : ''
-    }
-    onChange={(e) => {
-      if (!e.target.value) {
-        setSelectedApplication('');
-        setSelectedArea('');
-        return;
-      }
-
-      const [application, area] = e.target.value.split('|');
-      setSelectedApplication(application);
-      setSelectedArea(area);
-    }}
-    className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 shadow-sm focus:border-slate-900 focus:outline-none"
-  >
-    <option value="">Wszystkie strefy i obszary</option>
-
-    {applicationGroups.map((group) => (
-      <optgroup key={group.application} label={group.application}>
-        {group.areas.map((area) => (
-          <option
-            key={`${group.application}-${area}`}
-            value={`${group.application}|${area}`}
-          >
-            {area}
-          </option>
-        ))}
-      </optgroup>
-    ))}
-  </select>
-</div>
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3">
             <div>
-              <label
-                htmlFor="task-filter"
-                className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500"
-              >
-                <FlaskConical className="h-3.5 w-3.5" />
-                Rodzaj czynności
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                <Layers className="h-3.5 w-3.5" />
+                Obszar
               </label>
 
-              <select
-                id="task-filter"
-                value={selectedTask}
-                onChange={(e) => setSelectedTask(e.target.value)}
-                className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm text-slate-800 shadow-sm focus:border-slate-900 focus:outline-none"
-              >
-                <option value="">Wszystkie czynności</option>
-                {tasks.map((task) => (
-                  <option key={task} value={task}>
-                    {task}
-                  </option>
-                ))}
-              </select>
+              <FilterDropdown
+                label="Obszar"
+                placeholder="Wszystkie obszary"
+                selectedLabel={selectedAreaLabel}
+                selectedValue={selectedApplication ? selectedAreaValue : ''}
+                options={areaOptions}
+                isOpen={openFilter === 'area'}
+                onToggle={() =>
+                  setOpenFilter(openFilter === 'area' ? null : 'area')
+                }
+                onSelect={selectArea}
+                onClose={() => setOpenFilter(null)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                <FlaskConical className="h-3.5 w-3.5" />
+                Czynność
+              </label>
+
+              <FilterDropdown
+                label="Czynność"
+                placeholder="Wszystkie czynności"
+                selectedLabel={selectedTask}
+                selectedValue={selectedTask}
+                options={taskOptions}
+                isOpen={openFilter === 'task'}
+                onToggle={() =>
+                  setOpenFilter(openFilter === 'task' ? null : 'task')
+                }
+                onSelect={setSelectedTask}
+                onClose={() => setOpenFilter(null)}
+              />
+            </div>
+
+            <div>
+              <label className="mb-1.5 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-slate-500">
+                <Layers className="h-3.5 w-3.5" />
+                Branża
+              </label>
+
+              <FilterDropdown
+                label="Branża"
+                placeholder="Wszystkie branże"
+                selectedLabel={selectedIndustry}
+                selectedValue={selectedIndustry}
+                options={industryOptions}
+                isOpen={openFilter === 'industry'}
+                onToggle={() =>
+                  setOpenFilter(openFilter === 'industry' ? null : 'industry')
+                }
+                onSelect={setSelectedIndustry}
+                onClose={() => setOpenFilter(null)}
+              />
             </div>
           </div>
         </section>
@@ -419,23 +684,26 @@ const reset = () => {
                           )}
                         </div>
 
-<div className="mt-2 flex flex-wrap gap-x-2 gap-y-1 text-xs text-slate-500">
-  {Object.entries(p.areas ?? {}).map(([zone, areas]) => (
-    <span key={zone}>
-      {zone} · {areas.join(', ')}
-    </span>
-  ))}
+                        <div className="mt-2 flex flex-wrap gap-x-2 gap-y-1 text-xs text-slate-500">
+                          {Object.entries(p.areas ?? {}).map(
+                            ([zone, areas]) => (
+                              <span key={zone}>
+                                {zone}
+                                {areas.length > 0 && ` · ${areas.join(', ')}`}
+                              </span>
+                            ),
+                          )}
 
-  {(p.type || p.dosage) && (
-    <span>
-      · {[p.type, p.dosage].filter(Boolean).join(' · ')}
-    </span>
-  )}
+                          {(p.type || p.dosage) && (
+                            <span>
+                              · {[p.type, p.dosage].filter(Boolean).join(' · ')}
+                            </span>
+                          )}
 
-  {p.tasks.length > 0 && (
-    <span>· {p.tasks.join(', ')}</span>
-  )}
-</div>
+                          {p.tasks?.length > 0 && (
+                            <span>· {p.tasks.join(', ')}</span>
+                          )}
+                        </div>
                       </div>
 
                       <div className="flex shrink-0 items-center sm:pl-2">
@@ -523,29 +791,30 @@ const reset = () => {
               </span>
 
               <span className="text-sm font-medium text-slate-700">
-{selected.size}{' '}
-{selected.size === 1
-  ? 'środek'
-  : selected.size % 10 >= 2 &&
-      selected.size % 10 <= 4 &&
-      (selected.size % 100 < 12 || selected.size % 100 > 14)
-    ? 'środki'
-    : 'środków'}
+                {selected.size}{' '}
+                {selected.size === 1
+                  ? 'środek'
+                  : selected.size % 10 >= 2 &&
+                      selected.size % 10 <= 4 &&
+                      (selected.size % 100 < 12 ||
+                        selected.size % 100 > 14)
+                    ? 'środki'
+                    : 'środków'}
 
-{accessoriesStepVisited && (
-  <>
-    {' · '}
-    {selectedAccessoryIds.size}{' '}
-    {selectedAccessoryIds.size === 1
-      ? 'akcesorium'
-      : selectedAccessoryIds.size % 10 >= 2 &&
-          selectedAccessoryIds.size % 10 <= 4 &&
-          (selectedAccessoryIds.size % 100 < 12 ||
-            selectedAccessoryIds.size % 100 > 14)
-        ? 'akcesoria'
-        : 'akcesoriów'}
-  </>
-)}
+                {selectedAccessoryIds.size > 0 && (
+                  <>
+                    {' · '}
+                    {selectedAccessoryIds.size}{' '}
+                    {selectedAccessoryIds.size === 1
+                      ? 'akcesorium'
+                      : selectedAccessoryIds.size % 10 >= 2 &&
+                          selectedAccessoryIds.size % 10 <= 4 &&
+                          (selectedAccessoryIds.size % 100 < 12 ||
+                            selectedAccessoryIds.size % 100 > 14)
+                        ? 'akcesoria'
+                        : 'akcesoriów'}
+                  </>
+                )}
               </span>
 
               <button
@@ -561,17 +830,16 @@ const reset = () => {
               </button>
             </div>
 
- <button
-  type="button"
-  onClick={() => {
-    setAccessoriesStepVisited(true);
-    setView('plan');
-  }}
-  className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
->
-  <FileText className="h-4 w-4" />
-  Generuj plan higieny
-</button>
+            <button
+              type="button"
+              onClick={() => {
+                setView('plan');
+              }}
+              className="inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
+            >
+              <FileText className="h-4 w-4" />
+              Generuj plan higieny
+            </button>
           </div>
         </div>
       )}

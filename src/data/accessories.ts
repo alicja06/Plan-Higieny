@@ -4,7 +4,8 @@ export type AccessoryApplication =
   | 'Mycie szyb'
   | 'Powierzchnie ponadpodłogowe'
   | 'Sanitariaty'
-  | 'Teren zewnętrzny';
+  | 'Teren zewnętrzny'
+  | 'Pojazdy';
 
 export type AccessoryPaperType =
   | 'składane'
@@ -518,7 +519,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofazy-niebieska-32x32',
     name: 'CleanPRO Ścierka z mikrofazy nieb. 32x32',
     category: 'Ścierki',
-    application: ['Mycie szyb','Powierzchnie ponadpodłogowe'],
+    application: ['Mycie szyb','Powierzchnie ponadpodłogowe', 'Pojazdy'],
     image: '/images/407423.jpg',
   },
   {
@@ -546,7 +547,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-ultra-soft-blue-30x30',
     name: 'CleanPRO ścierka ultra soft 30x30 blue',
     category: 'Ścierki',
-    application: ['Mycie szyb','Powierzchnie ponadpodłogowe'],
+    application: ['Mycie szyb','Powierzchnie ponadpodłogowe', 'Pojazdy'],
     image: '/images/404253.jpg',
   },
   {
@@ -581,7 +582,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofaza-niebieska-40x40-320',
     name: 'CleanPRO Ścierka mikr.nieb.40x40 320g/m2',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/374194.jpg',
   },
   {
@@ -595,21 +596,21 @@ export const accessories: Accessory[] = [
     id: 'scierka-do-szyb-niebieska-40x40',
     name: 'CleanPRO Ścierka do szyb nieb. 40x40cm',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/374194.jpg',
   },
   {
     id: 'scierka-do-polerowania-32x32',
     name: 'CleanPRO ścierka do polerowania 32x32cm',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/382614.jpg',
   },
   {
     id: 'scierka-waflowa-niebieska-40x40',
     name: 'CleanPRO Ścierka waflowa nieb. 40x40cm',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/358841.jpg',
   },
   {
@@ -623,7 +624,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofaza-niebieska-50x60',
     name: 'CleanPRO ścierka z mikrof. nieb. 50x60',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/391115.jpg',
   },
   {
@@ -637,7 +638,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofazy-niebieska-30x30',
     name: 'CleanPRO Ścierka z mikrofazy nieb. 30x30',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/361170.jpg',
   },
   {
@@ -665,7 +666,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrofaza-niebieska-40x40-220',
     name: 'CleanPRO ścierka mikr.nieb.40x40 220g/m2',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/414574.jpg',
   },
   {
@@ -693,7 +694,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikro-50x60-niebieska-350',
     name: 'CleanPRO ścier.mikro.50x60 nieb.350 g/m2',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/391115.jpg',
   },
   {
@@ -714,7 +715,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-ultra-soft-blue-32x32',
     name: 'CleanPRO ścierka ultra soft 32x32, blue',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/352035.jpg',
   },
   {
@@ -742,7 +743,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-soft-blue-32x32-320',
     name: 'CleanPRO ścierka soft 32x32, 320g blue',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/404258.jpg',
   },
   {
@@ -763,7 +764,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-mikrof-bb-niebieska-32x32',
     name: 'CleanPRO Ścierka mikrof. BB nieb. 32x32',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/404253.jpg',
   },
   {
@@ -798,7 +799,7 @@ export const accessories: Accessory[] = [
     id: 'scierka-soft-niebieska-40x40-220',
     name: 'CleanPRO ścierka soft 40x40 220g niebies',
     category: 'Ścierki',
-    application: ['Mycie szyb'],
+    application: ['Mycie szyb', 'Pojazdy'],
     image: '/images/374194.jpg',
   },
   {
