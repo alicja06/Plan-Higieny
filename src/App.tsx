@@ -685,14 +685,11 @@ const matchesArea = (
                         </div>
 
                         <div className="mt-2 flex flex-wrap gap-x-2 gap-y-1 text-xs text-slate-500">
-                          {Object.entries(p.areas ?? {}).map(
-                            ([zone, areas]) => (
-                              <span key={zone}>
-                                {zone}
-                                {areas.length > 0 && ` · ${areas.join(', ')}`}
-                              </span>
-                            ),
-                          )}
+                          {Object.keys(p.areas ?? {}).map((zone) => (
+                            <span key={zone}>
+                              {zone}
+                            </span>
+                          ))}
 
                           {(p.type || p.dosage) && (
                             <span>

@@ -710,7 +710,7 @@ body: pdfRows.map((row) => {
             </h2>
             <p className="mt-1 text-sm text-slate-500">
               Wszystkie pola są opcjonalne. Uzupełnione informacje zostaną
-              umieszczone w planie higieny.
+              umieszczone w pliku PDF.
             </p>
           </div>
 

@@ -1042,7 +1042,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na czystą i suchą skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/APH100 - 1L - WIZ.png',
+    image: '/images/aph-100.jpg',
   },
   {
     name: 'Płyn do dezynfekcji rąk i skóry Biopur Tea Garden APH 101',
@@ -1060,7 +1060,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na czystą i suchą skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260514 APH101 - 1L - Wizualizacja - Trigger.png',
+    image: '/images/aph-101.jpg',
   },
   {
     name: 'Płyn do dezynfekcji powierzchni Biopur APC 100',
@@ -1078,7 +1078,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/APC100 - 1L - WIZ.png',
+    image: '/images/apc-100.jpg',
   },
   {
     name: 'Płyn do dezynfekcji powierzchni Biopur Tea Garden APC 101',
@@ -1096,7 +1096,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn do higienicznej i chirurgicznej dezynfekcji rąk Biopur APH 200',
@@ -1114,7 +1114,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn do higienicznej i chirurgicznej dezynfekcji rąk Biopur Tea Garden APH 201',
@@ -1132,7 +1132,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Żel do higienicznej i chirurgicznej dezynfekcji rąk Biopur APH 300',
@@ -1150,7 +1150,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Żel do higienicznej i chirurgicznej dezynfekcji rąk Biopur Tea Garden APH 301',
@@ -1168,7 +1168,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na skórę około 6 ml płynu – ilość wystarczającą do zwilżenia całych dłoni. Wcieraj przez minimum 1 minutę. Nie spłukuj.',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn myjąco-dezynfekujący do powierzchni Biopur APC 200',
@@ -1186,7 +1186,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn myjąco-dezynfekujący do powierzchni Biopur Tea Garden APC 201',
@@ -1204,7 +1204,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn do dezynfekcji powierzchni o przedłużonym działaniu Biopur APC 300',
@@ -1222,7 +1222,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn do dezynfekcji powierzchni o przedłużonym działaniu Biopur Tea Garden APC 301',
@@ -1240,7 +1240,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Pianka myjąco-dezynfekująca do powierzchni Biopur APC 400',
@@ -1258,7 +1258,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Pianka myjąco-dezynfekująca do powierzchni Biopur Tea Garden APC 401',
@@ -1276,7 +1276,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
     {
     name: 'Koncentrat myjąco-dezynfekujący do powierzchni Biopur APC 500',
@@ -1294,7 +1294,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
     {
     name: 'Koncentrat myjąco-dezynfekujący do powierzchni Biopur Tea Garden APC 501',
@@ -1312,7 +1312,7 @@ export const products: Product[] = [
     usage:
       'Nanieś na powierzchnię [do uzupełnienia]',
     dosage: 'Bez rozcieńczania',
-    image: '/images/20260506 APC101- 1L - Wizualizacja - Trigger.png',
+    image: '/images/apc-101.jpg',
   },
   {
     name: 'Płyn do pielęgnacji stali nierdzewnej Biopur F841',
