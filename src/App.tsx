@@ -22,6 +22,7 @@ type FilterOption = {
   label: string;
   level?: number;
   bold?: boolean;
+  disabled?: boolean;
 };
 
 function phColor(ph: number): string {
@@ -114,21 +115,24 @@ function FilterDropdown({
                 const isSelected = selectedValue === option.value;
 
                 return (
-                  <button
-                    key={option.value}
-                    type="button"
-                    onClick={() => {
-                      onSelect(option.value);
-                      onClose();
-                    }}
-                    className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition ${
-                      option.level === 1 ? 'pl-7' : ''
-                    } ${
-                      isSelected
+                <button
+                  key={option.value}
+                  type="button"
+                  disabled={option.disabled}
+                  onClick={() => {
+                    onSelect(option.value);
+                    onClose();
+                  }}
+                  className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition ${
+                    option.level === 1 ? 'pl-7' : ''
+                  } ${
+                    option.disabled
+                      ? 'cursor-not-allowed text-slate-300'
+                      : isSelected
                         ? 'bg-slate-100 text-primary'
                         : 'text-slate-700 hover:bg-slate-100'
-                    } ${option.bold ? 'font-semibold' : ''}`}
-                  >
+                  } ${option.bold ? 'font-semibold' : ''}`}
+                >
                     {option.level === 1 && (
                       <span className="text-slate-300">–</span>
                     )}
@@ -154,6 +158,9 @@ function App() {
   const [selectedArea, setSelectedArea] = useState('');
   const [selectedTask, setSelectedTask] = useState('');
   const [selectedIndustry, setSelectedIndustry] = useState('');
+  const [lastChangedFilter, setLastChangedFilter] = useState<
+  'area' | 'task' | 'industry' | null
+>(null);
 
   const [openFilter, setOpenFilter] = useState<
     'area' | 'task' | 'industry' | null
@@ -208,87 +215,91 @@ const matchesArea = (
   // OBSZARY
   // Dostępne sekcje i podobszary zależą od wybranej czynności i branży.
 
-  const applicationGroups = useMemo(() => {
-    const groups = new Map<string, Set<string>>();
+// OBSZARY
+// Wszystkie sekcje i podobszary są zawsze widoczne.
+// Ich dostępność zależy od wybranej czynności i branży.
 
-    products
-      .filter(
-        (product) =>
-          matchesTask(product, selectedTask) &&
-          matchesIndustry(product, selectedIndustry),
-      )
-      .forEach((product) => {
-        Object.entries(product.areas ?? {}).forEach(
-          ([application, areas]) => {
-            if (!application) return;
+const applicationGroups = useMemo(() => {
+  const groups = new Map<string, Set<string>>();
 
-            if (!groups.has(application)) {
-              groups.set(application, new Set());
-            }
+  products.forEach((product) => {
+    Object.entries(product.areas ?? {}).forEach(
+      ([application, areas]) => {
+        if (!application) return;
 
-            areas.forEach((area) => {
-              if (area) {
-                groups.get(application)!.add(area);
-              }
-            });
-          },
-        );
-      });
+        if (!groups.has(application)) {
+          groups.set(application, new Set());
+        }
 
-    return Array.from(groups.entries()).map(([application, areas]) => ({
-      application,
-      areas: Array.from(areas).sort((a, b) =>
-        a.localeCompare(b, 'pl'),
-      ),
-    }));
-  }, [selectedTask, selectedIndustry]);
+        areas.forEach((area) => {
+          if (area) {
+            groups.get(application)!.add(area);
+          }
+        });
+      },
+    );
+  });
 
-  const areaOptions = useMemo<FilterOption[]>(() => {
-    const options: FilterOption[] = [];
-    options.push({
+  return Array.from(groups.entries()).map(([application, areas]) => ({
+    application,
+    areas: Array.from(areas).sort((a, b) =>
+      a.localeCompare(b, 'pl'),
+    ),
+  }));
+}, []);
+
+const areaOptions = useMemo<FilterOption[]>(() => {
+  const options: FilterOption[] = [];
+
+  options.push({
     value: '',
     label: 'Wszystkie obszary',
   });
 
-    applicationGroups.forEach((group) => {
-      options.push({
-        value: JSON.stringify([group.application, '']),
-        label: group.application,
-        bold: true,
-      });
-
-      group.areas.forEach((area) => {
-        options.push({
-          value: JSON.stringify([group.application, area]),
-          label: area,
-          level: 1,
-        });
-      });
+  applicationGroups.forEach((group) => {
+    options.push({
+      value: JSON.stringify([group.application, '']),
+      label: group.application,
+      bold: true,
+      disabled: !products.some(
+        (product) =>
+          matchesArea(product, group.application, '') &&
+          matchesTask(product, selectedTask) &&
+          matchesIndustry(product, selectedIndustry),
+      ),
     });
 
-    return options;
-  }, [applicationGroups]);
+    group.areas.forEach((area) => {
+      options.push({
+        value: JSON.stringify([group.application, area]),
+        label: area,
+        level: 1,
+        disabled: !products.some(
+          (product) =>
+            matchesArea(product, group.application, area) &&
+            matchesTask(product, selectedTask) &&
+            matchesIndustry(product, selectedIndustry),
+        ),
+      });
+    });
+  });
 
-  // CZYNNOŚCI
-  // Dostępne czynności zależą od wybranego obszaru i branży.
+  return options;
+}, [applicationGroups, selectedTask, selectedIndustry]);
 
-  const tasks = useMemo(() => {
-    return Array.from(
-      new Set(
-        products
-          .filter(
-            (product) =>
-              matchesArea(product, selectedApplication, selectedArea) &&
-              matchesIndustry(product, selectedIndustry),
-          )
-          .flatMap((product) => product.tasks ?? []),
-      ),
-    )
-      .filter(Boolean)
-      .sort((a, b) => a.localeCompare(b, 'pl'));
-  }, [selectedApplication, selectedArea, selectedIndustry]);
+// CZYNNOŚCI
+// Wszystkie czynności są widoczne.
+// Opcje bez produktów pasujących do pozostałych filtrów są nieaktywne.
 
-  const taskOptions = useMemo<FilterOption[]>(
+const tasks = useMemo(() => {
+  return Array.from(
+    new Set(products.flatMap((product) => product.tasks ?? [])),
+  )
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, 'pl'));
+}, []);
+
+const taskOptions = useMemo<FilterOption[]>(
   () => [
     {
       value: '',
@@ -297,31 +308,38 @@ const matchesArea = (
     ...tasks.map((task) => ({
       value: task,
       label: task,
+      disabled: !products.some(
+        (product) =>
+          matchesArea(product, selectedApplication, selectedArea) &&
+          matchesIndustry(product, selectedIndustry) &&
+          matchesTask(product, task),
+      ),
     })),
   ],
-  [tasks],
+  [
+    tasks,
+    selectedApplication,
+    selectedArea,
+    selectedIndustry,
+  ],
 );
 
   // BRANŻE
   // Dostępne branże zależą od wybranego obszaru i czynności.
 
-  const industries = useMemo(() => {
-    return Array.from(
-      new Set(
-        products
-          .filter(
-            (product) =>
-              matchesArea(product, selectedApplication, selectedArea) &&
-              matchesTask(product, selectedTask),
-          )
-          .flatMap((product) => product.industries ?? []),
-      ),
-    )
-      .filter(Boolean)
-      .sort((a, b) => a.localeCompare(b, 'pl'));
-  }, [selectedApplication, selectedArea, selectedTask]);
+// BRANŻE
+// Wszystkie branże są widoczne.
+// Opcje bez produktów pasujących do pozostałych filtrów są nieaktywne.
 
-  const industryOptions = useMemo<FilterOption[]>(
+const industries = useMemo(() => {
+  return Array.from(
+    new Set(products.flatMap((product) => product.industries ?? [])),
+  )
+    .filter(Boolean)
+    .sort((a, b) => a.localeCompare(b, 'pl'));
+}, []);
+
+const industryOptions = useMemo<FilterOption[]>(
   () => [
     {
       value: '',
@@ -330,9 +348,20 @@ const matchesArea = (
     ...industries.map((industry) => ({
       value: industry,
       label: industry,
+      disabled: !products.some(
+        (product) =>
+          matchesArea(product, selectedApplication, selectedArea) &&
+          matchesTask(product, selectedTask) &&
+          matchesIndustry(product, industry),
+      ),
     })),
   ],
-  [industries],
+  [
+    industries,
+    selectedApplication,
+    selectedArea,
+    selectedTask,
+  ],
 );
 
   // FILTROWANIE PRODUKTÓW
@@ -376,11 +405,57 @@ const matchesArea = (
       selectedIndustry,
   );
 
+const clearLastChangedFilter = () => {
+  const filterToClear =
+    lastChangedFilter ??
+    (selectedIndustry
+      ? 'industry'
+      : selectedTask
+        ? 'task'
+        : selectedApplication
+          ? 'area'
+          : null);
+
+  if (!filterToClear) return;
+
+  if (filterToClear === 'area') {
+    setSelectedApplication('');
+    setSelectedArea('');
+  }
+
+  if (filterToClear === 'task') {
+    setSelectedTask('');
+  }
+
+  if (filterToClear === 'industry') {
+    setSelectedIndustry('');
+  }
+
+  const remainingFilters = {
+    area: filterToClear !== 'area' && Boolean(selectedApplication),
+    task: filterToClear !== 'task' && Boolean(selectedTask),
+    industry: filterToClear !== 'industry' && Boolean(selectedIndustry),
+  };
+
+  setLastChangedFilter(
+    remainingFilters.task
+      ? 'task'
+      : remainingFilters.industry
+        ? 'industry'
+        : remainingFilters.area
+          ? 'area'
+          : null,
+  );
+
+  setCurrentPage(1);
+};
+
   const reset = () => {
     setSelectedApplication('');
     setSelectedArea('');
     setSelectedTask('');
     setSelectedIndustry('');
+    setLastChangedFilter(null);
     setCurrentPage(1);
     setOpenFilter(null);
   };
@@ -565,7 +640,10 @@ const matchesArea = (
                 onToggle={() =>
                   setOpenFilter(openFilter === 'area' ? null : 'area')
                 }
-                onSelect={selectArea}
+                onSelect={(value) => {
+                selectArea(value);
+                setLastChangedFilter('area');
+              }}
                 onClose={() => setOpenFilter(null)}
               />
             </div>
@@ -586,7 +664,10 @@ const matchesArea = (
                 onToggle={() =>
                   setOpenFilter(openFilter === 'task' ? null : 'task')
                 }
-                onSelect={setSelectedTask}
+                onSelect={(value) => {
+                setSelectedTask(value);
+                setLastChangedFilter('task');
+              }}
                 onClose={() => setOpenFilter(null)}
               />
             </div>
@@ -607,7 +688,10 @@ const matchesArea = (
                 onToggle={() =>
                   setOpenFilter(openFilter === 'industry' ? null : 'industry')
                 }
-                onSelect={setSelectedIndustry}
+                onSelect={(value) => {
+                setSelectedIndustry(value);
+                setLastChangedFilter('industry');
+              }}
                 onClose={() => setOpenFilter(null)}
               />
             </div>
@@ -625,23 +709,33 @@ const matchesArea = (
             </span>
           </div>
 
-          {filtered.length === 0 ? (
-            <div className="rounded-xl border border-dashed border-slate-300 bg-white py-16 text-center">
-              <p className="text-sm text-slate-500">
-                Brak produktów spełniających wybrane kryteria.
-              </p>
+{filtered.length === 0 ? (
+  <div className="rounded-xl border border-dashed border-slate-300 bg-white px-4 py-16 text-center">
+    <div className="mx-auto max-w-md">
+      <p className="text-base font-semibold text-slate-700">
+        Nie znaleziono produktów
+      </p>
 
-              <button
-                type="button"
-                onClick={reset}
-                className="mt-3 inline-flex items-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-sm font-medium text-white transition hover:bg-primary-dark"
-              >
-                <RotateCcw className="h-3.5 w-3.5" />
-                Wyczyść filtry
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-2">
+      <p className="mt-2 text-sm leading-relaxed text-slate-500">
+        Dla wybranej kombinacji obszaru, czynności i branży
+        nie ma przypisanych produktów. Zmień jeden z filtrów,
+        aby zobaczyć więcej wyników.
+      </p>
+
+      {hasFilters && (
+        <button
+          type="button"
+          onClick={clearLastChangedFilter}
+          className="mt-4 inline-flex items-center gap-1.5 rounded-md bg-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-primary-dark"
+        >
+          <RotateCcw className="h-3.5 w-3.5" />
+          Wyczyść ostatni filtr
+        </button>
+      )}
+    </div>
+  </div>
+) : (
+  <div className="space-y-2">
               {paginatedProducts.map((p) => {
                 const isSelected = selected.has(p.name);
 

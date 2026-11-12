@@ -7,36 +7,18 @@ export type AccessoryApplication =
   | 'Teren zewnętrzny'
   | 'Pojazdy';
 
-export type AccessoryPaperType =
-  | 'składane'
-  | 'w roli'
-  | 'systemowe'
-  | 'Jumbo';
-
-export type AccessoryPaperMaterial = 'celuloza' | 'makulatura';
-
-export type AccessoryBagColor =
-  | 'bezbarwny'
-  | 'biały'
-  | 'brązowy'
-  | 'czarny'
-  | 'czerwony'
-  | 'niebieski'
-  | 'zielony'
-  | 'żółty';
+export interface AccessoryParameter {
+  label: string;
+  value: string;
+}
 
 export interface Accessory {
   id: string;
   name: string;
   category: string;
   application: AccessoryApplication[];
-  type?: AccessoryPaperType;
-  material?: AccessoryPaperMaterial;
-  rollDiameter?: number;
-  capacity?: number;
-  color?: AccessoryBagColor;
+  parameters?: AccessoryParameter[];
   image?: string;
-
 }
 
 export const accessories: Accessory[] = [
@@ -46,9 +28,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-ręczn.Mak.Biel280m 1W(6)#305034',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'makulatura',
-    rollDiameter: 18,
+    parameters: [
+      { label: 'Typ', value: 'w roli' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Średnica rolki', value: '18 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305034.png',
   },
   {
@@ -56,9 +41,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-ręczn.Mak.Biel150m 1W(6)#305035',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'makulatura',
-    rollDiameter: 18,
+    parameters: [
+      { label: 'Typ', value: 'w roli' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Średnica rolki', value: '18 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305035.png',
   },
   {
@@ -66,9 +54,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ręcznik celul 280m 1W(6)#305029',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'celuloza',
-    rollDiameter: 18,
+    parameters: [
+      { label: 'Typ', value: 'w roli' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Średnica rolki', value: '18 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305035.png',
   },
   {
@@ -76,9 +67,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ręcznik celul 150m 1W(6)#305030',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'celuloza',
-    rollDiameter: 18,
+    parameters: [
+      { label: 'Typ', value: 'w roli' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Średnica rolki', value: '18 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305030.png',
   },
   {
@@ -86,9 +80,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ręcz.cel.LUX 150m 1W(6)#305033',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'celuloza',
-    rollDiameter: 18,
+    parameters: [
+      { label: 'Typ', value: 'w roli' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Średnica rolki', value: '18 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305033.png',
   },
   {
@@ -96,8 +93,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ZZ-1520 celul.25x23cm 2W#305003',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'celuloza',
+    parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Wymiary', value: '25 × 23 cm' },
+      { label: 'Warstwy', value: '2' }
+    ],
     image: '/images/305003.png',
   },
   {
@@ -105,8 +106,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ZZ-4000 celul.25x23cm 2W#305037',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'celuloza',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Wymiary', value: '25 × 23 cm' },
+      { label: 'Warstwy', value: '2' }
+    ],
     image: '/images/305037.png',
   },
   {
@@ -114,8 +119,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ZZ-4000 Mbiel.25x23cm 1W#305039',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'makulatura',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Wymiary', value: '25 × 23 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305039.png',
   },
   {
@@ -123,8 +132,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ZZ-4000 Mbiel.22x23cm 1W#305040',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'makulatura',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Wymiary', value: '22 × 23 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/305040.png',
   },
   {
@@ -132,8 +145,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ZZ-4000 Cel. 21x23cm 2W#305038',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'celuloza',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Wymiary', value: '21 × 23 cm' },
+      { label: 'Warstwy', value: '2' }
+    ],
     image: '/images/305038.png',
   },
   {
@@ -141,8 +158,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPro Ręcznik ZZ 4000 zielony25x23 1W',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'makulatura',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Wymiary', value: '25 × 23 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/511278.png',
   },
   {
@@ -150,8 +171,12 @@ export const accessories: Accessory[] = [
     name: 'CleanPro Ręcznik ZZ 4000 szary 25x23 1W',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'składane',
-    material: 'makulatura',
+   parameters: [
+      { label: 'Typ', value: 'składane' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Wymiary', value: '25 × 23 cm' },
+      { label: 'Warstwy', value: '1' }
+    ],
     image: '/images/505258.jpg',
   },
   {
@@ -159,9 +184,13 @@ export const accessories: Accessory[] = [
     name: 'Ręcznik w roli CleanPRO Autocut, 1w, celuloza, biały, 6x260m',
     category: 'Ręczniki papierowe',
     application: ['Kuchnia', 'Sanitariaty'],
-    type: 'w roli',
-    material: 'celuloza',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'autocut' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Długość roli', value: '260 cm' },
+      { label: 'Warstwy', value: '1' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305033.png',
   },
 
@@ -171,9 +200,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Papier Jumbo celuloza190m1W(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'celuloza',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Długość roli', value: '190 cm' },
+      { label: 'Warstwy', value: '1' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305028.png',
   },
   {
@@ -181,9 +214,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Jumbo MakBiel190m 1W(12)#305016',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'makulatura',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Długość roli', value: '190 cm' },
+      { label: 'Warstwy', value: '1' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305016.png',
   },
   {
@@ -191,9 +228,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Jumbo mak.biel190m 1W(6)#305017',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'makulatura',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Długość roli', value: '190 cm' },
+      { label: 'Warstwy', value: '1' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305017.png',
   },
   {
@@ -201,9 +242,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Papier Jumbo celuloza150m2W(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'celuloza',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Długość roli', value: '150 cm' },
+      { label: 'Warstwy', value: '2' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305001.png',
   },
   {
@@ -211,9 +256,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO-Papier Jumbo celuloza150m 2W(6)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'celuloza',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Długość roli', value: '150 cm' },
+      { label: 'Warstwy', value: '2' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305002.png',
   },
   {
@@ -221,9 +270,13 @@ export const accessories: Accessory[] = [
     name: 'Papier toaletowy w roli Jumbo CleanPRO, 2w, celuloza, biały, 12x100m',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'celuloza',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'celuloza' },
+      { label: 'Długość roli', value: '100 cm' },
+      { label: 'Warstwy', value: '2' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/305041.jpg',
   },
   {
@@ -231,9 +284,13 @@ export const accessories: Accessory[] = [
     name: 'CleanPro Papier toal.Jumbo szary150m(12)',
     category: 'Papiery toaletowe',
     application: ['Sanitariaty'],
-    type: 'Jumbo',
-    material: 'makulatura',
-    rollDiameter: 18,
+   parameters: [
+      { label: 'Typ', value: 'jumbo' },
+      { label: 'Materiał', value: 'makulatura' },
+      { label: 'Długość roli', value: '150 cm' },
+      { label: 'Warstwy', value: '1' },
+      { label: 'Średnica rolki', value: '18 cm' }
+    ],
     image: '/images/papier_505259.png',
   },
 
@@ -243,6 +300,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO KENTUCKY Wózek 1x20l z prasą',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '1 × 20 l'}
+    ],
     image: '/images/352603.jpg',
   },
   {
@@ -250,6 +310,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 25L prasa+uchwyt (nieb.)',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '1 × 25 l'}
+    ],
     image: '/images/354313.jpg',
   },
   {
@@ -257,6 +320,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 2x25L z prasą (2szt.)',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '2 × 25 l'}
+    ],
     image: '/images/357965.jpg',
   },
   {
@@ -264,6 +330,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 1x31l z prasą',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '1 × 31 l'}
+    ],
     image: '/images/358116.jpg',
   },
   {
@@ -271,6 +340,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 25L (czerw) prasa+uchwyt',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '1 × 25 l'}
+    ],
     image: '/images/358897.jpg',
   },
   {
@@ -278,6 +350,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 2x17l z prasą (2szt) ABS',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '2 × 17 l' }
+    ],
     image: '/images/361181.jpg',
   },
   {
@@ -285,6 +360,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO wózek KENTUCKY nieb. z prasą',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '1 × 20 l' }
+    ],
     image: '/images/394641.jpg',
   },
   {
@@ -292,6 +370,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wózek 2x17l prasa+koszyk+uchwyt',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '2 × 17 l' }
+    ],
     image: '/images/352607.jpg',
   },
   {
@@ -306,6 +387,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wiadro czerw. do wózka 352607',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '17 l' }
+    ],
     image: '/images/367512.jpg',
   },
   {
@@ -313,6 +397,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wiadro czerw. do 357965;358897',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '20 l' }
+    ],
     image: '/images/367514.jpg',
   },
   {
@@ -320,6 +407,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wiadro nieb. do wózka 352607',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '17 l' }
+    ],
     image: '/images/367513.jpg',
   },
   {
@@ -327,6 +417,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Wiadro nieb. do 357965;354313',
     category: 'Wózki do sprzątania',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Pojemność', value: '20 l' }
+    ],
     image: '/images/367515.jpg',
   },
   {
@@ -343,6 +436,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO DUO MOP 11 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/373157.jpg',
   },
   {
@@ -350,6 +446,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 01 kieszeniowy 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352591.jpg',
   },
   {
@@ -357,6 +456,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 07 kieszeniowy 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352043.jpg',
   },
   {
@@ -378,6 +480,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO DUO MOP 11 50cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '50 cm' }
+    ],
     image: '/images/374110.jpg',
   },
   {
@@ -385,6 +490,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPro mop mikrof.21, biały duo 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/399547.jpg',
   },
   {
@@ -392,6 +500,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO mop mikrof.15, nieb duo 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/432234.jpg',
   },
   {
@@ -399,6 +510,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 04 kieszeniowy 40cm 140 g',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352592.jpg',
   },
   {
@@ -413,6 +527,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 04 40cm mocowanie 2str',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352590.jpg',
   },
   {
@@ -420,6 +537,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO DUO MOP 14 50cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '50 cm' }
+    ],
     image: '/images/373682.jpg',
   },
   {
@@ -427,6 +547,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO DUO MOP 06 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/374181_a.jpg',
   },
   {
@@ -434,6 +557,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 02 kieszeniowy 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352039.png',
   },
   {
@@ -441,6 +567,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 01 z tasiemką 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352591.jpg',
   },
   {
@@ -448,6 +577,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 03 kieszeniowy 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352040.png',
   },
   {
@@ -455,6 +587,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 01 40cm mocowanie 2str',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352589.jpg',
   },
   {
@@ -462,6 +597,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 05 kieszeniowy 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352041.jpg',
   },
   {
@@ -469,6 +607,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO DUO MOP 14 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/373158_przod.png',
   },
   {
@@ -483,6 +624,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Mop 04 z tasiemką 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352592.jpg',
   },
   {
@@ -490,6 +634,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Stelaż mopa 40cm mocowanie 2str',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352600.jpg',
   },
   {
@@ -497,6 +644,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO stelaż mopa 50cm moc. 2 str.',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '50 cm' }
+    ],
     image: '/images/374132.jpg',
   },
   {
@@ -504,6 +654,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO stelaż mopa 40 dwustronny pełny',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/398192_1.jpg',
   },
   {
@@ -511,6 +664,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Stelaż mopa 40cm',
     category: 'Mopy',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Wymiary', value: '40 cm' }
+    ],
     image: '/images/352045.jpg',
   },
 
@@ -520,6 +676,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy nieb. 32x32',
     category: 'Ścierki',
     application: ['Mycie szyb','Powierzchnie ponadpodłogowe', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/407423.jpg',
   },
   {
@@ -527,6 +687,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy czerw 32x32',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/407422.jpg',
   },
   {
@@ -534,6 +698,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy żółta 32x32',
     category: 'Ścierki',
     application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/407425.jpg',
   },
   {
@@ -541,6 +709,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy ziel. 32x32',
     category: 'Ścierki',
     application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/352036.jpg',
   },
   {
@@ -548,6 +720,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 30x30 blue',
     category: 'Ścierki',
     application: ['Mycie szyb','Powierzchnie ponadpodłogowe', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404253.jpg',
   },
   {
@@ -555,6 +731,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 30x30 red',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404256.jpg',
   },
   {
@@ -562,6 +742,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 30x30 green',
     category: 'Ścierki',
     application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404254.jpg',
   },
   {
@@ -569,6 +753,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 30x30 yellow',
     category: 'Ścierki',
     application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404255.jpg',
   },
   {
@@ -576,6 +764,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 30x30 orange',
     category: 'Ścierki',
     application: ['Kuchnia','Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404261.jpg',
   },
   {
@@ -583,6 +775,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikr.nieb.40x40 320g/m2',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/374194.jpg',
   },
   {
@@ -590,6 +786,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikr.czer.40x40 320g/m2',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/414573.jpg',
   },
   {
@@ -597,6 +797,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka do szyb nieb. 40x40cm',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/374194.jpg',
   },
   {
@@ -604,6 +808,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka do polerowania 32x32cm',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '200 g/m²' }
+    ],
     image: '/images/382614.jpg',
   },
   {
@@ -611,6 +819,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka waflowa nieb. 40x40cm',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/358841.jpg',
   },
   {
@@ -618,6 +830,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrof. orange 50x60',
     category: 'Ścierki',
     application: ['Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '50 × 60 cm' },
+      { label: 'Gramatura', value: '240 g/m²' }
+    ],
     image: '/images/369022.jpg',
   },
   {
@@ -625,6 +841,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka z mikrof. nieb. 50x60',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '50 × 60 cm' },
+      { label: 'Gramatura', value: '240 g/m²' }
+    ],
     image: '/images/391115.jpg',
   },
   {
@@ -632,6 +852,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy czerw.30x30',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/361169.jpg',
   },
   {
@@ -639,6 +863,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy nieb. 30x30',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/361170.jpg',
   },
   {
@@ -646,6 +874,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka z mikrof. żółta 30x30',
     category: 'Ścierki',
     application: ['Kuchnia'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404255.jpg',
   },
   {
@@ -653,6 +885,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka z mikrof. zielona 30x30',
     category: 'Ścierki',
     application: ['Kuchnia'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404254.jpg',
   },
   {
@@ -660,6 +896,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka mikr.czer.40x40 220g/m2',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/374193.jpg',
   },
   {
@@ -667,6 +907,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka mikr.nieb.40x40 220g/m2',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/414574.jpg',
   },
   {
@@ -674,6 +918,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka mikr.ziel.40x40 220g/m2',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/384469.jpg',
   },
   {
@@ -681,6 +929,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścier z mikr ziel 40x40 320gsm',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/384469.jpg',
   },
   {
@@ -688,6 +940,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścier z mikr żółta 40x40 320gsm',
     category: 'Ścierki',
     application: ['Kuchnia'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/388361.jpg',
   },
   {
@@ -695,6 +951,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścier.mikro.50x60 nieb.350 g/m2',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '50 × 60 cm' },
+      { label: 'Gramatura', value: '350 g/m²' }
+    ],
     image: '/images/391115.jpg',
   },
   {
@@ -702,6 +962,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścier.mikro.50x60 czerw.350g/m2',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '50 × 60 cm' },
+      { label: 'Gramatura', value: '350 g/m²' }
+    ],
     image: '/images/394132.jpg',
   },
   {
@@ -709,6 +973,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 32x32 red',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/352033.jpg',
   },
   {
@@ -716,6 +984,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka ultra soft 32x32, blue',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/352035.jpg',
   },
   {
@@ -723,6 +995,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścier ultra soft 30x30 grey/red',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '30 × 30 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404259.jpg',
   },
   {
@@ -730,6 +1006,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścier ultra soft 32x32 grey/red',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404259.jpg',
   },
   {
@@ -737,6 +1017,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 32x32, 320g red',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404257.jpg',
   },
   {
@@ -744,6 +1028,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 32x32, 320g blue',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404258.jpg',
   },
   {
@@ -751,6 +1039,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 32x32, 320g green',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+        parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/407424.jpg',
   },
   {
@@ -758,6 +1050,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 32x32, 320g yellow',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/407425.jpg',
   },
   {
@@ -765,6 +1061,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikrof. BB nieb. 32x32',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404253.jpg',
   },
   {
@@ -772,6 +1072,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikrof. BB ziel. 32x32',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404254.jpg',
   },
   {
@@ -779,6 +1083,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikrof. BB czerw 32x32',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404256.jpg',
   },
   {
@@ -786,6 +1094,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka mikrof. BB żółta 32x32',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/404255.jpg',
   },
   {
@@ -793,6 +1105,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 40x40 220g czerwon',
     category: 'Ścierki',
     application: ['Sanitariaty'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/404256.jpg',
   },
   {
@@ -800,6 +1116,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 40x40 220g niebies',
     category: 'Ścierki',
     application: ['Mycie szyb', 'Pojazdy'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/374194.jpg',
   },
   {
@@ -807,6 +1127,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 40x40 220g zielona',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/384469.jpg',
   },
   {
@@ -814,6 +1138,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka soft 40x40 220g żółta',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/388361.jpg',
   },
   {
@@ -821,6 +1149,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO ścierka mikr.żółta40x40 220g/m2',
     category: 'Ścierki',
     application: ['Kuchnia', 'Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '40 × 40 cm' },
+      { label: 'Gramatura', value: '220 g/m²' }
+    ],
     image: '/images/384467.jpg',
   },
   {
@@ -828,6 +1160,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ścierka z mikrofazy biała 32x32',
     category: 'Ścierki',
     application: ['Powierzchnie ponadpodłogowe'],
+    parameters: [
+      { label: 'Wymiary', value: '32 × 32 cm' },
+      { label: 'Gramatura', value: '320 g/m²' }
+    ],
     image: '/images/352037.jpg',
   },
 
@@ -837,6 +1173,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Kij 140cm aluminiowy śr 25mm',
     category: 'Kije',
     application: ['Mycie podłóg', 'Teren zewnętrzny'],
+    parameters: [
+      { label: 'Długość', value: '140 cm' },
+      { label: 'Średnica', value: '25 mm' }
+    ],
     image: '/images/352609.jpg',
   },
   {
@@ -844,6 +1184,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Kij teleskop 140cm alum śr 22mm',
     category: 'Kije',
     application: ['Mycie podłóg', 'Teren zewnętrzny'],
+    parameters: [
+      { label: 'Długość', value: '140 cm' },
+      { label: 'Średnica', value: '22 mm' }
+    ],
     image: '/images/352609.jpg',
   },
   {
@@ -851,6 +1195,10 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Kij aluminiowy 140cm śr 22mm',
     category: 'Kije',
     application: ['Mycie podłóg', 'Teren zewnętrzny'],
+    parameters: [
+      { label: 'Długość', value: '140 cm' },
+      { label: 'Średnica', value: '22 mm' }
+    ],
     image: '/images/352609.jpg',
   },
   {
@@ -867,6 +1215,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ściągaczka do podł. plast. 45cm',
     category: 'Ściągaczki',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Długość', value: '45 cm' }
+    ],
     image: '/images/354314.jpg',
   },
   {
@@ -874,6 +1225,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ściągaczka do podł. plast. 55cm',
     category: 'Ściągaczki',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Długość', value: '55 cm' }
+    ],
     image: '/images/354315.jpg',
   },
   {
@@ -881,6 +1235,9 @@ export const accessories: Accessory[] = [
     name: 'CleanPRO Ściągaczka do podł. plast. 75cm',
     category: 'Ściągaczki',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Długość', value: '75 cm' }
+    ],
     image: '/images/354316.jpg',
   },
 
@@ -906,8 +1263,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) bezbarwne',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'bezbarwny',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/EN_worki_LDPE_120l_25_bezbarwne.jpg',
   },
   {
@@ -915,17 +1273,19 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) białe',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'biały',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/EN_worki_LDPE_120l_25_biale.jpg',
   },
   {
     id: 'worki-ldpe-120l-brazowe-25',
     name: 'EN worki LDPE 120l (25) brązowe',
     category: 'Worki',
-    application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'brązowy',
+    application: ['Kuchnia'],
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/EN worki LDPE 120l (25) brązowe.jpg',
   },
   {
@@ -933,8 +1293,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) czarne',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'czarny',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/czarne-120L-ldpe-25szt...jpg',
   },
   {
@@ -942,8 +1303,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) czerwone',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'czerwony',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/czerwone-120L-ldpe-25szt..jpg',
   },
   {
@@ -951,8 +1313,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) niebieskie',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'niebieski',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/niebieskie-120L-ldpe-25szt..jpg',
   },
   {
@@ -960,8 +1323,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) zielone',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'zielony',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/EN worki LDPE 120l (25) zielone.jpg',
   },
   {
@@ -969,8 +1333,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 120l (25) żółte',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 120,
-    color: 'żółty',
+    parameters: [
+      { label: 'Pojemność', value: '120 l' }
+    ],
     image: '/images/EN worki LDPE 120l (25) żółte.jpg',
   },
   {
@@ -978,8 +1343,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 160l, czarne, LDPE, 20 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 160,
-    color: 'czarny',
+    parameters: [
+      { label: 'Pojemność', value: '160 l' }
+    ],
     image: '/images/czarne-160-l-20-szt-505934.jpg',
   },
   {
@@ -987,8 +1353,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 160l, czerwone, LDPE, 20 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 160,
-    color: 'czerwony',
+    parameters: [
+      { label: 'Pojemność', value: '160 l' }
+    ],
     image: '/images/C2C worki LDPE 160l (20) czerwone.jpg',
   },
   {
@@ -996,8 +1363,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 160l, niebieskie, LDPE, 20 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 160,
-    color: 'niebieski',
+    parameters: [
+      { label: 'Pojemność', value: '160 l' }
+    ],
     image: '/images/C2C worki LDPE 160L (20) niebieskie.jpg',
   },
   {
@@ -1005,8 +1373,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 160l, zielone, LDPE, 20 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 160,
-    color: 'zielony',
+    parameters: [
+      { label: 'Pojemność', value: '160 l' }
+    ],
     image: '/images/C2C worki LDPE 160L (20) zielone.jpg',
   },
   {
@@ -1014,8 +1383,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 160l, żółte, LDPE, 20 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 160,
-    color: 'żółty',
+    parameters: [
+      { label: 'Pojemność', value: '160 l' }
+    ],
     image: '/images/C2C worki LDPE 160L (20) żółte.jpg',
   },
   {
@@ -1023,8 +1393,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 35l, czarne, LDPE, 50 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 35,
-    color: 'czarny',
+    parameters: [
+      { label: 'Pojemność', value: '35 l' }
+    ],
     image: '/images/czarne-35L-ldpe-50szt..jpg',
   },
   {
@@ -1032,8 +1403,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 35l, czerwone, LDPE, 50 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 35,
-    color: 'czerwony',
+    parameters: [
+      { label: 'Pojemność', value: '35 l' }
+    ],
     image: '/images/czerwone-35L-ldpe-50szt..jpg',
   },
   {
@@ -1041,8 +1413,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 35l, niebieskie, LDPE, 50 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 35,
-    color: 'niebieski',
+    parameters: [
+      { label: 'Pojemność', value: '35 l' }
+    ],
     image: '/images/niebieskie-35L-ldpe-50szt..jpg',
   },
   {
@@ -1050,8 +1423,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 60l (50) czarne',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 60,
-    color: 'czarny',
+    parameters: [
+      { label: 'Pojemność', value: '60 l' }
+    ],
     image: '/images/czarne-60L-ldpe-50szt..jpg',
   },
   {
@@ -1059,8 +1433,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 60l (50) czerwone',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 60,
-    color: 'czerwony',
+    parameters: [
+      { label: 'Pojemność', value: '60 l' }
+    ],
     image: '/images/czerwone-60L-ldpe-50szt..jpg',
   },
   {
@@ -1068,8 +1443,9 @@ export const accessories: Accessory[] = [
     name: 'EN worki LDPE 60l (50) niebieskie',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 60,
-    color: 'niebieski',
+    parameters: [
+      { label: 'Pojemność', value: '60 l' }
+    ],
     image: '/images/niebieskie-60L-ldpe-50szt..jpg',
   },
   {
@@ -1077,8 +1453,9 @@ export const accessories: Accessory[] = [
     name: 'Worki na śmieci CleanPRO, 90l, czarne, LDPE, 25 sztuk',
     category: 'Worki',
     application: ['Kuchnia', 'Sanitariaty'],
-    capacity: 90,
-    color: 'czarny',
+    parameters: [
+      { label: 'Pojemność', value: '90 l' }
+    ],
     image: '/images/czarne-90L-ldpe-25szt.png',
   },
 
@@ -1088,6 +1465,9 @@ export const accessories: Accessory[] = [
     name: 'CLEANPRO SZCZOTKA DO SZOROWANIA 27CM',
     category: 'Miotły i szczotki',
     application: ['Mycie podłóg'],
+    parameters: [
+      { label: 'Szerokość', value: '27 cm' }
+    ],
     image: '/images/368171.jpg',
   },
   {
@@ -1095,6 +1475,9 @@ export const accessories: Accessory[] = [
     name: 'CLEANPRO MIOTŁA PLASTIKOWA 30CM',
     category: 'Miotły i szczotki',
     application: ['Mycie podłóg', 'Teren zewnętrzny'],
+    parameters: [
+      { label: 'Szerokość', value: '30 cm' }
+    ],
     image: '/images/368174.jpg',
   },
   {

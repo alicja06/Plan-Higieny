@@ -35,6 +35,12 @@ function phColor(ph: number): string {
   return 'bg-indigo-100 text-indigo-700 ring-indigo-200';
 }
 
+function getAccessoryParameters(accessory: Accessory): string[] {
+  return (accessory.parameters ?? [])
+    .filter((parameter) => parameter.label.trim() && parameter.value.trim())
+    .map((parameter) => `${parameter.label}: ${parameter.value}`);
+}
+
 function HygienePlan({
   selected,
   selectedAccessories,
@@ -531,12 +537,14 @@ body: pdfRows.map((row) => {
           '',
           'Produkt',
           'Kategoria',
+          'Parametry',
           'Zastosowanie',
         ]],
         body: selectedAccessories.map((accessory) => [
           '',
           accessory.name,
           accessory.category,
+          getAccessoryParameters(accessory).join('\n'),
           accessory.application.join(', '),
         ]),
         styles: {
@@ -561,9 +569,10 @@ body: pdfRows.map((row) => {
         },
         columnStyles: {
           0: { cellWidth: 18 },
-          1: { cellWidth: 95 },
-          2: { cellWidth: 65 },
-          3: { cellWidth: 85 },
+          1: { cellWidth: 75 },
+          2: { cellWidth: 45 },
+          3: { cellWidth: 65 },
+          4: { cellWidth: 60 },
         },
         margin: {
           left: 10,
@@ -977,44 +986,71 @@ body: pdfRows.map((row) => {
               </h2>
             </div>
 
-            <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-              <ul className="divide-y divide-slate-100">
-                {selectedAccessories.map((accessory) => (
-                  <li
-                    key={accessory.id}
-                    className="flex items-center gap-3 p-4"
-                  >
-                    {accessory.image && (
-                      <img
-                        src={accessory.image}
-                        alt={accessory.name}
-                        className="h-14 w-14 shrink-0 rounded object-contain"
-                      />
-                    )}
+      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="hidden grid-cols-[80px_minmax(180px,1fr)_minmax(250px,1.5fr)_40px] gap-4 border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs uppercase tracking-wide text-slate-500 sm:grid">
+        <div className="font-medium">Zdjęcie</div>
+        <div className="font-medium">Produkt</div>
+        <div className="font-medium">Parametry</div>
+        <div></div>
+      </div>
 
-                    <div className="min-w-0 flex-1">
-                      <p className="text-sm font-medium text-primary">
-                        {accessory.name}
-                      </p>
-                      <p className="mt-1 text-xs text-slate-500">
-                        {accessory.category} ·{' '}
-                        {accessory.application.join(', ')}
-                      </p>
-                    </div>
+        <ul className="divide-y divide-slate-100">
+          {selectedAccessories.map((accessory) => (
+            <li
+              key={accessory.id}
+              className="grid grid-cols-1 items-center gap-3 p-4 sm:grid-cols-[80px_minmax(180px,1fr)_minmax(250px,1.5fr)_40px] sm:gap-4"
+            >
+              <div className="flex items-center">
+                {accessory.image ? (
+                  <img
+                    src={accessory.image}
+                    alt={accessory.name}
+                    className="h-14 w-14 rounded object-contain"
+                  />
+                ) : (
+                  <div className="flex h-14 w-14 items-center justify-center rounded bg-slate-50 text-xs text-slate-400">
+                    Brak zdjęcia
+                  </div>
+                )}
+              </div>
 
-                    <button
-                      type="button"
-                      onClick={() => onToggleAccessory(accessory.id)}
-                      className="shrink-0 rounded-md p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
-                      aria-label={`Usuń ${accessory.name} z planu`}
-                      title="Usuń z planu"
-                    >
-                      <X className="h-4 w-4" />
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
+              <div className="min-w-0">
+                <p className="text-sm font-medium text-primary">
+                  {accessory.name}
+                </p>
+                <p className="mt-1 text-xs text-slate-500">
+                  {accessory.category} · {accessory.application.join(', ')}
+                </p>
+              </div>
+
+              <div className="min-w-0">
+                <p className="mb-1 text-xs font-medium text-slate-400 sm:hidden">
+                  Parametry
+                </p>
+                {getAccessoryParameters(accessory).length > 0 ? (
+                  <p className="text-sm text-slate-600">
+                    {getAccessoryParameters(accessory).join(' · ')}
+                  </p>
+                ) : (
+                  <span className="text-sm text-slate-400">—</span>
+                )}
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="button"
+                  onClick={() => onToggleAccessory(accessory.id)}
+                  className="rounded-md p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"
+                  aria-label={`Usuń ${accessory.name} z planu`}
+                  title="Usuń z planu"
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
           </section>
         )}
 
@@ -1180,56 +1216,24 @@ body: pdfRows.map((row) => {
                             </div>
                           </div>
 
-                          {(accessory.type ||
-                            accessory.material ||
-                            accessory.rollDiameter != null ||
-                            accessory.capacity != null ||
-                            accessory.color) && (
-                            <dl className="mt-4 space-y-1.5 text-sm text-slate-600">
-                              {accessory.type && (
-                                <div className="flex justify-between gap-3">
-                                  <dt className="shrink-0">Typ</dt>
-                                  <dd className="text-right">
-                                    {accessory.type}
-                                  </dd>
-                                </div>
-                              )}
-                              {accessory.material && (
-                                <div className="flex justify-between gap-3">
-                                  <dt className="shrink-0">Materiał</dt>
-                                  <dd className="text-right">
-                                    {accessory.material}
-                                  </dd>
-                                </div>
-                              )}
-                              {accessory.rollDiameter != null && (
-                                <div className="flex justify-between gap-3">
-                                  <dt className="shrink-0">
-                                    Średnica rolki
-                                  </dt>
-                                  <dd className="text-right">
-                                    {accessory.rollDiameter} cm
-                                  </dd>
-                                </div>
-                              )}
-                              {accessory.capacity != null && (
-                                <div className="flex justify-between gap-3">
-                                  <dt className="shrink-0">Pojemność</dt>
-                                  <dd className="text-right">
-                                    {accessory.capacity} l
-                                  </dd>
-                                </div>
-                              )}
-                              {accessory.color && (
-                                <div className="flex justify-between gap-3">
-                                  <dt className="shrink-0">Kolor</dt>
-                                  <dd className="text-right">
-                                    {accessory.color}
-                                  </dd>
-                                </div>
-                              )}
-                            </dl>
-                          )}
+                    {accessory.parameters && accessory.parameters.length > 0 && (
+                      <dl className="mt-4 space-y-1.5 text-sm text-slate-600">
+                        {accessory.parameters
+                          .filter(
+                            (parameter) =>
+                              parameter.label.trim() && parameter.value.trim(),
+                          )
+                          .map((parameter, index) => (
+                            <div
+                              key={`${accessory.id}-${index}`}
+                              className="flex justify-between gap-3"
+                            >
+                              <dt className="shrink-0">{parameter.label}</dt>
+                              <dd className="text-right">{parameter.value}</dd>
+                            </div>
+                          ))}
+                      </dl>
+                    )}
 
                           <button
                             type="button"

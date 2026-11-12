@@ -1445,7 +1445,7 @@ export const products: Product[] = [
     safetyDataSheetUrl: 'https://kawido.pl/storage/enova-files/kch_BIOPUR_SZYBY_%E2%80%93_p%C5%82yn_do_mycia_szyb.pdf',
     type: 'Gotowy do użycia',
     surfaces: ['szyby, lusterka'],
-    areas: {Pojazdy: ['Szyby']},
+    areas: {Pojazdy: ['Szyby'], Przeszklenia: []},
     industries: ['Detailing samochodowy'],
     ph: 6.5,
     phLabel: '6.5',
